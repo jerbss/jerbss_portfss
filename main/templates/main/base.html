@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    {% load bootstrap5 %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio{% endblock %}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'main:home' %}">Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:home' %}">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:projects' %}">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'main:contact' %}">Contato</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5 pt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <div class="position-fixed bottom-0 end-0 m-3">
+        <a href="{% url 'main:contact' %}" class="btn btn-primary rounded-circle p-3">
+            📩
+        </a>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
