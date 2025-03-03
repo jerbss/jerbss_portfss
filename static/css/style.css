@@ -92,3 +92,122 @@ body.dark-mode .navbar .nav-link.active {
     background-color: currentColor;
     margin-top: 2px;
 }
+
+/* Dropdown styles */
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-item i {
+    width: 20px;
+}
+
+/* Dark mode styles for dropdown */
+body.dark-mode .dropdown-menu {
+    background-color: #2d2d2d;
+    border-color: #3d3d3d;
+}
+
+body.dark-mode .dropdown-item {
+    color: #ffffff;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: #3d3d3d;
+    color: #bb86fc;
+}
+
+body.dark-mode .dropdown-divider {
+    border-color: #3d3d3d;
+}
+
+/* Custom navbar toggler */
+.custom-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+    font-size: 1.25rem;
+    color: inherit; /* This will inherit from parent text color */
+}
+
+.custom-toggler:focus {
+    box-shadow: none;
+}
+
+/* Dark mode hamburger menu */
+body.dark-mode .custom-toggler {
+    color: #ffffff; /* Ensure high contrast in dark mode */
+}
+
+body.dark-mode .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Mobile navbar styles */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: var(--bs-light);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    body.dark-mode .navbar-collapse {
+        background-color: #2d2d2d;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0.5rem 0;
+    }
+
+    .dropdown-menu {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        padding-left: 1rem;
+    }
+
+    body.dark-mode .dropdown-menu {
+        background-color: transparent;
+    }
+
+    .theme-toggle {
+        margin: 0.5rem 0;
+    }
+
+    /* Fix theme toggle position on mobile */
+    .navbar > .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .theme-toggle {
+        position: static; /* Remove absolute positioning */
+        margin: 0;
+        order: 2; /* Place it after the hamburger menu */
+    }
+
+    .navbar-toggler {
+        order: 1; /* Place it before the theme toggle */
+    }
+
+    .navbar-collapse {
+        order: 3; /* Place it after both buttons */
+        flex-basis: 100%; /* Full width when expanded */
+    }
+}
+
+/* Fix dropdown position on desktop */
+@media (min-width: 992px) {
+    .dropdown-menu {
+        margin-top: 0.5rem;
+    }
+}
