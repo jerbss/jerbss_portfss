@@ -180,7 +180,6 @@ body.dark-mode .navbar .nav-link.active::after {
 
 /* Light mode hover effects */
 .dropdown-item:hover {
-    transform: translateX(5px);
     background-color: rgba(13, 110, 253, 0.05);
 }
 
@@ -188,13 +187,10 @@ body.dark-mode .navbar .nav-link.active::after {
     color: #0d6efd;
 }
 
+/* Dark mode hover effects */
 body.dark-mode .dropdown-item:hover {
     background-color: rgba(187, 134, 252, 0.1);
     color: #bb86fc;
-}
-
-body.dark-mode .dropdown-item i {
-    color: #a8a8a8;
 }
 
 body.dark-mode .dropdown-item:hover i {
