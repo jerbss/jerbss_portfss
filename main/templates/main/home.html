@@ -3,6 +3,10 @@
 
 {% block title %}Home - Portfolio{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
     <div class="row align-items-center">
@@ -15,7 +19,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <img src="{% static 'images/profile_photo.png' %}" class="img-fluid rounded-circle" alt="Profile">
+            <img src="{% static 'images/profile_photo_1.png' %}" class="img-fluid rounded-circle" alt="Profile">
         </div>
     </div>
 </div>

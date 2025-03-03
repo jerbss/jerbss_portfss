@@ -1,0 +1,88 @@
+/* Estilos para a seção principal da página inicial */
+.container.py-5 {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+/* Estilos para o título principal */
+.display-4.fw-bold {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color); /* Usa a variável de cor do tema */
+    margin-bottom: 1rem;
+}
+
+/* Estilos para o texto de descrição */
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--text-color); /* Usa a variável de cor do tema */
+    margin-bottom: 2rem;
+}
+
+/* Estilos para os botões */
+.d-grid.gap-2.d-md-flex.justify-content-md-start {
+    gap: 1rem;
+}
+
+.btn-primary.btn-lg {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color); /* Usa a variável de cor do tema */
+    border-color: var(--primary-color); /* Usa a variável de cor do tema */
+    color: #fff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary.btn-lg:hover {
+    background-color: var(--hover-color); /* Usa a variável de cor do tema */
+    border-color: var(--hover-color); /* Usa a variável de cor do tema */
+}
+
+.btn-outline-secondary.btn-lg {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-color); /* Usa a variável de cor do tema */
+    border-color: var(--text-color); /* Usa a variável de cor do tema */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline-secondary.btn-lg:hover {
+    background-color: var(--text-color); /* Usa a variável de cor do tema */
+    color: var(--bg-color); /* Usa a variável de cor do tema */
+}
+
+/* Estilos para a imagem de perfil */
+.img-fluid.rounded-circle {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-fluid.rounded-circle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .display-4.fw-bold {
+        font-size: 2rem;
+    }
+
+    .lead {
+        font-size: 1.1rem;
+    }
+
+    .btn-primary.btn-lg,
+    .btn-outline-secondary.btn-lg {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .img-fluid.rounded-circle {
+        margin-top: 2rem;
+    }
+}
