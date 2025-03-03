@@ -26,16 +26,19 @@ body {
     height: 2.5rem;
     margin-left: 1rem;
     border-radius: 50%;
+    color: inherit;
 }
 
 .theme-toggle__expand {
     width: 1.5rem;
     height: 1.5rem;
+    transform: rotate(180deg);
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Invertendo a rotação para corrigir a orientação da lua */
 body.dark-mode .theme-toggle__expand {
-    transform: rotate(180deg);
+    transform: rotate(0deg);
 }
 
 body.dark-mode {
