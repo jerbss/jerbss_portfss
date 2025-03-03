@@ -29,25 +29,25 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
                            href="{% url 'main:home' %}">
-                            <i class="fas fa-user"></i> Sobre
+                            <i class="fas fa-user"></i> Sobre mim
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" 
                            href="{% url 'main:projects' %}">
-                            <i class="fas fa-code"></i> Projetos
+                            <i class="fas fa-code"></i> Meus trabalhos
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" 
                            href="{% url 'main:contact' %}">
-                            <i class="fas fa-envelope"></i> Contato
+                            <i class="fas fa-envelope"></i> Manda um salve!
                         </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-share-alt"></i> Redes
+                            <i class="fas fa-share-alt"></i> Me stalkeie
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -58,6 +58,11 @@
                             <li>
                                 <a class="dropdown-item" href="https://www.linkedin.com/in/jerbs/" target="_blank">
                                     <i class="fab fa-linkedin"></i> LinkedIn
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="https://x.com/jerbssssss" target="_blank">
+                                    <i class="fab fa-x-twitter"></i> X
                                 </a>
                             </li>
                         </ul>
@@ -106,27 +111,27 @@
     <footer class="footer py-3">
         <div class="container">
             <div class="row align-items-center justify-content-between">
-                <!-- Redes Sociais e Contatos -->
+                <!-- Social Links -->
                 <div class="col-md-4 text-center text-md-start">
-                    <a href="https://www.linkedin.com/in/jerbs/" target="_blank" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/jerbs/" target="_blank" aria-label="Me encontre no LinkedIn">
                         <i class="fab fa-linkedin fa-lg mx-2"></i>
                     </a>
-                    <a href="https://github.com/jerbss/" target="_blank" aria-label="GitHub">
+                    <a href="https://github.com/jerbss/" target="_blank" aria-label="Dá uma olhada no meu GitHub">
                         <i class="fab fa-github fa-lg mx-2"></i>
                     </a>
-                    <a href="mailto:jerbsson@example.com" aria-label="Enviar e-mail">
+                    <a href="mailto:jerbsson@example.com" aria-label="Manda um e-mail!">
                         <i class="fas fa-envelope fa-lg mx-2"></i>
                     </a>
-                    <a href="{% url 'main:contact' %}" aria-label="Página de contato">
+                    <a href="{% url 'main:contact' %}" aria-label="Vem trocar uma ideia">
                         <i class="fas fa-comment-dots fa-lg mx-2"></i>
                     </a>
                 </div>
 
-                <!-- Botão "Voltar ao Topo" -->
+                <!-- Made with love text -->
                 <div class="col-md-4 text-center order-md-3">
                     <small class="text-muted">
-                        Feito com <i class="fas fa-heart text-danger"></i> usando Django, Bootstrap e JavaScript.
-                    </small>
+                        Feito com <i class="fas fa-heart text-danger"></i> (e um pouco de ☕) usando Django, Bootstrap e JavaScript.
+                                        </small>
                 </div>
             </div>
         </div>
