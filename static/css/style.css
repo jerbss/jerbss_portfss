@@ -13,18 +13,47 @@ body {
     z-index: 1000;
 }
 
+/* Reset do botão */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+    border-radius: 50%;
+}
+
+.theme-toggle__expand {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode .theme-toggle__expand {
+    transform: rotate(180deg);
+}
+
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
 
 body.dark-mode .navbar {
-    background-color: #1f1f1f;
-    color: #ffffff;
+    background-color: #1f1f1f !important;
 }
 
-body.dark-mode .navbar .nav-link {
-    color: #ffffff;
+body.dark-mode .navbar-light {
+    background-color: #1f1f1f !important;
+}
+
+body.dark-mode .navbar-light .navbar-brand,
+body.dark-mode .navbar-light .nav-link {
+    color: #ffffff !important;
 }
 
 body.dark-mode .btn-primary {
