@@ -23,17 +23,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:home' %}">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
+                           href="{% url 'main:home' %}">
                             <i class="fas fa-user"></i> Sobre
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:projects' %}">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" 
+                           href="{% url 'main:projects' %}">
                             <i class="fas fa-code"></i> Projetos
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'main:contact' %}">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" 
+                           href="{% url 'main:contact' %}">
                             <i class="fas fa-envelope"></i> Contato
                         </a>
                     </li>

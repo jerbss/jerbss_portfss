@@ -72,3 +72,23 @@ body.dark-mode .btn-outline-secondary {
 body.dark-mode .form-check-label {
     color: #ffffff;
 }
+
+/* Active link styles */
+.navbar .nav-link.active {
+    color: #0d6efd !important;
+    font-weight: 500;
+}
+
+body.dark-mode .navbar .nav-link.active {
+    color: #bb86fc !important;
+}
+
+/* Optional: Add a subtle underline to active link */
+.navbar .nav-link.active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    margin-top: 2px;
+}
