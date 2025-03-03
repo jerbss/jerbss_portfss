@@ -1,9 +1,12 @@
+/* Global transition styles */
 body {
     padding-top: 60px;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .navbar {
     box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 .floating-button {
@@ -27,7 +30,7 @@ body {
     margin-left: 1rem;
     border-radius: 50%;
     color: inherit;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .theme-toggle__expand {
@@ -78,12 +81,28 @@ body.dark-mode .form-check-label {
 .navbar .nav-link.active {
     color: #0d6efd !important;
     font-weight: 500;
+    position: relative;
 }
 
 .navbar .nav-link.active i {
     color: #0d6efd;
 }
 
+/* Replace dot with underline bar */
+.navbar .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 2px;
+    background-color: #0d6efd;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Dark mode active styles */
 body.dark-mode .navbar .nav-link.active {
     color: #bb86fc !important;
 }
@@ -92,40 +111,53 @@ body.dark-mode .navbar .nav-link.active i {
     color: #bb86fc;
 }
 
-/* Optional: Add a subtle underline to active link */
-.navbar .nav-link.active::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
-    margin-top: 2px;
+body.dark-mode .navbar .nav-link.active::after {
+    background-color: #bb86fc;
 }
 
 /* Dropdown styles */
 .dropdown-menu {
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem;
+    min-width: 200px;
+    transform-origin: top;
+    animation: dropdownFade 0.2s ease;
+    transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .dropdown-item {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     transition: all 0.3s ease;
 }
 
 .dropdown-item i {
-    font-size: 0.9rem;
-    width: 1rem;
+    font-size: 1rem;
+    width: 1.25rem;
     color: #6c757d;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
+/* Light mode hover effects */
 .dropdown-item:hover {
     transform: translateX(5px);
-    background-color: rgba(13, 110, 253, 0.1);
+    background-color: rgba(13, 110, 253, 0.05);
 }
 
 .dropdown-item:hover i {
@@ -133,7 +165,7 @@ body.dark-mode .navbar .nav-link.active i {
 }
 
 body.dark-mode .dropdown-item:hover {
-    background-color: #3d3d3d;
+    background-color: rgba(187, 134, 252, 0.1);
     color: #bb86fc;
 }
 
@@ -148,7 +180,9 @@ body.dark-mode .dropdown-item:hover i {
 /* Dark mode styles for dropdown */
 body.dark-mode .dropdown-menu {
     background-color: #2d2d2d;
-    border-color: #3d3d3d;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 
 body.dark-mode .dropdown-item {
@@ -156,7 +190,7 @@ body.dark-mode .dropdown-item {
 }
 
 body.dark-mode .dropdown-item:hover {
-    background-color: #3d3d3d;
+    background-color: rgba(187, 134, 252, 0.1);
     color: #bb86fc;
 }
 
@@ -202,6 +236,7 @@ body.dark-mode .navbar-toggler-icon {
 
     body.dark-mode .navbar-collapse {
         background-color: #2d2d2d;
+        transition: background-color 0.5s ease;
     }
 
     .navbar-nav .nav-item {
@@ -210,9 +245,9 @@ body.dark-mode .navbar-toggler-icon {
 
     .dropdown-menu {
         border: none;
-        background-color: transparent;
         box-shadow: none;
-        padding-left: 1rem;
+        padding-left: 1.5rem;
+        animation: none;
     }
 
     body.dark-mode .dropdown-menu {
@@ -259,6 +294,20 @@ body.dark-mode .navbar-toggler-icon {
     .nav-link i {
         width: 1rem;
         text-align: center;
+    }
+
+    .navbar .nav-link.active::after {
+        left: 0;
+        transform: none;
+        width: 3px;
+        height: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
     }
 }
 
