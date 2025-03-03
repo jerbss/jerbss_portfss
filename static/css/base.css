@@ -587,3 +587,72 @@ body.dark-mode .navbar {
         background-color: rgba(45, 45, 45, 0.9);
     }
 }
+
+/* Estilos para o footer */
+.footer {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: var(--text-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin-top: auto;
+    position: relative; /* Change from fixed-bottom */
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.footer .text-muted {
+    color: var(--text-color) !important;
+    opacity: 0.8;
+}
+
+/* Ajustes para o modo escuro */
+body.dark-mode .footer {
+    background-color: rgba(31, 31, 31, 0.8);
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .footer .text-muted {
+    color: var(--text-dark) !important;
+    opacity: 0.9;
+}
+
+/* Ajustes Mobile */
+@media (max-width: 767.98px) {
+    .footer {
+        padding: 2rem 0;
+    }
+    
+    .footer .row > div {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Add fallback for browsers that don't support backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+    .footer {
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    body.dark-mode .footer {
+        background-color: rgba(31, 31, 31, 0.95);
+    }
+}
+
+/* Remove the previous margin adjustments */
+main {
+    min-height: calc(100vh - 60px - 200px); /* Adjust based on navbar and footer height */
+    padding-bottom: 2rem;
+}
