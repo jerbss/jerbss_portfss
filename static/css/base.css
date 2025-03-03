@@ -524,3 +524,28 @@ body.dark-mode .btn-primary:hover {
     background-color: #90caf9;
     border-color: #90caf9;
 }
+
+/* Outline button styles */
+.btn-outline-secondary {
+    color: var(--text-color);
+    border-color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    color: var(--bg-color);
+    background-color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+/* Dark mode outline button styles */
+body.dark-mode .btn-outline-secondary {
+    color: var(--text-dark);
+    border-color: var(--text-dark);
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+    color: var(--bg-dark);
+    background-color: var(--text-dark);
+    border-color: var(--text-dark);
+}
