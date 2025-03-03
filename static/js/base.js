@@ -49,11 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back to top button
     const backToTopBtn = document.querySelector('.position-fixed .btn-primary');
     
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
+    function toggleBackToTopButton() {
+        if (window.pageYOffset > 300) {
             backToTopBtn.classList.add('show');
         } else {
             backToTopBtn.classList.remove('show');
         }
-    });
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', toggleBackToTopButton);
+    
+    // Check initial scroll position
+    toggleBackToTopButton();
 });

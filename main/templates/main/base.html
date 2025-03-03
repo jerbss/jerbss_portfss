@@ -103,18 +103,18 @@
         {% endblock %}
     </main>
 
-    <footer class="footer py-3"> <!-- Remove fixed-bottom class -->
+    <footer class="footer py-3">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center justify-content-between">
                 <!-- Redes Sociais e Contatos -->
-                <div class="col-md-6 text-center text-md-start">
+                <div class="col-md-4 text-center text-md-start">
                     <a href="https://www.linkedin.com/in/jerbs/" target="_blank" aria-label="LinkedIn">
                         <i class="fab fa-linkedin fa-lg mx-2"></i>
                     </a>
                     <a href="https://github.com/jerbss/" target="_blank" aria-label="GitHub">
                         <i class="fab fa-github fa-lg mx-2"></i>
                     </a>
-                    <a href="mailto:jerbessonc@gmail.com" aria-label="Enviar e-mail">
+                    <a href="mailto:jerbsson@example.com" aria-label="Enviar e-mail">
                         <i class="fas fa-envelope fa-lg mx-2"></i>
                     </a>
                     <a href="{% url 'main:contact' %}" aria-label="Página de contato">
@@ -122,32 +122,21 @@
                     </a>
                 </div>
 
-                <!-- Tecnologias Usadas -->
-                <div class="col-md-3 text-center">
+                <!-- Botão "Voltar ao Topo" -->
+                <div class="col-md-4 text-center order-md-3">
                     <small class="text-muted">
                         Feito com <i class="fas fa-heart text-danger"></i> usando Django, Bootstrap e JavaScript.
                     </small>
                 </div>
             </div>
-
-            <!-- Frase Descontraída e Direitos Autorais -->
-            <div class="row mt-2">
-                <div class="col text-center">
-                    <p class="text-muted mb-0">
-                        "Uma grande verdade tem como seu oposto também uma grande verdade." – Niels Bohr
-                    </p>
-                    <p class="text-muted mb-0">
-                        © 2024 Jerbesson. Todos os direitos reservados.
-                    </p>
-                </div>
-            </div>
         </div>
     </footer>
 
-    <!-- Replace the contact button with back to top button -->
+    <!-- Back to top button -->
     <div class="position-fixed bottom-0 end-0 m-3">
         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
-                class="btn btn-primary rounded-circle p-3" 
+                class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 45px; height: 45px;"
                 aria-label="Voltar ao topo"
                 title="Voltar ao topo">
             <i class="fas fa-arrow-up"></i>
