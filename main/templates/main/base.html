@@ -128,13 +128,6 @@
                         Feito com <i class="fas fa-heart text-danger"></i> usando Django, Bootstrap e JavaScript.
                     </small>
                 </div>
-
-                <!-- Botão "Voltar ao Topo" -->
-                <div class="col-md-3 text-center text-md-end">
-                    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="btn btn-sm btn-outline-secondary" aria-label="Voltar ao topo">
-                        <i class="fas fa-arrow-up"></i> Topo
-                    </button>
-                </div>
             </div>
 
             <!-- Frase Descontraída e Direitos Autorais -->
@@ -151,10 +144,14 @@
         </div>
     </footer>
 
+    <!-- Replace the contact button with back to top button -->
     <div class="position-fixed bottom-0 end-0 m-3">
-        <a href="{% url 'main:contact' %}" class="btn btn-primary rounded-circle p-3">
-            📩
-        </a>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                class="btn btn-primary rounded-circle p-3" 
+                aria-label="Voltar ao topo"
+                title="Voltar ao topo">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </div>
 
     <script src="{% static 'js/base.js' %}"></script>

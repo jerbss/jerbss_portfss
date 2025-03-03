@@ -45,4 +45,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save theme preference
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
+
+    // Back to top button
+    const backToTopBtn = document.querySelector('.position-fixed .btn-primary');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
 });
