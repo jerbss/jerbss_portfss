@@ -1,3 +1,16 @@
+/* Theme Colors */
+:root {
+    --primary-light: #0d6efd;
+    --primary-dark: #64b5f6;
+    --hover-light: #0b5ed7;
+    --hover-dark: #90caf9;
+    --bg-light: #ffffff;
+    --bg-dark: #121212;
+    --navbar-dark: #1f1f1f;
+    --text-light: #212529;
+    --text-dark: #e0e0e0;
+}
+
 /* Global transition styles */
 body {
     padding-top: 60px;
@@ -88,8 +101,13 @@ body.dark-mode .navbar-light .nav-link {
 }
 
 body.dark-mode .btn-primary {
-    background-color: #bb86fc;
-    border-color: #bb86fc;
+    background-color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #90caf9;
+    border-color: #90caf9;
 }
 
 body.dark-mode .btn-outline-secondary {
@@ -128,15 +146,15 @@ body.dark-mode .form-check-label {
 
 /* Dark mode active styles */
 body.dark-mode .navbar .nav-link.active {
-    color: #bb86fc !important;
+    color: #64b5f6 !important;
 }
 
 body.dark-mode .navbar .nav-link.active i {
-    color: #bb86fc;
+    color: #64b5f6;
 }
 
 body.dark-mode .navbar .nav-link.active::after {
-    background-color: #bb86fc;
+    background-color: #64b5f6;
 }
 
 /* Dropdown styles */
@@ -189,12 +207,12 @@ body.dark-mode .navbar .nav-link.active::after {
 
 /* Dark mode hover effects */
 body.dark-mode .dropdown-item:hover {
-    background-color: rgba(187, 134, 252, 0.1);
-    color: #bb86fc;
+    background-color: rgba(100, 181, 246, 0.1);
+    color: #64b5f6;
 }
 
 body.dark-mode .dropdown-item:hover i {
-    color: #bb86fc;
+    color: #64b5f6;
 }
 
 /* Dark mode styles for dropdown */
@@ -210,8 +228,8 @@ body.dark-mode .dropdown-item {
 }
 
 body.dark-mode .dropdown-item:hover {
-    background-color: rgba(187, 134, 252, 0.1);
-    color: #bb86fc;
+    background-color: rgba(100, 181, 246, 0.1);
+    color: #64b5f6;
 }
 
 body.dark-mode .dropdown-divider {
@@ -388,9 +406,121 @@ body.dark-mode .nav-link i {
 }
 
 body.dark-mode .nav-link:hover {
-    color: #bb86fc !important;
+    color: #64b5f6 !important;
 }
 
 body.dark-mode .nav-link:hover i {
-    color: #bb86fc;
+    color: #64b5f6;
+}
+
+/* Light Theme (default) */
+body {
+    --primary-color: var(--primary-light);
+    --hover-color: var(--hover-light);
+    --bg-color: var(--bg-light);
+    --text-color: var(--text-light);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+/* Dark Theme */
+body.dark-mode {
+    --primary-color: var(--primary-dark);
+    --hover-color: var(--hover-dark);
+    --bg-color: var(--bg-dark);
+    --text-color: var(--text-dark);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--bg-color) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+body.dark-mode .navbar {
+    background-color: var(--navbar-dark) !important;
+}
+
+/* Navigation Links */
+.nav-link.active {
+    color: var(--primary-color) !important;
+}
+
+.nav-link.active::after {
+    background-color: var(--primary-color);
+}
+
+/* Dropdown Styles */
+.dropdown-item:hover {
+    color: var(--primary-color);
+}
+
+.dropdown-item:hover i {
+    color: var(--primary-color);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    color: #ffffff;
+}
+
+/* Dark mode button styles */
+body.dark-mode .btn-primary {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: #121212; /* Dark text for better contrast with light blue background */
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: var(--hover-dark);
+    border-color: var(--hover-dark);
+    color: #121212;
+}
+
+/* Light mode styles */
+.nav-link:hover,
+.nav-link.active {
+    color: #0d6efd !important;
+}
+
+.nav-link.active::after {
+    background-color: #0d6efd;
+}
+
+/* Dark mode styles - replacing purple (#bb86fc) with blue (#64b5f6) */
+body.dark-mode .nav-link:hover,
+body.dark-mode .nav-link.active {
+    color: #64b5f6 !important;
+}
+
+body.dark-mode .nav-link.active::after {
+    background-color: #64b5f6;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: rgba(100, 181, 246, 0.1);
+    color: #64b5f6;
+}
+
+body.dark-mode .dropdown-item:hover i {
+    color: #64b5f6;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #90caf9;
+    border-color: #90caf9;
 }
