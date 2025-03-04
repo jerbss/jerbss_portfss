@@ -32,7 +32,18 @@
 
                         <div class="row mb-3">
                             <div class="col-12">
-                                {% bootstrap_field form.short_description %}
+                                <label for="id_short_description" class="form-label">{{ form.short_description.label }}</label>
+                                {{ form.short_description }}
+                                {% if form.short_description.help_text %}
+                                    <div class="form-text">{{ form.short_description.help_text }}</div>
+                                {% endif %}
+                                {% if form.short_description.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.short_description.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -92,4 +103,5 @@
 
 {% block extra_js %}
 {{ form.media }}
+<script src="{% static 'js/tinymce-theme.js' %}"></script>
 {% endblock %}

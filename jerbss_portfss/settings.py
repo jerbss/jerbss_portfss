@@ -161,25 +161,14 @@ TINYMCE_DEFAULT_CONFIG = {
     'selector': 'textarea',
     'theme': 'silver',
     'language': 'pt_BR',
-    'plugins': '''
-        advlist autolink lists link image charmap print preview anchor
-        searchreplace visualblocks code fullscreen
-        insertdatetime media table paste code help wordcount
-    ''',
-    'toolbar': '''
-        undo redo | formatselect | bold italic backcolor |
-        alignleft aligncenter alignright alignjustify |
-        bullist numlist outdent indent | removeformat | link image media | help |
-        code
-    ''',
+    'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount help',
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
     'menubar': 'file edit view insert format tools table help',
     'toolbar_mode': 'sliding',
-    'contextmenu': 'link image table',
-    'valid_elements': '*[*]',  # Permite todos os elementos HTML
-    'extended_valid_elements': '*[*]',  # Permite elementos HTML estendidos
-    'custom_elements': '*[*]',  # Permite elementos customizados
-    'file_picker_callback': 'tinymce_file_picker',  # Para upload de imagens
-    'paste_data_images': True,  # Permite colar imagens
+    'skin': 'oxide',
+    'relative_urls': False,
+    'remove_script_host': False,
+    'convert_urls': False
 }
 
 # Default primary key field type

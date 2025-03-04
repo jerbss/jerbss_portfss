@@ -9,23 +9,14 @@ class ProjectForm(forms.ModelForm):
             attrs={'cols': 80, 'rows': 30},
             mce_attrs={
                 'menubar': 'file edit view insert format tools table help',
-                'plugins': '''
-                    advlist autolink lists link image charmap print preview anchor
-                    searchreplace visualblocks code fullscreen
-                    insertdatetime media table paste code help wordcount
-                ''',
-                'toolbar': '''
-                    undo redo | formatselect | bold italic backcolor |
-                    alignleft aligncenter alignright alignjustify |
-                    bullist numlist outdent indent | removeformat | link image media | help |
-                    code
-                ''',
-                'skin': 'oxide-dark',  # Dark theme for TinyMCE
-                'content_css': 'dark',  # Dark theme for content
-                'content_style': '''
-                    body { background-color: #1a1a1a; color: #e1e1e1; }
-                    a { color: #58a6ff; }
-                ''',
+                'plugins': 'advlist autolink lists link image charmap searchreplace visualblocks code fullscreen insertdatetime media table wordcount help',
+                'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+                'skin': 'oxide-dark',
+                'content_css': 'dark',
+                'content_style': 'body { background-color: #1a1a1a; color: #e1e1e1; } a { color: #58a6ff; }',
+                'relative_urls': False,
+                'remove_script_host': False,
+                'convert_urls': False
             }
         ),
         required=False
