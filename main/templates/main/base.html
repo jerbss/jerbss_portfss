@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Portfolio{% endblock %}</title>
     {% bootstrap_css %}
-    {% bootstrap_javascript %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/expand.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
     {% block extra_css %}{% endblock %}
+    {% bootstrap_javascript %}
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -29,25 +29,25 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" 
                            href="{% url 'main:home' %}">
-                            <i class="fas fa-user"></i> Sobre mim
+                            <i class="fas fa-user"></i> Sobre Mim
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'projects' %}active{% endif %}" 
                            href="{% url 'main:projects' %}">
-                            <i class="fas fa-code"></i> Meus trabalhos
+                            <i class="fas fa-code"></i> Meus Trabalhos
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" 
                            href="{% url 'main:contact' %}">
-                            <i class="fas fa-envelope"></i> Manda um salve!
+                            <i class="fas fa-envelope"></i> Manda um Salve!
                         </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-share-alt"></i> Me stalkeie
+                            <i class="fas fa-share-alt"></i> Me Stalkeie
                         </a>
                         <ul class="dropdown-menu">
                             <li>
@@ -63,8 +63,6 @@
                             <li>
                                 <a class="dropdown-item" href="https://discordapp.com/users/347103415010066433" target="_blank">
                                     <i class="fab fa-discord"></i> Discord
-                                </a>
-                            <li>
                                 <a class="dropdown-item" href="https://x.com/jerbssssss" target="_blank">
                                     <i class="fab fa-x-twitter"></i> X
                                 </a>
@@ -158,7 +156,7 @@
                 <!-- Made with love text -->
                 <div class="col-md-4 text-center order-md-3">
                     <small class="text-muted">
-                        Feito com <i class="fas fa-heart text-danger"></i> (e um pouco de ☕) usando Django, Bootstrap e JavaScript.
+                        Feito com <i class="fas fa-heart text-danger"></i> usando Django, Bootstrap e JavaScript.
                                         </small>
                 </div>
             </div>

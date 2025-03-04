@@ -1,3 +1,6 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 /* Theme Colors */
 :root {
     --primary-light: #0d6efd;
@@ -9,12 +12,15 @@
     --navbar-dark: #1f1f1f;
     --text-light: #212529;
     --text-dark: #e0e0e0;
+    --font-heading: 'Exo 2', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 /* Global transition styles */
 body {
     padding-top: 60px;
     transition: background-color 0.5s ease, color 0.5s ease;
+    font-family: var(--font-body);
 }
 
 /* Remove or comment out these styles from base.css */
@@ -458,6 +464,11 @@ body.dark-mode .navbar {
 }
 
 /* Button Styles */
+.btn {
+    font-family: var(--font-heading);
+    font-weight: 500;
+}
+
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
@@ -710,4 +721,33 @@ body.dark-mode .position-fixed .btn-primary:hover {
     .footer .fa-heart {
         margin: 0 0.25rem;
     }
+}
+
+/* Typography base styles */
+h1, h2, h3, h4, h5, h6,
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+}
+
+/* Navbar styles */
+.navbar .nav-link {
+    font-family: var(--font-heading);
+    font-weight: 500;
+}
+
+.navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 600;
+}
+
+/* Footer styles */
+.footer small {
+    font-family: var(--font-body);
+}
+
+/* Typography Overrides */
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    font-family: var(--font-heading) !important;
+    letter-spacing: -0.02em;
 }
