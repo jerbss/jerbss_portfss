@@ -1,0 +1,132 @@
+<!-- filepath: /c:/PROJETO/jerbss_portfss/main/templates/main/projects.html -->
+{% extends "main/base.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block title %}Projetos - Portfolio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/projects.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="display-4 fw-bold mb-4">Meus Projetos</h1>
+    
+    <!-- Interface de Admin para Superuser -->
+    {% if user.is_superuser %}
+        <div class="admin-panel card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Painel de Administração</h3>
+                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#newProjectForm">
+                    <i class="fas fa-plus"></i> Novo Projeto
+                </button>
+            </div>
+            <div class="collapse" id="newProjectForm">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Tags (separadas por vírgula)</label>
+                            <input type="text" class="form-control" id="tags" name="tags">
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Salvar Projeto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    <!-- Filtro de Tags -->
+    <div class="filters mb-4">
+        <h2 class="h4 mb-3">Filtrar por tag</h2>
+        <div class="tags">
+            <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-filter="all">Todos</button>
+            {% for tag in tags %}
+                <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-filter="{{ tag.name }}">{{ tag.name }}</button>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Lista de Projetos -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 projects-container">
+        {% for project in projects %}
+            <div class="col project-item" data-tags="{% for tag in project.tags.all %}{{ tag.name }} {% endfor %}">
+                <div class="card h-100">
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h3 class="card-title h5">{{ project.title }}</h3>
+                        <p class="card-text">{{ project.description|truncatewords:20 }}</p>
+                        <div class="project-tags mb-3">
+                            {% for tag in project.tags.all %}
+                                <span class="badge bg-secondary me-1">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        {% if project.url %}
+                            <a href="{{ project.url }}" class="btn btn-sm btn-primary" target="_blank">Ver Projeto</a>
+                        {% else %}
+                            <span class="text-muted">Sem link disponível</span>
+                        {% endif %}
+                        
+                        <!-- Controles de Admin para Superuser -->
+                        {% if user.is_superuser %}
+                            <div class="admin-controls">
+                                <a href="{% url 'main:edit_project' project.id %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'main:delete_project' project.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    Nenhum projeto encontrado. {% if user.is_superuser %}Adicione seu primeiro projeto!{% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filtro de projetos por tag
+        const filterButtons = document.querySelectorAll('.filters button');
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                // Show/hide projects based on filter
+                projectItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-tags').includes(filter)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

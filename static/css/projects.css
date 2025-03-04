@@ -1,0 +1,100 @@
+/* Estilos para página de projetos */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* Estilos para o painel admin */
+.admin-panel {
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.admin-panel .card-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem;
+}
+
+/* Estilos para os filtros */
+.filters .tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.filters .btn {
+    transition: all 0.3s ease;
+}
+
+.filters .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Estilos para as tags */
+.project-tags .badge {
+    padding: 0.5em 0.8em;
+    font-weight: 500;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .card-footer {
+    background-color: #232323;
+    border-top-color: #3a3a3a;
+}
+
+body.dark-mode .admin-panel .card-header {
+    background-color: var(--primary-dark);
+    color: #121212;
+}
+
+body.dark-mode .filters .btn.active {
+    background-color: var(--primary-dark);
+    color: #121212;
+    border-color: var(--primary-dark);
+}
+
+/* Animação para os itens do projeto */
+.project-item {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 160px;
+    }
+}
