@@ -242,53 +242,36 @@ body.dark-mode .tags-container .btn.active {
 /* Status filter styles */
 .status-filter .btn-group {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Always stack buttons vertically */
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    flex-wrap: nowrap; /* Impede que os botões quebrem linha */
-    gap: 4px; /* Reduced gap */
-    padding-right: 2px; /* Add small padding to prevent overflow */
+    gap: 0.5rem; /* Consistent gap between buttons */
 }
 
 .status-filter .btn {
-    flex: 1 1 auto; /* Allow buttons to grow and shrink */
-    min-width: 90px; /* Reduced minimum width */
-    padding: 0.5rem 0.5rem; /* Reduced padding */
+    width: 100%;
+    padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    white-space: normal; /* Allow text wrapping */
-    line-height: 1.2; /* Better line height for wrapped text */
-    height: auto; /* Allow height to adjust */
-    font-size: 0.9rem; /* Slightly smaller font */
-}
-
-/* Adjust button widths for better fit */
-.status-filter .btn[data-status="all"] {
-    flex-grow: 0.8; /* Less space for "Todos" */
-}
-
-.status-filter .btn[data-status="in_progress"] {
-    flex-grow: 1.2; /* More space for "Em Andamento" */
-}
-
-.status-filter .btn[data-status="completed"] {
-    flex-grow: 1; /* Normal space for "Concluídos" */
+    border-radius: 0.25rem !important; /* Ensure consistent border radius */
+    text-align: left; /* Align text to the left */
+    white-space: nowrap;
+    font-size: 0.9rem;
 }
 
 .status-filter .btn i {
-    flex-shrink: 0; /* Prevent icon from shrinking */
-    margin-right: 6px;
-    font-size: 0.9rem; /* Reduz o tamanho do ícone */
+    flex-shrink: 0;
+    margin-right: 0.75rem; /* Consistent margin for all screen sizes */
+    font-size: 0.9rem;
+    width: 16px; /* Fixed width for icons */
+    text-align: center;
 }
 
 .status-filter .btn span {
-    display: inline-block; /* Better text wrapping */
-    word-wrap: break-word; /* Enable word wrapping */
-    max-width: 100%; /* Ensure text stays within button */
+    display: inline; /* Always show text */
 }
 
+/* Remove unnecessary media queries and adjustments */
 @media (min-width: 769px) {
     .status-filter {
         height: 100%;
@@ -299,17 +282,13 @@ body.dark-mode .tags-container .btn.active {
     .status-filter .form-label {
         margin-bottom: 0.5rem;
     }
-    
-    .status-filter .btn-group {
-        height: calc(100% - 24px); /* Altura total menos a altura do label */
-        padding-right: 1px; /* Evita que o último botão toque a borda */
-    }
-    
-    .status-filter .btn {
-        padding: 0.5rem 0.75rem; /* Ajusta o padding horizontal */
-        overflow: hidden; /* Previne overflow do texto */
-        text-overflow: ellipsis; /* Adiciona ... se o texto for muito longo */
-    }
+}
+
+/* Remove flex-grow adjustments since we're using full width */
+.status-filter .btn[data-status="all"],
+.status-filter .btn[data-status="in_progress"],
+.status-filter .btn[data-status="completed"] {
+    flex: none;
 }
 
 /* Ajuste específico para telas médias */
@@ -321,12 +300,12 @@ body.dark-mode .tags-container .btn.active {
     }
     
     .status-filter .btn span {
-        display: none; /* Esconde o texto */
+        display: inline; /* Always show text */
     }
     
     .status-filter .btn i {
-        margin: 0;
         font-size: 1rem;
+        /* Remove the margin: 0 that was causing the issue */
     }
     
     /* Adiciona tooltip quando hover */
@@ -335,18 +314,7 @@ body.dark-mode .tags-container .btn.active {
     }
     
     .status-filter .btn:hover::after {
-        content: attr(data-title);
-        position: absolute;
-        bottom: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
-        white-space: nowrap;
-        z-index: 1000;
+        display: none;
     }
     
     .status-filter .btn-group {
