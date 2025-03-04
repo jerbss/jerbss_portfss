@@ -39,14 +39,18 @@
 
 /* Dark mode adjustments */
 body.dark-mode .form-control {
-    background-color: #2d2d2d;
+    background-color: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.1);
-    color: #e0e0e0;
+    color: #e1e1e1;
 }
 
 body.dark-mode .form-control:focus {
     border-color: var(--primary-dark);
-    box-shadow: 0 0 0 0.2rem rgba(100, 181, 246, 0.15);
+    box-shadow: 0 0 0 0.25rem rgba(100, 181, 246, 0.25);
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #8c8c8c; /* Lighter gray for placeholders */
 }
 
 /* Form help text */
@@ -56,7 +60,7 @@ body.dark-mode .form-control:focus {
 }
 
 body.dark-mode .form-text {
-    color: #a0a0a0;
+    color: #a0a0a0; /* Help text color */
 }
 
 /* Light mode styles */
@@ -68,14 +72,28 @@ body.dark-mode .form-text {
     border-bottom: none;
 }
 
+/* Card header styles */
+.card-header.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--text-color);
+}
+
+/* Dark mode card header */
+body.dark-mode .card-header.bg-primary {
+    background-color: #64b5f6 !important;
+    color: #1a1a1a;
+}
+
 /* Form field styling */
 .form-group {
     margin-bottom: 1.5rem;
 }
 
+/* Form field labels */
 .form-label {
     font-weight: 500;
     margin-bottom: 0.5rem;
+    color: var(--text-color); /* Use theme text color */
 }
 
 /* Dark mode adjustments */
@@ -110,4 +128,75 @@ body.dark-mode .form-text {
 /* TinyMCE dark mode */
 body.dark-mode .tox-tinymce {
     border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Form control in dark mode */
+body.dark-mode .form-label {
+    color: #e1e1e1;
+}
+
+/* Select inputs in dark mode */
+body.dark-mode .form-select {
+    background-color: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* Checkbox and radio in dark mode */
+body.dark-mode .form-check-label {
+    color: #e1e1e1;
+}
+
+body.dark-mode .form-check-input {
+    background-color: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .form-check-input:checked {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Date input specific styles */
+body.dark-mode input[type="date"] {
+    color-scheme: dark; /* Ensures calendar popup is dark */
+    color: #e1e1e1;
+}
+
+body.dark-mode input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* Makes the calendar icon white */
+    opacity: 0.7;
+}
+
+/* File input styles */
+body.dark-mode input[type="file"]::file-selector-button {
+    background-color: #2d2d2d;
+    color: #e1e1e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode input[type="file"]::file-selector-button:hover {
+    background-color: #363636; /* Darker hover color */
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Fix file input text color */
+body.dark-mode input[type="file"] {
+    color: #e1e1e1;
+}
+
+/* Placeholder text in dark mode */
+body.dark-mode .form-control::placeholder,
+body.dark-mode .form-select::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Input focus states in dark mode */
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #262626;
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 0.25rem rgba(100, 181, 246, 0.25);
 }
