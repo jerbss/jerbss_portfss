@@ -13,7 +13,6 @@
 <div class="container py-5">
     <h1 class="display-4 fw-bold mb-4">Meus Projetos</h1>
     
-    <!-- Interface de Admin para Superuser -->
     {% if user.is_superuser %}
     <div class="admin-notice mb-4">
         <h4 class="h5 mb-0">
@@ -34,30 +33,62 @@
     </div>
     {% endif %}
     
-    <!-- Filtro de Tags -->
-    {% if tags %}
-    <div class="filters mb-4">
-        <h2 class="h5 mb-3">Filtrar por tag</h2>
-        <div class="tags mb-4">
-            <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-filter="all">Todos</button>
-            {% for tag in tags %}
-                <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-filter="{{ tag.name }}">{{ tag.name }}</button>
-            {% endfor %}
+    <!-- Filters Section -->
+    <div class="filters-section card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">
+                <i class="fas fa-filter me-2"></i>Filtros
+            </h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Tags Filter -->
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <label class="form-label">Tags</label>
+                    <div class="tags-container">
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-filter="all">
+                            <i class="fas fa-tags me-1"></i>Todas
+                        </button>
+                        {% for tag in tags %}
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-filter="{{ tag.name }}">
+                            <i class="fas fa-tag me-1"></i>{{ tag.name }}
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Status Filter -->
+                <div class="col-md-4">
+                    <div class="status-filter">
+                        <label class="form-label">Status</label>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary active" data-status="all">
+                                <i class="fas fa-list"></i>
+                                <span>Todos</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-status="in_progress">
+                                <i class="fas fa-spinner"></i>
+                                <span>Em Andamento</span>
+                            </button>
+                            <button type="button" class="btn btn-outline-primary" data-status="completed">
+                                <i class="fas fa-check"></i>
+                                <span>Concluídos</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clear Filters Button -->
+            <div class="text-end mt-3">
+                <button class="btn btn-secondary btn-sm clear-filters">
+                    <i class="fas fa-times me-1"></i>Limpar Filtros
+                </button>
+            </div>
         </div>
     </div>
-    {% endif %}
     
-    <!-- Status Filter -->
-    <div class="status-filter mb-4">
-        <h2 class="h5 mb-3">Filtrar por status</h2>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-primary active" data-status="all">Todos</button>
-            <button type="button" class="btn btn-outline-primary" data-status="in_progress">Em Andamento</button>
-            <button type="button" class="btn btn-outline-primary" data-status="completed">Concluídos</button>
-        </div>
-    </div>
-    
-    <!-- Lista de Projetos -->
+    <!-- Projects List -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 projects-container">
         {% for project in projects %}
         <div class="col project-item" 
@@ -122,48 +153,90 @@
 
 {% block extra_js %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Filtro de projetos por tag
-        const tagButtons = document.querySelectorAll('.filters button');
-        const statusButtons = document.querySelectorAll('.status-filter button');
-        const projectItems = document.querySelectorAll('.project-item');
-        
-        let currentTag = 'all';
-        let currentStatus = 'all';
-        
-        function filterProjects() {
-            projectItems.forEach(item => {
-                const tags = item.getAttribute('data-tags');
-                const status = item.getAttribute('data-status');
-                
-                const tagMatch = currentTag === 'all' || tags.includes(currentTag);
-                const statusMatch = currentStatus === 'all' || status === currentStatus;
-                
-                if (tagMatch && statusMatch) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-        
-        tagButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                tagButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                currentTag = this.getAttribute('data-filter');
-                filterProjects();
-            });
+document.addEventListener('DOMContentLoaded', function() {
+    const tagButtons = document.querySelectorAll('.tags-container button');
+    const statusButtons = document.querySelectorAll('.btn-group button');
+    const clearFiltersBtn = document.querySelector('.clear-filters');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    let currentTag = 'all';
+    let currentStatus = 'all';
+    
+    function filterProjects() {
+        let visibleCount = 0;
+        projectItems.forEach(item => {
+            const tags = item.getAttribute('data-tags');
+            const status = item.getAttribute('data-status');
+            
+            const tagMatch = currentTag === 'all' || tags.includes(currentTag);
+            const statusMatch = currentStatus === 'all' || status === currentStatus;
+            
+            if (tagMatch && statusMatch) {
+                item.style.display = '';
+                item.classList.add('fade-in');
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+                item.classList.remove('fade-in');
+            }
         });
         
-        statusButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                statusButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                currentStatus = this.getAttribute('data-status');
-                filterProjects();
-            });
+        // Show "no results" message if no projects match
+        const noResultsMessage = document.querySelector('.no-results');
+        if (visibleCount === 0) {
+            if (!noResultsMessage) {
+                const message = document.createElement('div');
+                message.className = 'col-12 no-results';
+                message.innerHTML = `
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Nenhum projeto encontrado com os filtros selecionados.
+                    </div>
+                `;
+                document.querySelector('.projects-container').appendChild(message);
+            }
+        } else if (noResultsMessage) {
+            noResultsMessage.remove();
+        }
+    }
+    
+    function updateActiveStates() {
+        // Update tag buttons
+        tagButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-filter') === currentTag);
+        });
+        
+        // Update status buttons
+        statusButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-status') === currentStatus);
+        });
+    }
+    
+    // Tag filter handlers
+    tagButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            currentTag = this.getAttribute('data-filter');
+            updateActiveStates();
+            filterProjects();
         });
     });
+    
+    // Status filter handlers
+    statusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            currentStatus = this.getAttribute('data-status');
+            updateActiveStates();
+            filterProjects();
+        });
+    });
+    
+    // Clear filters handler
+    clearFiltersBtn.addEventListener('click', function() {
+        currentTag = 'all';
+        currentStatus = 'all';
+        updateActiveStates();
+        filterProjects();
+    });
+});
 </script>
 {% endblock %}
