@@ -269,6 +269,50 @@ body.dark-mode .filters-section .card-header {
         font-size: 0.85rem; /* Reduz ainda mais a fonte em telas médias */
         padding: 0.5rem 0.5rem;
     }
+    
+    .status-filter .btn span {
+        display: none; /* Esconde o texto */
+    }
+    
+    .status-filter .btn i {
+        margin: 0;
+        font-size: 1rem;
+    }
+    
+    /* Adiciona tooltip quando hover */
+    .status-filter .btn {
+        position: relative;
+    }
+    
+    .status-filter .btn:hover::after {
+        content: attr(data-title);
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        z-index: 1000;
+    }
+}
+
+/* Retorna o texto para telas maiores */
+@media (min-width: 992px) {
+    .status-filter .btn {
+        padding: 0.5rem 1rem;
+    }
+    
+    .status-filter .btn span {
+        display: inline;
+    }
+    
+    .status-filter .btn i {
+        margin-right: 0.5rem;
+    }
 }
 
 /* Responsividade ajustada */
