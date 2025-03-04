@@ -37,8 +37,15 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = [
-            'title', 'short_description', 'content', 'image', 
-            'status', 'project_type', 'start_date', 'end_date', 'url', 'github_url', 
+            'title',
+            'short_description',
+            'content',
+            'image',
+            'status',
+            'project_type',
+            'tags_input',
+            'url',
+            'github_url',
             'featured'
         ]
         widgets = {
@@ -88,3 +95,9 @@ class ProjectForm(forms.ModelForm):
                     instance.tags.add(tag)
         
         return instance
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image and not self.instance.pk:  # Only require image for new projects
+            raise forms.ValidationError("A imagem é obrigatória.")
+        return image
