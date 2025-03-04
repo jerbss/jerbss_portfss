@@ -8,23 +8,28 @@ class ProjectForm(forms.ModelForm):
         widget=TinyMCE(attrs={'cols': 80, 'rows': 30}),
         required=False
     )
-    tags = forms.CharField(
+    tags_input = forms.CharField(
+        label='Tags',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        help_text='Separe as tags por vírgula'
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Separe as tags por vírgula'
+        }),
+        help_text='Separe as tags por vírgula (ex.: django, python, web)'
     )
     
     class Meta:
         model = Project
         fields = [
             'title', 'short_description', 'content', 'image', 
-            'status', 'start_date', 'end_date', 'url', 'github_url', 
+            'status', 'project_type', 'start_date', 'end_date', 'url', 'github_url', 
             'featured'
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'status': forms.Select(attrs={'class': 'form-control'}),
+            'project_type': forms.Select(attrs={'class': 'form-control'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'url': forms.URLInput(attrs={'class': 'form-control'}),

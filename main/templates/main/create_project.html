@@ -3,7 +3,7 @@
 {% load static %}
 {% load django_bootstrap5 %}
 
-{% block title %}Criar Novo Projeto{% endblock %}
+{% block title %}Criar Projeto{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/project-form.css' %}">
@@ -12,17 +12,7 @@
 {% block content %}
 <div class="container py-5">
     <div class="row">
-        <div class="col-12 mb-4">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'main:projects' %}">Projetos</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Criar Projeto</li>
-                </ol>
-            </nav>
-        </div>
-        
-        <div class="col-12">
+        <div class="col-md-10 mx-auto">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h2 class="h4 mb-0">Criar Novo Projeto</h2>
@@ -31,55 +21,40 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
                                 {% bootstrap_field form.title %}
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 {% bootstrap_field form.tags_input %}
                             </div>
                         </div>
-                        
-                        <div class="row">
+
+                        <div class="row mb-3">
                             <div class="col-12">
                                 {% bootstrap_field form.short_description %}
                             </div>
                         </div>
-                        
-                        <div class="row">
+
+                        <div class="row mb-3">
                             <div class="col-md-6">
-                                {% bootstrap_field form.image %}
+                                {% bootstrap_field form.status %}
                             </div>
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        {% bootstrap_field form.status %}
-                                    </div>
-                                    <div class="col-md-6">
-                                        {% bootstrap_field form.featured %}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        {% bootstrap_field form.start_date %}
-                                    </div>
-                                    <div class="col-md-6">
-                                        {% bootstrap_field form.end_date %}
-                                    </div>
-                                </div>
+                                {% bootstrap_field form.project_type %}
                             </div>
                         </div>
-                        
-                        <div class="row">
+
+                        <div class="row mb-3">
                             <div class="col-md-6">
-                                {% bootstrap_field form.url %}
+                                {% bootstrap_field form.start_date %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.github_url %}
+                                {% bootstrap_field form.end_date %}
                             </div>
                         </div>
-                        
-                        <div class="row">
+
+                        <div class="row mb-3">
                             <div class="col-12">
                                 {% bootstrap_field form.content %}
                                 <small class="form-text text-muted">
@@ -87,10 +62,28 @@
                                 </small>
                             </div>
                         </div>
-                        
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="{% url 'main:projects' %}" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-success">Criar Projeto</button>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.url %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.github_url %}
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.image %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.featured %}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <a href="{% url 'main:projects' %}" class="btn btn-secondary me-2">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Salvar Projeto</button>
                         </div>
                     </form>
                 </div>
@@ -98,4 +91,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ form.media }}
 {% endblock %}
