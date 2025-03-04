@@ -58,3 +58,56 @@ body.dark-mode .form-control:focus {
 body.dark-mode .form-text {
     color: #a0a0a0;
 }
+
+/* Light mode styles */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-bottom: none;
+}
+
+/* Form field styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .card {
+    background-color: var(--bg-dark);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .card-body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #262626;
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
+}
+
+body.dark-mode .form-text {
+    color: #8c8c8c;
+}
+
+/* TinyMCE dark mode */
+body.dark-mode .tox-tinymce {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}

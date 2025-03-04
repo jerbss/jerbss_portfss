@@ -20,6 +20,12 @@ class ProjectForm(forms.ModelForm):
                     bullist numlist outdent indent | removeformat | link image media | help |
                     code
                 ''',
+                'skin': 'oxide-dark',  # Dark theme for TinyMCE
+                'content_css': 'dark',  # Dark theme for content
+                'content_style': '''
+                    body { background-color: #1a1a1a; color: #e1e1e1; }
+                    a { color: #58a6ff; }
+                ''',
             }
         ),
         required=False
