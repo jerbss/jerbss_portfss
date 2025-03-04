@@ -191,6 +191,31 @@ body.dark-mode .filters-section {
 body.dark-mode .filters-section .card-header {
     background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1; /* Add this line for better text visibility */
+}
+
+/* Update filter buttons hover state in dark mode */
+body.dark-mode .filters .btn:hover,
+body.dark-mode .status-filter .btn:hover,
+body.dark-mode .tags-container .btn:hover {
+    background-color: var(--primary-dark);
+    color: #e1e1e1;
+    border-color: var(--primary-dark);
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    background-color: var(--primary-dark);
+    color: #e1e1e1;
+    border-color: var(--primary-dark);
+}
+
+/* Keep active state consistent in dark mode */
+body.dark-mode .filters .btn.active,
+body.dark-mode .status-filter .btn.active,
+body.dark-mode .tags-container .btn.active {
+    background-color: var(--primary-dark);
+    color: #e1e1e1;
+    border-color: var(--primary-dark);
 }
 
 /* Responsividade */
@@ -350,4 +375,17 @@ body.dark-mode .filters-section .card-header {
     .status-filter .btn {
         padding: 0.75rem 1.5rem;
     }
+}
+
+/* Remove hover animations from filters and admin panels */
+.filters-section.card:hover,
+.admin-panel.card:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filters-section,
+.admin-panel {
+    transition: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
