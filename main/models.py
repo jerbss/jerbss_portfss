@@ -33,7 +33,7 @@ class Project(models.Model):
     image = models.ImageField('Capa do Projeto', upload_to='projects/')
     status = models.CharField('Status', max_length=20, choices=STATUS_CHOICES, default='in_progress')
     project_type = models.CharField('Tipo', max_length=20, choices=TYPE_CHOICES, default='web')
-    start_date = models.DateField('Data de Início')  # Removed auto_now_add=True
+    start_date = models.DateField('Data de Início', null=True, blank=True)
     end_date = models.DateField('Data de Conclusão', null=True, blank=True)
     created_at = models.DateTimeField('Data de Publicação', auto_now_add=True)
     updated_at = models.DateTimeField('Última Atualização', auto_now=True)
@@ -50,15 +50,23 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
+    @property
     def get_status_display_html(self):
-        if self.status == 'in_progress':
-            return mark_safe('<span class="badge bg-warning">Em Andamento</span>')
-        return mark_safe('<span class="badge bg-success">Concluído</span>')
+        status_classes = {
+            'in_progress': 'badge bg-warning',
+            'completed': 'badge bg-success'
+        }
+        status_class = status_classes.get(self.status, 'badge bg-secondary')
+        return f'<span class="{status_class}">{self.get_status_display()}</span>'
     
+    @property
     def get_date_display(self):
-        if self.status == 'in_progress':
-            return f"{self.start_date.strftime('%d/%m/%Y')} - Em Andamento"
-        return f"{self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
+        if not self.start_date:
+            return "Data não definida"
+        
+        if self.status == 'completed' and self.end_date:
+            return f"{self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
+        return f"{self.start_date.strftime('%d/%m/%Y')} - Em andamento"
 
     def save(self, *args, **kwargs):
         if not self.slug:

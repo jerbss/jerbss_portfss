@@ -175,5 +175,9 @@
     </div>
 
     <script src="{% static 'js/base.js' %}"></script>
+    {% block extra_js %}
+    <script src="https://cdn.tiny.cloud/1/lm7d66xbh1ufbev2pxrr4vrtlj2hd1fk14tca04uq1rpo6mq/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    {{ form.media }}
+    {% endblock %}
 </body>
 </html>

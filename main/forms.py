@@ -5,7 +5,23 @@ from django.utils.text import slugify
 
 class ProjectForm(forms.ModelForm):
     content = forms.CharField(
-        widget=TinyMCE(attrs={'cols': 80, 'rows': 30}),
+        widget=TinyMCE(
+            attrs={'cols': 80, 'rows': 30},
+            mce_attrs={
+                'menubar': 'file edit view insert format tools table help',
+                'plugins': '''
+                    advlist autolink lists link image charmap print preview anchor
+                    searchreplace visualblocks code fullscreen
+                    insertdatetime media table paste code help wordcount
+                ''',
+                'toolbar': '''
+                    undo redo | formatselect | bold italic backcolor |
+                    alignleft aligncenter alignright alignjustify |
+                    bullist numlist outdent indent | removeformat | link image media | help |
+                    code
+                ''',
+            }
+        ),
         required=False
     )
     tags_input = forms.CharField(

@@ -68,10 +68,12 @@
                     <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
                     <div class="card-img-overlay d-flex flex-column justify-content-end">
                         <div class="project-status">
-                            {{ project.get_status_display_html }}
-                            <span class="project-date ms-2">
-                                <i class="far fa-calendar-alt"></i> {{ project.get_date_display }}
-                            </span>
+                            {{ project.get_status_display_html|safe }}
+                            {% if project.get_date_display %}
+                                <span class="project-date ms-2">
+                                    <i class="far fa-calendar-alt"></i> {{ project.get_date_display }}
+                                </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

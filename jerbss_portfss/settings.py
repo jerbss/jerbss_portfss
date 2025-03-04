@@ -160,26 +160,26 @@ TINYMCE_DEFAULT_CONFIG = {
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
     'theme': 'silver',
+    'language': 'pt_BR',
     'plugins': '''
-        link image preview codesample contextmenu
-        table code lists fullscreen insertdatetime
-        nonbreaking directionality searchreplace wordcount
-        visualblocks visualchars code fullscreen autolink
-        lists charmap print hr anchor pagebreak
-        ''',
-    'toolbar1': '''
-        fullscreen preview bold italic underline | fontselect,
-        fontsizeselect | forecolor backcolor | alignleft alignright |
-        aligncenter alignjustify | indent outdent | bullist numlist table |
-        | link image media | codesample |
-        ''',
-    'toolbar2': '''
-        visualblocks visualchars |
-        charmap hr pagebreak nonbreaking anchor | code |
-        ''',
-    'contextmenu': 'formats | link image',
-    'menubar': True,
-    'statusbar': True,
+        advlist autolink lists link image charmap print preview anchor
+        searchreplace visualblocks code fullscreen
+        insertdatetime media table paste code help wordcount
+    ''',
+    'toolbar': '''
+        undo redo | formatselect | bold italic backcolor |
+        alignleft aligncenter alignright alignjustify |
+        bullist numlist outdent indent | removeformat | link image media | help |
+        code
+    ''',
+    'menubar': 'file edit view insert format tools table help',
+    'toolbar_mode': 'sliding',
+    'contextmenu': 'link image table',
+    'valid_elements': '*[*]',  # Permite todos os elementos HTML
+    'extended_valid_elements': '*[*]',  # Permite elementos HTML estendidos
+    'custom_elements': '*[*]',  # Permite elementos customizados
+    'file_picker_callback': 'tinymce_file_picker',  # Para upload de imagens
+    'paste_data_images': True,  # Permite colar imagens
 }
 
 # Default primary key field type
