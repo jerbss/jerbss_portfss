@@ -1,0 +1,130 @@
+<!-- filepath: /c:/PROJETO/jerbss_portfss/main/templates/main/project_detail.html -->
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/project-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Breadcrumbs -->
+        <div class="col-12 mb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'main:projects' %}">Projetos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ project.title }}</li>
+                </ol>
+            </nav>
+        </div>
+        
+        <!-- Admin Controls -->
+        {% if user.is_superuser %}
+        <div class="col-12 mb-4">
+            <div class="admin-controls p-3 card">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Ações de administrador</h5>
+                    </div>
+                    <div>
+                        <a href="{% url 'main:edit_project' project.slug %}" class="btn btn-sm btn-warning me-2">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a href="{% url 'main:delete_project' project.slug %}" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    
+        <!-- Project Header -->
+        <div class="col-12">
+            <div class="project-header mb-5">
+                <div class="project-cover">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
+                </div>
+                <div class="project-meta mt-4">
+                    <h1 class="display-4 fw-bold">{{ project.title }}</h1>
+                    
+                    <div class="d-flex flex-wrap align-items-center mt-3 mb-4">
+                        <div class="me-4">
+                            {{ project.get_status_display_html }}
+                        </div>
+                        <div class="me-4">
+                            <i class="far fa-calendar-alt me-1"></i> {{ project.get_date_display }}
+                        </div>
+                        <div class="me-4">
+                            <i class="far fa-clock me-1"></i> Publicado em {{ project.created_at|date:"d/m/Y" }}
+                        </div>
+                    </div>
+                    
+                    <!-- Tags -->
+                    <div class="project-tags mb-4">
+                        {% for tag in project.tags.all %}
+                            <span class="badge bg-secondary me-2">{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Links do projeto -->
+                    <div class="project-links mb-4">
+                        {% if project.url %}
+                        <a href="{{ project.url }}" target="_blank" class="btn btn-primary me-2">
+                            <i class="fas fa-external-link-alt me-1"></i> Ver Projeto
+                        </a>
+                        {% endif %}
+                        
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
+                            <i class="fab fa-github me-1"></i> GitHub
+                        </a>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Breve descrição -->
+                    <div class="project-short-description mb-5">
+                        <p class="lead">{{ project.short_description }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Separador -->
+            <hr class="mb-5">
+            
+            <!-- Conteúdo do projeto -->
+            <div class="project-content mb-5">
+                {{ project.content|safe }}
+            </div>
+            
+            <!-- Projetos relacionados -->
+            {% if related_projects %}
+            <div class="related-projects mt-5">
+                <h3 class="h4 mb-4">Projetos Relacionados</h3>
+                
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for related in related_projects %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ related.title }}</h5>
+                                <p class="card-text small">{{ related.short_description|truncatechars:100 }}</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="{% url 'main:project_detail' related.slug %}" class="btn btn-sm btn-outline-primary">Ver Projeto</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

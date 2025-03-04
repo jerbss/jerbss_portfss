@@ -43,6 +43,27 @@ def projects(request):
     return render(request, 'main/projects.html', context)
 
 @login_required
+def create_project(request):
+    # Garantir que apenas superusers possam criar
+    if not request.user.is_superuser:
+        messages.error(request, 'Você não tem permissão para criar projetos.')
+        return redirect('main:projects')
+    
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, request.FILES)
+        if form.is_valid():
+            project = form.save()
+            messages.success(request, 'Projeto criado com sucesso!')
+            return redirect('main:project_detail', slug=project.slug)
+    else:
+        form = ProjectForm()
+    
+    return render(request, 'main/create_project.html', {
+        'form': form,
+        'action': 'create'
+    })
+
+@login_required
 def edit_project(request, project_id):
     # Garantir que apenas superusers possam editar
     if not request.user.is_superuser:
@@ -94,3 +115,14 @@ def delete_project(request, project_id):
 
 def contact(request):
     return render(request, 'main/contact.html')
+
+def project_detail(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    
+    # Projetos relacionados baseados em tags
+    related_projects = Project.objects.filter(tags__in=project.tags.all()).exclude(id=project.id).distinct()[:3]
+    
+    return render(request, 'main/project_detail.html', {
+        'project': project,
+        'related_projects': related_projects
+    })

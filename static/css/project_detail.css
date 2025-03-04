@@ -1,0 +1,107 @@
+/* Project detail styles */
+.project-header {
+    margin-bottom: 2rem;
+}
+
+.project-cover img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-meta {
+    padding: 1.5rem 0;
+}
+
+.project-tags .badge {
+    padding: 0.6em 1em;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.project-content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.project-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.project-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.project-content blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    font-style: italic;
+    margin: 1.5rem 0;
+}
+
+.project-content iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+/* Related projects */
+.related-projects .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.related-projects .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.related-projects .card-img-top {
+    height: 160px;
+    object-fit: cover;
+}
+
+/* Admin controls */
+.admin-controls {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: none;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .project-content pre {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .admin-controls {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .breadcrumb-item.active {
+    color: #a0a0a0;
+}
+
+body.dark-mode .related-projects .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
