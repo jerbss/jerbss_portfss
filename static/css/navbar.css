@@ -1,0 +1,54 @@
+/* Navbar styles */
+.navbar {
+    padding: 0.75rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.nav-link {
+    padding: 0.5rem 1rem !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link i {
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Dropdown styles */
+.dropdown-menu {
+    border: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item i {
+    margin-right: 0.75rem;
+    width: 1rem;
+    text-align: center;
+}
+
+/* Mobile navbar */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem !important;
+    }
+}
