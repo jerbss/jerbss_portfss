@@ -1,24 +1,168 @@
-/* Estilos para página de projetos */
+/* Project Card Styles */
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
     border-radius: 12px;
     overflow: hidden;
     border: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
+.card-img-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+    background-color: #000; /* Add black background */
+}
+
 .card-img-top {
-    height: 180px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    border-bottom-left-radius: 0; /* Remove bottom border radius */
+    border-bottom-right-radius: 0; /* Remove bottom border radius */
+}
+
+/* Gradient overlay */
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.7) 0%,
+        transparent 30%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom-left-radius: 0; /* Remove bottom border radius */
+    border-bottom-right-radius: 0; /* Remove bottom border radius */
+}
+
+/* Project status and metadata */
+.project-status {
+    margin-top: auto;
+    color: #fff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.project-date {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Card content */
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Featured badge */
+.featured-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgba(255, 193, 7, 0.9);
+    color: #000;
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    border-color: #404040;
+}
+
+body.dark-mode .card-img-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        transparent 30%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.9) 100%
+    );
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-img-wrapper {
+        padding-bottom: 75%; /* 4:3 aspect ratio for mobile */
+    }
+    
+    .card-body {
+        padding: 0.75rem;
+    }
+    
+    .card-title {
+        font-size: 1rem;
+    }
+    
+    .card-text {
+        font-size: 0.85rem;
+        -webkit-line-clamp: 2;
+    }
+}
+
+/* Project tags */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+}
+
+.project-tags .badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+body.dark-mode .project-tags .badge {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
 }
 
 /* Estilos para o painel admin */
@@ -59,12 +203,6 @@
 }
 
 /* Dark mode adjustments */
-body.dark-mode .card {
-    background-color: #2d2d2d;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border-color: #404040;
-}
-
 body.dark-mode .card-footer {
     background-color: #232323;
     border-top-color: #3a3a3a;
