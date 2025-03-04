@@ -53,11 +53,11 @@ class Project(models.Model):
     @property
     def get_status_display_html(self):
         status_classes = {
-            'in_progress': 'badge bg-warning',
-            'completed': 'badge bg-success'
+            'in_progress': 'badge bg-warning text-dark',  # Added text-dark for better contrast
+            'completed': 'badge bg-success text-light'    # Added text-light for better contrast
         }
-        status_class = status_classes.get(self.status, 'badge bg-secondary')
-        return f'<span class="{status_class}">{self.get_status_display()}</span>'
+        status_class = status_classes.get(self.status, 'badge bg-secondary text-light')
+        return mark_safe(f'<span class="{status_class}">{self.get_status_display()}</span>')
     
     @property
     def get_date_display(self):
@@ -65,8 +65,8 @@ class Project(models.Model):
             return "Data não definida"
         
         if self.status == 'completed' and self.end_date:
-            return f"{self.start_date.strftime('%d/%m/%Y')} - {self.end_date.strftime('%d/%m/%Y')}"
-        return f"{self.start_date.strftime('%d/%m/%Y')} - Em andamento"
+            return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - {self.end_date.strftime("%d/%m/%Y")}</span>')
+        return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - Em andamento</span>')
 
     def save(self, *args, **kwargs):
         if not self.slug:

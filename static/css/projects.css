@@ -5,11 +5,15 @@
     overflow: hidden;
     border: none;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
 }
 
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .card-img-top {
@@ -58,6 +62,7 @@
 body.dark-mode .card {
     background-color: #2d2d2d;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-color: #404040;
 }
 
 body.dark-mode .card-footer {
@@ -74,6 +79,45 @@ body.dark-mode .filters .btn.active {
     background-color: var(--primary-dark);
     color: #121212;
     border-color: var(--primary-dark);
+}
+
+body.dark-mode .card-body {
+    color: #e1e1e1;
+}
+
+body.dark-mode .card-title {
+    color: #ffffff;
+}
+
+body.dark-mode .admin-notice {
+    background-color: #2d2d2d;
+    color: #e1e1e1;
+    border: 1px solid #404040;
+}
+
+body.dark-mode .project-date {
+    color: #b0b0b0;
+}
+
+body.dark-mode .text-body {
+    color: #e1e1e1 !important;
+}
+
+/* Light mode defaults */
+.admin-notice {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+}
+
+.project-date {
+    color: #6c757d;
+}
+
+.card-title {
+    color: #212529;
 }
 
 /* Animação para os itens do projeto */

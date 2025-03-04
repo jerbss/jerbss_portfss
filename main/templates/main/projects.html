@@ -15,6 +15,12 @@
     
     <!-- Interface de Admin para Superuser -->
     {% if user.is_superuser %}
+    <div class="admin-notice mb-4">
+        <h4 class="h5 mb-0">
+            <i class="fas fa-user-shield me-2"></i>
+            Você está logado como administrador. Pode criar, editar e excluir projetos.
+        </h4>
+    </div>
     <div class="admin-panel card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="h4 mb-0">Painel de Administração</h3>
@@ -57,7 +63,7 @@
         <div class="col project-item" 
              data-tags="{% for tag in project.tags.all %}{{ tag.name }} {% endfor %}"
              data-status="{{ project.status }}">
-            <div class="card h-100 {% if project.featured %}featured-project{% endif %}">
+            <div class="card h-100">
                 {% if project.featured %}
                 <div class="featured-badge">
                     <i class="fas fa-star"></i> Destaque
@@ -69,21 +75,19 @@
                     <div class="card-img-overlay d-flex flex-column justify-content-end">
                         <div class="project-status">
                             {{ project.get_status_display_html|safe }}
-                            {% if project.get_date_display %}
-                                <span class="project-date ms-2">
-                                    <i class="far fa-calendar-alt"></i> {{ project.get_date_display }}
-                                </span>
-                            {% endif %}
+                            <span class="project-date ms-2">
+                                <i class="far fa-calendar-alt"></i> {{ project.get_date_display|safe }}
+                            </span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="card-body">
                     <h3 class="card-title h5">{{ project.title }}</h3>
-                    <p class="card-text">{{ project.short_description }}</p>
+                    <p class="card-text text-body">{{ project.short_description }}</p>
                     <div class="project-tags mb-3">
                         {% for tag in project.tags.all %}
-                            <span class="badge bg-secondary me-1">{{ tag.name }}</span>
+                        <span class="badge bg-secondary">{{ tag.name }}</span>
                         {% endfor %}
                     </div>
                 </div>
