@@ -26,14 +26,14 @@ class Project(models.Model):
     )
     
     title = models.CharField('Título', max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-    short_description = models.TextField('Breve Descrição', max_length=500, default='')
-    content = HTMLField('Conteúdo Completo', default='')
+    slug = models.SlugField(unique=True, blank=True, max_length=255)
+    short_description = models.CharField('Breve Descrição', max_length=200, default='')  # Limite de 200 caracteres
+    content = models.TextField('Conteúdo Completo', default='')
     image = models.ImageField('Capa do Projeto', upload_to='projects/')
-    status = models.CharField('Status', max_length=20, choices=STATUS_CHOICES, default='in_progress')
+    status = models.CharField('Status', max_length=50, choices=STATUS_CHOICES, default='in_progress')
     project_type = models.CharField(
         'Tipo',
-        max_length=20,
+        max_length=50,
         choices=TYPE_CHOICES,
         default='personal'
     )

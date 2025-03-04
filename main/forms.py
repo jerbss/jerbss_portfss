@@ -1,26 +1,8 @@
 from django import forms
 from .models import Project, Tag
-from tinymce.widgets import TinyMCE
 from django.utils.text import slugify
 
 class ProjectForm(forms.ModelForm):
-    content = forms.CharField(
-        widget=TinyMCE(
-            attrs={'cols': 80, 'rows': 30},
-            mce_attrs={
-                'menubar': 'file edit view insert format tools table help',
-                'plugins': 'advlist autolink lists link image charmap searchreplace visualblocks code fullscreen insertdatetime media table wordcount help',
-                'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
-                'skin': 'oxide-dark',
-                'content_css': 'dark',
-                'content_style': 'body { background-color: #1a1a1a; color: #e1e1e1; } a { color: #58a6ff; }',
-                'relative_urls': False,
-                'remove_script_host': False,
-                'convert_urls': False
-            }
-        ),
-        required=False
-    )
     tags_input = forms.CharField(
         label='Tags',
         required=False,
@@ -40,8 +22,8 @@ class ProjectForm(forms.ModelForm):
             'image',
             'status',
             'project_type',
-            'start_date',  # Add this
-            'end_date',    # Add this
+            'start_date',
+            'end_date',
             'tags_input',
             'url',
             'github_url',
@@ -49,7 +31,8 @@ class ProjectForm(forms.ModelForm):
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'maxlength': 200}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'project_type': forms.Select(attrs={
                 'class': 'form-control',

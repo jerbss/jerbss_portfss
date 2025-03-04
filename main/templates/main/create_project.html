@@ -34,6 +34,9 @@
                             <div class="col-12">
                                 <label for="id_short_description" class="form-label">{{ form.short_description.label }}</label>
                                 {{ form.short_description }}
+                                <div class="form-text">
+                                    <span id="short_description_counter">0</span>/200 caracteres
+                                </div>
                                 {% if form.short_description.help_text %}
                                     <div class="form-text">{{ form.short_description.help_text }}</div>
                                 {% endif %}
@@ -104,4 +107,18 @@
 {% block extra_js %}
 {{ form.media }}
 <script src="{% static 'js/tinymce-theme.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var shortDescriptionField = document.getElementById('id_short_description');
+        var counter = document.getElementById('short_description_counter');
+
+        function updateCounter() {
+            var length = shortDescriptionField.value.length;
+            counter.textContent = length;
+        }
+
+        shortDescriptionField.addEventListener('input', updateCounter);
+        updateCounter();  // Initialize counter on page load
+    });
+</script>
 {% endblock %}
