@@ -43,6 +43,8 @@ class ProjectForm(forms.ModelForm):
             'image',
             'status',
             'project_type',
+            'start_date',  # Add this
+            'end_date',    # Add this
             'tags_input',
             'url',
             'github_url',
@@ -52,7 +54,10 @@ class ProjectForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'status': forms.Select(attrs={'class': 'form-control'}),
-            'project_type': forms.Select(attrs={'class': 'form-control'}),
+            'project_type': forms.Select(attrs={
+                'class': 'form-control',
+                'aria-label': 'Selecione o tipo do projeto'
+            }),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'url': forms.URLInput(attrs={'class': 'form-control'}),

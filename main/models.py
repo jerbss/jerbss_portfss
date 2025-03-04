@@ -20,10 +20,9 @@ class Project(models.Model):
     )
     
     TYPE_CHOICES = (
-        ('web', 'Web Development'),
-        ('mobile', 'Mobile Development'),
-        ('design', 'Design'),
-        ('other', 'Outro'),
+        ('academic', 'Acadêmico'),
+        ('personal', 'Pessoal'),
+        ('professional', 'Profissional'),
     )
     
     title = models.CharField('Título', max_length=200)
@@ -32,7 +31,12 @@ class Project(models.Model):
     content = HTMLField('Conteúdo Completo', default='')
     image = models.ImageField('Capa do Projeto', upload_to='projects/')
     status = models.CharField('Status', max_length=20, choices=STATUS_CHOICES, default='in_progress')
-    project_type = models.CharField('Tipo', max_length=20, choices=TYPE_CHOICES, default='web')
+    project_type = models.CharField(
+        'Tipo',
+        max_length=20,
+        choices=TYPE_CHOICES,
+        default='personal'
+    )
     start_date = models.DateField('Data de Início', null=True, blank=True)
     end_date = models.DateField('Data de Conclusão', null=True, blank=True)
     created_at = models.DateTimeField('Data de Publicação', auto_now_add=True)
