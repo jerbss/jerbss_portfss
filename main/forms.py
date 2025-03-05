@@ -1,48 +1,99 @@
 from django import forms
 from .models import Project, Tag
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 
 class ProjectForm(forms.ModelForm):
     tags_input = forms.CharField(
-        label='Tags',
-        required=False,
+        label='Tags *',
+        required=True,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Separe as tags por vírgula'
+            'placeholder': 'Separe as tags por vírgula (máximo 3)'
         }),
-        help_text='Separe as tags por vírgula (ex.: django, python, web)'
+        help_text='Separe as tags por vírgula (ex.: django, python, web). Máximo 3 tags.'
     )
     
     class Meta:
         model = Project
         fields = [
-            'title',
-            'short_description',
-            'content',
-            'image',
-            'status',
-            'project_type',
-            'start_date',
-            'end_date',
-            'tags_input',
-            'url',
-            'github_url',
-            'featured'
+            'image',             # Required
+            'title',            # Required
+            'short_description', # Required
+            'project_type',     # Required
+            'start_date',       # Required
+            'url',              # Required
+            'tags_input',       # Required, max 3
+            'content',          # Required
+            'end_date',         # Optional
+            'github_url',       # Optional
+            'status',           # Optional
+            'featured'          # Optional
         ]
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'short_description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'maxlength': 200}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'required': True,
+            }),
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'required': True,
+                'placeholder': 'Digite o título do projeto'
+            }),
+            'short_description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'maxlength': 200,
+                'required': True,
+                'placeholder': 'Breve descrição do projeto (máximo 200 caracteres)'
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 10,
+                'required': True,
+                'placeholder': 'Conteúdo detalhado do projeto'
+            }),
             'project_type': forms.Select(attrs={
                 'class': 'form-control',
-                'aria-label': 'Selecione o tipo do projeto'
+                'required': True,
             }),
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'url': forms.URLInput(attrs={'class': 'form-control'}),
-            'github_url': forms.URLInput(attrs={'class': 'form-control'}),
-            'featured': forms.CheckboxInput(attrs={'class': 'form-check-input'})
+            'start_date': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date',
+                'required': True
+            }),
+            'url': forms.URLInput(attrs={
+                'class': 'form-control',
+                'required': True,
+                'placeholder': 'https://...'
+            }),
+            'end_date': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
+            'github_url': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://github.com/...'
+            }),
+            'status': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'featured': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            })
+        }
+        labels = {
+            'image': 'Foto do Projeto *',
+            'title': 'Título do Projeto *',
+            'short_description': 'Breve Descrição *',
+            'project_type': 'Tipo de Projeto *',
+            'start_date': 'Data de Início *',
+            'url': 'Link Externo *',
+            'content': 'Conteúdo do Projeto *',
+            'end_date': 'Data de Conclusão',
+            'github_url': 'Link do GitHub',
+            'status': 'Status do Projeto',
+            'featured': 'Projeto Destacado'
         }
     
     def __init__(self, *args, **kwargs):
@@ -86,3 +137,13 @@ class ProjectForm(forms.ModelForm):
         if not image and not self.instance.pk:  # Only require image for new projects
             raise forms.ValidationError("A imagem é obrigatória.")
         return image
+
+    def clean_tags_input(self):
+        tags = self.cleaned_data.get('tags_input')
+        if tags:
+            tag_list = [t.strip() for t in tags.split(',') if t.strip()]
+            if len(tag_list) > 3:
+                raise ValidationError('Máximo de 3 tags permitidas.')
+            if len(tag_list) == 0:
+                raise ValidationError('Pelo menos uma tag é necessária.')
+        return tags

@@ -18,83 +18,89 @@
                     <h2 class="h4 mb-0">Criar Novo Projeto</h2>
                 </div>
                 <div class="card-body">
+                    <div class="alert alert-info mb-4">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Campos marcados com <strong>*</strong> são obrigatórios
+                    </div>
+
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
-                        <div class="row mb-3">
-                            <div class="col-md-8">
-                                {% bootstrap_field form.title %}
+                        <!-- Imagem e Título -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.image layout='floating' %}
                             </div>
-                            <div class="col-md-4">
-                                {% bootstrap_field form.tags_input %}
+                            <div class="col-md-6">
+                                {% bootstrap_field form.title layout='floating' %}
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <!-- Breve Descrição -->
+                        <div class="row mb-4">
                             <div class="col-12">
-                                <label for="id_short_description" class="form-label">{{ form.short_description.label }}</label>
-                                {{ form.short_description }}
-                                <div class="form-text">
+                                {% bootstrap_field form.short_description layout='floating' %}
+                                <div class="form-text text-end">
                                     <span id="short_description_counter">0</span>/200 caracteres
                                 </div>
-                                {% if form.short_description.help_text %}
-                                    <div class="form-text">{{ form.short_description.help_text }}</div>
-                                {% endif %}
-                                {% if form.short_description.errors %}
-                                    <div class="invalid-feedback d-block">
-                                        {% for error in form.short_description.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <!-- Tipo e Tags -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.project_type layout='floating' %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.tags_input layout='floating' %}
+                            </div>
+                        </div>
+
+                        <!-- URLs -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.url layout='floating' %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.github_url layout='floating' %}
+                            </div>
+                        </div>
+
+                        <!-- Datas -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.start_date layout='floating' %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.end_date layout='floating' %}
+                            </div>
+                        </div>
+
+                        <!-- Status e Destaque -->
+                        <div class="row mb-4">
                             <div class="col-md-6">
                                 {% bootstrap_field form.status %}
-                            </div>
-                            <div class="col-md-6">
-                                {% bootstrap_field form.project_type %}
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                {% bootstrap_field form.start_date %}
-                            </div>
-                            <div class="col-md-6">
-                                {% bootstrap_field form.end_date %}
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                {% bootstrap_field form.content %}
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                {% bootstrap_field form.url %}
-                            </div>
-                            <div class="col-md-6">
-                                {% bootstrap_field form.github_url %}
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                {% bootstrap_field form.image %}
                             </div>
                             <div class="col-md-6 d-flex align-items-center">
                                 {% bootstrap_field form.featured %}
                             </div>
                         </div>
 
-                        <div class="d-flex justify-content-end mt-4">
-                            <a href="{% url 'main:projects' %}" class="btn btn-secondary me-2">Cancelar</a>
-                            {% bootstrap_button "Salvar Projeto" button_type="submit" button_class="btn-primary" %}
+                        <!-- Conteúdo -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                {% bootstrap_field form.content layout='floating' %}
+                            </div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'main:projects' %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Salvar Projeto
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -106,6 +112,7 @@
 
 {% block extra_js %}
 {{ form.media }}
+{{ block.super }}
 <script src="https://cdn.tiny.cloud/1/lm7d66xbh1ufbev2pxrr4vrtlj2hd1fk14tca04uq1rpo6mq/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -149,6 +156,17 @@
                 const isDarkMode = document.body.classList.contains('dark-mode');
                 updateTinyMCETheme(isDarkMode);
             }, 300);
+        });
+
+        // Validação de tags
+        const tagsInput = document.getElementById('id_tags_input');
+        tagsInput.addEventListener('change', function() {
+            const tags = this.value.split(',').filter(tag => tag.trim().length > 0);
+            if (tags.length > 3) {
+                this.setCustomValidity('Máximo de 3 tags permitidas');
+            } else {
+                this.setCustomValidity('');
+            }
         });
     });
 </script>
