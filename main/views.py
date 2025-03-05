@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.core.mail import send_mail
 from .models import Project, Tag
-from .forms import ProjectForm
+from .forms import ProjectForm, ContactForm
 
 def home(request):
     return render(request, 'main/home.html')
@@ -94,7 +95,35 @@ def delete_project(request, slug):
     return render(request, 'main/delete_project.html', {'project': project})
 
 def contact(request):
-    return render(request, 'main/contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            sender_email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            
+            subject = f"Contato via Site - {name}"
+            body = (
+                f"Você recebeu uma nova mensagem pelo formulário de contato.\n\n"
+                f"Nome: {name}\n"
+                f"E-mail: {sender_email}\n\n"
+                f"Mensagem:\n{message}"
+            )
+            
+            send_mail(
+                subject,
+                body,
+                sender_email,  # Remetente (opcional: pode ser um endereço fixo)
+                ['jerbessonc@gmail.com'],  # Destinatário
+                fail_silently=False,
+            )
+            
+            messages.success(request, 'Sua mensagem foi enviada com sucesso!')
+            return redirect('main:contact')
+    else:
+        form = ContactForm()
+        
+    return render(request, 'main/contact.html', {'form': form})
 
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)

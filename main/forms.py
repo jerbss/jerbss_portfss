@@ -146,3 +146,28 @@ class ProjectForm(forms.ModelForm):
             if len(tag_list) == 0:
                 raise ValidationError('Pelo menos uma tag é necessária.')
         return tags
+
+class ContactForm(forms.Form):
+    name = forms.CharField(
+        max_length=100,
+        label='Nome',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Seu nome'
+        })
+    )
+    email = forms.EmailField(
+        label='Seu e-mail',
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'email@exemplo.com'
+        })
+    )
+    message = forms.CharField(
+        label='Mensagem',
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 5,
+            'placeholder': 'Digite sua mensagem'
+        })
+    )
