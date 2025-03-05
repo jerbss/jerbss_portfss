@@ -1,31 +1,69 @@
 /* Project detail styles */
 .project-header {
     margin-bottom: 2rem;
+    border: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-/* Estilos para a imagem de capa do projeto */
-.project-cover img {
+/* Estilos para o container da imagem de capa */
+.project-cover {
+    position: relative;
     width: 100%;
-    height: auto;
-    max-height: 400px; /* Defina a altura máxima */
-    object-fit: cover; /* Mantém a proporção da imagem e corta o excesso */
+    min-height: 300px;
+    max-height: 500px;
+    overflow: hidden;
+    background-color: #f8f9fa; /* Cor de fundo enquanto a imagem carrega */
+}
+
+/* Estilos para a imagem de capa */
+.project-cover img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mudança de 'cover' para 'contain' */
+    object-position: center;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
+/* Estilos para os metadados */
 .project-meta {
     padding: 1.5rem 0;
+    color: #6c757d;
+    font-size: 0.95rem;
 }
 
+/* Estilos para as tags */
 .project-tags .badge {
-    padding: 0.6em 1em;
+    padding: 0.5em 1em;
     font-weight: 500;
     font-size: 0.9rem;
 }
 
+/* Estilos para os links do projeto */
+.project-links .btn {
+    padding: 0.5rem 1.5rem;
+}
+
+/* Estilos para a descrição curta */
+.project-short-description {
+    padding: 1.5rem;
+    background-color: rgba(0,0,0,0.02);
+    border-radius: 0 0 0.375rem 0.375rem;
+}
+
+.project-short-description .lead {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+/* Estilos para o conteúdo principal */
 .project-content {
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 1.1rem;
+    line-height: 1.8;
 }
 
 .project-content h2 {
@@ -111,8 +149,20 @@ body.dark-mode .related-projects .card {
 }
 
 /* Ajustes para telas menores */
+@media (max-width: 991px) {
+    .project-cover {
+        min-height: 250px;
+        max-height: 400px;
+    }
+}
+
 @media (max-width: 768px) {
-    .project-cover img {
-        max-height: 300px; /* Ajuste a altura máxima para telas menores */
+    .project-cover {
+        min-height: 200px;
+        max-height: 300px;
+    }
+    
+    .project-header .card-body {
+        padding-top: 1.5rem;
     }
 }

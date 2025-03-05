@@ -43,58 +43,66 @@
         </div>
         {% endif %}
     
-        <!-- Project Header -->
+        <!-- Project Header - Nova estrutura com duas colunas -->
         <div class="col-12">
-            <div class="project-header mb-5">
-                <div class="project-cover">
-                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded">
+            <div class="project-header card mb-5">
+                <div class="row g-0">
+                    <!-- Coluna da imagem -->
+                    <div class="col-md-5">
+                        <div class="project-cover h-100">
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-start h-100 w-100">
+                        </div>
+                    </div>
+                    
+                    <!-- Coluna dos metadados principais -->
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h1 class="card-title h2 fw-bold mb-4">{{ project.title }}</h1>
+                            
+                            <div class="project-meta mb-4">
+                                <div class="mb-3">
+                                    {{ project.get_status_display_html }}
+                                </div>
+                                <div class="mb-2">
+                                    <i class="far fa-calendar-alt me-2"></i>{{ project.get_date_display }}
+                                </div>
+                                <div class="mb-3">
+                                    <i class="far fa-clock me-2"></i>Publicado em {{ project.created_at|date:"d/m/Y" }}
+                                </div>
+                            </div>
+                            
+                            <!-- Tags -->
+                            <div class="project-tags mb-4">
+                                {% for tag in project.tags.all %}
+                                    <span class="badge bg-secondary me-2">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                            
+                            <!-- Links do projeto -->
+                            <div class="project-links">
+                                {% if project.url %}
+                                <a href="{{ project.url }}" target="_blank" class="btn btn-primary me-2">
+                                    <i class="fas fa-external-link-alt me-1"></i> Ver Projeto
+                                </a>
+                                {% endif %}
+                                
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
+                                    <i class="fab fa-github me-1"></i> GitHub
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="project-meta mt-4">
-                    <h1 class="display-4 fw-bold">{{ project.title }}</h1>
-                    
-                    <div class="d-flex flex-wrap align-items-center mt-3 mb-4">
-                        <div class="me-4">
-                            {{ project.get_status_display_html }}
-                        </div>
-                        <div class="me-4">
-                            <i class="far fa-calendar-alt me-1"></i> {{ project.get_date_display }}
-                        </div>
-                        <div class="me-4">
-                            <i class="far fa-clock me-1"></i> Publicado em {{ project.created_at|date:"d/m/Y" }}
-                        </div>
-                    </div>
-                    
-                    <!-- Tags -->
-                    <div class="project-tags mb-4">
-                        {% for tag in project.tags.all %}
-                            <span class="badge bg-secondary me-2">{{ tag.name }}</span>
-                        {% endfor %}
-                    </div>
-                    
-                    <!-- Links do projeto -->
-                    <div class="project-links mb-4">
-                        {% if project.url %}
-                        <a href="{{ project.url }}" target="_blank" class="btn btn-primary me-2">
-                            <i class="fas fa-external-link-alt me-1"></i> Ver Projeto
-                        </a>
-                        {% endif %}
-                        
-                        {% if project.github_url %}
-                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
-                            <i class="fab fa-github me-1"></i> GitHub
-                        </a>
-                        {% endif %}
-                    </div>
-                    
-                    <!-- Breve descrição -->
-                    <div class="project-short-description mb-5">
-                        <p class="lead">{{ project.short_description }}</p>
+                
+                <!-- Descrição curta abaixo da imagem e metadados -->
+                <div class="card-footer bg-transparent border-top-0">
+                    <div class="project-short-description">
+                        <p class="lead mb-0">{{ project.short_description }}</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Separador -->
-            <hr class="mb-5">
             
             <!-- Conteúdo do projeto -->
             <div class="project-content mb-5">
