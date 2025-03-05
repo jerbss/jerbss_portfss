@@ -5,6 +5,19 @@
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
+.project-header .row {
+    margin: 0; /* Remove margens que podem causar espaços */
+}
+
+.project-header .card {
+    overflow: hidden; /* Evita que o conteúdo vaze */
+}
+
+.project-header .col-md-5,
+.project-header .col-md-7 {
+    padding: 0; /* Remove padding que pode causar espaços */
+}
+
 /* Estilos para o container da imagem de capa */
 .project-cover {
     position: relative;
@@ -12,7 +25,7 @@
     min-height: 300px;
     max-height: 500px;
     overflow: hidden;
-    background-color: #f8f9fa; /* Cor de fundo enquanto a imagem carrega */
+    background-color: #f8f9fa; /* Cor de fundo clara */
 }
 
 /* Estilos para a imagem de capa */
@@ -146,6 +159,55 @@ body.dark-mode .breadcrumb-item.active {
 body.dark-mode .related-projects .card {
     background-color: #2d2d2d;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .project-meta {
+    color: #e0e0e0; /* Cor mais clara para melhor legibilidade */
+}
+
+body.dark-mode .project-meta span,
+body.dark-mode .project-meta time,
+body.dark-mode .project-meta strong {
+    color: #e0e0e0; /* Garantir que todos os elementos de texto sejam legíveis */
+}
+
+body.dark-mode .project-meta i {
+    color: #64b5f6; /* Cor azul mais suave para ícones */
+}
+
+body.dark-mode .project-short-description {
+    background-color: rgba(255, 255, 255, 0.05); /* Fundo sutilmente mais claro */
+}
+
+body.dark-mode .project-short-description .lead {
+    color: #e1e1e1; /* Cor mais clara para o texto da descrição */
+}
+
+body.dark-mode .project-header {
+    background-color: #2d2d2d;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .project-cover {
+    background-color: #2d2d2d; /* Mesma cor de fundo do card no modo escuro */
+}
+
+body.dark-mode .card-body {
+    background-color: #2d2d2d;
+}
+
+body.dark-mode .card-footer {
+    background-color: #262626;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .card-title {
+    color: #ffffff;
+}
+
+/* Dark mode icons */
+body.dark-mode .project-meta i {
+    color: #64b5f6; /* Cor dos ícones em modo escuro */
 }
 
 /* Ajustes para telas menores */
