@@ -120,12 +120,35 @@
         shortDescriptionField.addEventListener('input', updateCounter);
         updateCounter();
 
-        // Configuração simplificada do TinyMCE
-        tinymce.init({
-            selector: '#id_content',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-            toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-            height: 400
+        // Função para atualizar o tema do TinyMCE
+        function updateTinyMCETheme(isDarkMode) {
+            if (tinymce.get('id_content')) {
+                tinymce.get('id_content').remove();
+            }
+            tinymce.init({
+                selector: '#id_content',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                height: 400,
+                skin: isDarkMode ? 'oxide-dark' : 'oxide',
+                content_css: isDarkMode ? 'dark' : 'default',
+                content_style: isDarkMode 
+                    ? 'body { background-color: #1a1a1a; color: #e1e1e1; }'
+                    : 'body { background-color: #ffffff; color: #000000; }'
+            });
+        }
+
+        // Verificar o tema atual do sistema
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        updateTinyMCETheme(isDarkMode);
+
+        // Atualizar o tema do TinyMCE quando o tema do sistema mudar
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            setTimeout(function() {
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                updateTinyMCETheme(isDarkMode);
+            }, 300);
         });
     });
 </script>
