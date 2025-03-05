@@ -41,7 +41,7 @@
 body.dark-mode .form-control {
     background-color: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.1);
-    color: #e1e1e1;
+    color: #ffffff; /* Ajuste a cor do texto para branco */
 }
 
 body.dark-mode .form-control:focus {
@@ -119,14 +119,14 @@ body.dark-mode .form-control,
 body.dark-mode .form-select {
     background-color: #1a1a1a;
     border-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-light);
+    color: #ffffff; /* Ajuste a cor do texto para branco */
 }
 
 body.dark-mode .form-control:focus,
 body.dark-mode .form-select:focus {
     background-color: #262626;
     border-color: var(--primary-dark);
-    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb), 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(100, 181, 246, 0.25);
 }
 
 body.dark-mode .form-text {
