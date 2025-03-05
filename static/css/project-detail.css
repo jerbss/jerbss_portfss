@@ -3,8 +3,12 @@
     margin-bottom: 2rem;
 }
 
+/* Estilos para a imagem de capa do projeto */
 .project-cover img {
     width: 100%;
+    height: auto;
+    max-height: 400px; /* Defina a altura máxima */
+    object-fit: cover; /* Mantém a proporção da imagem e corta o excesso */
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
@@ -104,4 +108,11 @@ body.dark-mode .breadcrumb-item.active {
 body.dark-mode .related-projects .card {
     background-color: #2d2d2d;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+    .project-cover img {
+        max-height: 300px; /* Ajuste a altura máxima para telas menores */
+    }
 }
