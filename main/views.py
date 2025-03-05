@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Project, Tag
 from .forms import ProjectForm
@@ -63,38 +63,22 @@ def create_project(request):
         'action': 'create'
     })
 
-@login_required
-def edit_project(request, project_id):
-    # Garantir que apenas superusers possam editar
-    if not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para editar projetos.')
-        return redirect('main:projects')
-    
-    project = get_object_or_404(Project, id=project_id)
+@user_passes_test(lambda u: u.is_superuser)
+def edit_project(request, slug):
+    project = get_object_or_404(Project, slug=slug)
     
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             project = form.save()
-            
-            # Processar tags
-            project.tags.clear()
-            tags = request.POST.get('tags', '').split(',')
-            for tag_name in tags:
-                tag_name = tag_name.strip()
-                if tag_name:
-                    tag, created = Tag.objects.get_or_create(name=tag_name)
-                    project.tags.add(tag)
-                    
-            messages.success(request, 'Projeto atualizado com sucesso!')
-            return redirect('main:projects')
+            return redirect('main:project_detail', slug=project.slug)
     else:
         form = ProjectForm(instance=project)
-        
-    return render(request, 'main/edit_project.html', {
+    
+    return render(request, 'main/create_project.html', {
         'form': form,
-        'project': project,
-        'tags': ', '.join(tag.name for tag in project.tags.all())
+        'is_edit': True,
+        'project': project
     })
 
 @login_required
