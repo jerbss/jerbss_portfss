@@ -165,6 +165,29 @@ body.dark-mode .project-meta {
     color: #e0e0e0; /* Cor mais clara para melhor legibilidade */
 }
 
+body.dark-mode .project-meta .status-badge {
+    color: #ffffff; /* Texto branco para melhor legibilidade */
+    background-color: rgba(255, 255, 255, 0.1); /* Fundo mais claro */
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+body.dark-mode .project-meta .date-info {
+    color: #ffffff; /* Texto branco para melhor legibilidade */
+}
+
+body.dark-mode .project-meta i {
+    color: #64b5f6;
+    margin-right: 8px;
+}
+
+/* Ajuste geral para elementos de texto nos metadados */
+body.dark-mode .project-meta span,
+body.dark-mode .project-meta time,
+body.dark-mode .project-meta strong {
+    color: #ffffff; /* Mudado de #e0e0e0 para #ffffff para maior contraste */
+}
+
 body.dark-mode .project-meta span,
 body.dark-mode .project-meta time,
 body.dark-mode .project-meta strong {
@@ -210,6 +233,33 @@ body.dark-mode .project-meta i {
     color: #64b5f6; /* Cor dos ícones em modo escuro */
 }
 
+/* Dark mode adjustments */
+body.dark-mode .project-meta,
+body.dark-mode .project-meta *,
+body.dark-mode .card-body,
+body.dark-mode .card-text,
+body.dark-mode .project-header {
+    color: #e0e0e0;
+}
+
+body.dark-mode .project-meta .status-badge {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* Garantir que todos os textos dentro do card sejam legíveis */
+body.dark-mode .card {
+    color: #e0e0e0;
+}
+
+/* Cor específica para ícones */
+body.dark-mode .project-meta i {
+    color: #64b5f6;
+    margin-right: 8px;
+}
+
 /* Ajustes para telas menores */
 @media (max-width: 991px) {
     .project-cover {
@@ -227,4 +277,35 @@ body.dark-mode .project-meta i {
     .project-header .card-body {
         padding-top: 1.5rem;
     }
+}
+
+/* Dark mode adjustments */
+body.dark-mode {
+    --bs-body-color: #e0e0e0;
+    --bs-body-color-rgb: 224, 224, 224;
+}
+
+/* Sobrescrever especificamente para o card se necessário */
+body.dark-mode .project-header {
+    --bs-card-color: #e0e0e0;
+}
+
+body.dark-mode .card {
+    --bs-card-color: #e0e0e0;
+}
+
+/* Manter os estilos específicos existentes */
+body.dark-mode .project-meta {
+    color: var(--bs-body-color);
+}
+
+body.dark-mode .project-meta .status-badge {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+body.dark-mode .project-meta .date-info {
+    color: var(--bs-body-color);
 }
