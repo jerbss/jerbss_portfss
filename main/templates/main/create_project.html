@@ -29,6 +29,11 @@
                         <!-- Imagem e Título -->
                         <div class="row mb-4">
                             <div class="col-md-6">
+                                {% if form.instance.image %}
+                                <div class="image-preview-container mb-2">
+                                    <img src="{{ form.instance.image.url }}" alt="Preview" id="image-preview" class="img-fluid rounded">
+                                </div>
+                                {% endif %}
                                 {% bootstrap_field form.image layout='' %}
                             </div>
                             <div class="col-md-6">

@@ -230,3 +230,33 @@ body.dark-theme {
     --background-color: #333333; /* Cor de fundo para tema escuro */
     --text-color: #ffffff; /* Cor do texto para tema escuro */
 }
+
+/* Estilos para o preview da imagem */
+.form-control[type="file"] {
+    padding: 0.375rem 0.75rem;
+}
+
+/* Container da imagem */
+.image-preview-container {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Altura fixa para o retângulo */
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+/* Imagem dentro do container */
+.image-preview-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantém a proporção e cobre o container */
+}
+
+/* Modo escuro */
+body.dark-mode .image-preview-container {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
