@@ -138,7 +138,20 @@
                 content_css: isDarkMode ? 'dark' : 'default',
                 content_style: isDarkMode 
                     ? 'body { background-color: #1a1a1a; color: #e1e1e1; }'
-                    : 'body { background-color: #ffffff; color: #000000; }'
+                    : 'body { background-color: #ffffff; color: #000000; }',
+                // Adicione estas configurações
+                required: true,
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save(); // Sincroniza o conteúdo com o textarea
+                        // Validação customizada
+                        if (editor.getContent().trim().length === 0) {
+                            editor.getElement().setCustomValidity('Este campo é obrigatório.');
+                        } else {
+                            editor.getElement().setCustomValidity('');
+                        }
+                    });
+                }
             });
         }
 

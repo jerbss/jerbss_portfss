@@ -50,8 +50,6 @@ class ProjectForm(forms.ModelForm):
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 10,
-                'required': True,
-                'placeholder': 'Conteúdo detalhado do projeto'
             }),
             'project_type': forms.Select(attrs={
                 'class': 'form-control',
