@@ -106,7 +106,7 @@
 
 {% block extra_js %}
 {{ form.media }}
-<script src="{% static 'js/tinymce-theme.js' %}"></script>
+<script src="https://cdn.tiny.cloud/1/lm7d66xbh1ufbev2pxrr4vrtlj2hd1fk14tca04uq1rpo6mq/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var shortDescriptionField = document.getElementById('id_short_description');
@@ -118,7 +118,15 @@
         }
 
         shortDescriptionField.addEventListener('input', updateCounter);
-        updateCounter();  // Initialize counter on page load
+        updateCounter();
+
+        // Configuração simplificada do TinyMCE
+        tinymce.init({
+            selector: '#id_content',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+            toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            height: 400
+        });
     });
 </script>
 {% endblock %}
