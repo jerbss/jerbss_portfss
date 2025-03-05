@@ -29,17 +29,17 @@
                         <!-- Imagem e Título -->
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                {% bootstrap_field form.image layout='floating' %}
+                                {% bootstrap_field form.image layout='' %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.title layout='floating' %}
+                                {% bootstrap_field form.title layout='' %}
                             </div>
                         </div>
 
                         <!-- Breve Descrição -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                {% bootstrap_field form.short_description layout='floating' %}
+                                {% bootstrap_field form.short_description layout='' %}
                                 <div class="form-text text-end">
                                     <span id="short_description_counter">0</span>/200 caracteres
                                 </div>
@@ -49,47 +49,44 @@
                         <!-- Tipo e Tags -->
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                {% bootstrap_field form.project_type layout='floating' %}
+                                {% bootstrap_field form.project_type layout='' %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.tags_input layout='floating' %}
+                                {% bootstrap_field form.tags_input layout='' %}
                             </div>
                         </div>
 
                         <!-- URLs -->
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                {% bootstrap_field form.url layout='floating' %}
+                                {% bootstrap_field form.url layout='' %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.github_url layout='floating' %}
+                                {% bootstrap_field form.github_url layout='' %}
                             </div>
                         </div>
 
                         <!-- Datas -->
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                {% bootstrap_field form.start_date layout='floating' %}
+                                {% bootstrap_field form.start_date layout='' %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.end_date layout='floating' %}
+                                {% bootstrap_field form.end_date layout='' %}
                             </div>
                         </div>
 
-                        <!-- Status e Destaque -->
+                        <!-- Status -->
                         <div class="row mb-4">
                             <div class="col-md-6">
-                                {% bootstrap_field form.status %}
-                            </div>
-                            <div class="col-md-6 d-flex align-items-center">
-                                {% bootstrap_field form.featured %}
+                                {% bootstrap_field form.status layout='' %}
                             </div>
                         </div>
 
                         <!-- Conteúdo -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                {% bootstrap_field form.content layout='floating' %}
+                                {% bootstrap_field form.content layout='' %}
                             </div>
                         </div>
 
