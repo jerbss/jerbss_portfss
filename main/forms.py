@@ -33,7 +33,7 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
-                'required': True,
+                # Remover o "required": True para permitir edição sem re-upload
             }),
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -132,8 +132,9 @@ class ProjectForm(forms.ModelForm):
 
     def clean_image(self):
         image = self.cleaned_data.get('image')
-        if not image and not self.instance.pk:  # Only require image for new projects
-            raise forms.ValidationError("A imagem é obrigatória.")
+        # Só exige a imagem se for um novo projeto (self.instance.pk está vazio)
+        if not image and not self.instance.pk:
+            raise forms.ValidationError("A imagem é obrigatória para novos projetos.")
         return image
 
     def clean_tags_input(self):
