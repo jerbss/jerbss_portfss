@@ -168,7 +168,7 @@ body.dark-mode .form-check-input:checked {
 
 /* Date input specific styles */
 body.dark-mode input[type="date"] {
-    color-scheme: dark; /* Ensures calendar popup is dark */
+    color-scheme: #FFFFFF; /* Ensures calendar popup is dark */
     color: #e1e1e1;
 }
 
@@ -186,7 +186,7 @@ body.dark-mode input[type="file"]::file-selector-button {
 }
 
 body.dark-mode input[type="file"]::file-selector-button:hover {
-    background-color: #363636; /* Darker hover color */
+    background-color: #3a3a3a; /* Darker hover color */
     border-color: rgba(255, 255, 255, 0.2);
 }
 
