@@ -81,14 +81,10 @@ def edit_project(request, slug):
         'project': project
     })
 
+@user_passes_test(lambda u: u.is_superuser)
 @login_required
-def delete_project(request, project_id):
-    # Garantir que apenas superusers possam excluir
-    if not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para excluir projetos.')
-        return redirect('main:projects')
-    
-    project = get_object_or_404(Project, id=project_id)
+def delete_project(request, slug):
+    project = get_object_or_404(Project, slug=slug)
     
     if request.method == 'POST':
         project.delete()
