@@ -53,40 +53,40 @@ Funciona em qualquer tela: celular, tablet, PC... Até no seu videogame se você
 
 ### 2.1 Requisitos Funcionais Geral (Usuários Não-Autenticados e Administradores)
 
-| ID          | REQUISITOS GERAIS | STATUS           |
-|-------------|------------------|------------------|
-| RF-GER001   | Garantir que o site seja exibido corretamente em dispositivos móveis, tablets e desktops, com layout adaptável. | ✅ Implementado |
-| RF-GER002   | Permitir que o usuário alterne entre os temas claro e escuro, com persistência da escolha. | ✅ Implementado |
-| RF-GER003   | Exibir uma lista de projetos com informações básicas (título, status, tags, etc.). | ✅ Implementado |
-| RF-GER004   | Permitir filtrar a lista de projetos por tags, facilitando a busca por categorias específicas. | ✅ Implementado |
-| RF-GER005   | Permitir filtrar a lista de projetos por status (ex.: concluído, em andamento). | ✅ Implementado |
-| RF-GER006   | Oferecer um botão para limpar todos os filtros aplicados e retornar à lista completa de projetos. | ✅ Implementado |
-| RF-GER007   | Exibir cards de projetos com metadados (título, status, tags, datas, etc.) de forma clara e organizada. | ✅ Implementado |
-| RF-GER008   | Permitir que o usuário visualize detalhes completos de um projeto ao clicar em um card. | ✅ Implementado |
-| RF-GER009   | Disponibilizar links relacionados a cada projeto (ex.: repositório GitHub, Drive, YouTube, Site em Deploy, etc.). | ✅ Implementado |
-| RF-GER010   | Incluir um botão flutuante para retornar ao topo da página, melhorando a navegabilidade. | ✅ Implementado |
-| RF-GER011   | Exibir um "caminho" ou "camadas de acesso" na página de detalhes do projeto, indicando a localização atual no site. | ✅ Implementado |
-| RF-GER012   | Permitir que o usuário envie um e-mail para contato diretamente pelo site, usando um formulário simples. | ✅ Implementado |
-| RF-GER013   | Exibir links para redes sociais em um menu suspenso. | ✅ Implementado |
-| RF-GER014   | Garantir que todos os textos sejam legíveis em ambos os temas (claro e escuro), com contraste adequado. | ⚠️ Parcialmente |
-| RF-GER015   | Aplicar um efeito de "vidro" (glassmorphism) na barra de navegação para um visual moderno. | ✅ Implementado |
-| RF-GER016   | Permitir a exclusão de tags que não estão mais em uso no sistema, mantendo a base de dados organizada. | ⏳ Não Iniciado |
-| RF-GER017   | Permitir a ordenação da lista de projetos por data de criação, data de conclusão ou título. | ⏳ Não Iniciado |
-| RF-GER018   | Exibir um indicador visual (ex.: ícone ou badge) nos Cards de Projetos para destacar o status. | ⏳ Não Iniciado |
-| RF-GER019   | Exibir um contador de projetos na lista. | ⏳ Não Iniciado |
+| ID         | REQUISITOS GERAIS                                                                                                                                                                                      | STATUS          |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| RF-GER001  | Garantir que o site seja exibido corretamente em dispositivos móveis, tablets e desktops, com layout adaptável.                                                                                        | ✅ Implementado |
+| RF-GER002  | Permitir que o usuário alterne entre os temas claro e escuro, com persistência da escolha.                                                                                                              | ✅ Implementado |
+| RF-GER003  | Exibir uma lista de projetos com informações básicas (título, status, tags, etc.).                                                                                                                      | ✅ Implementado |
+| RF-GER004  | Permitir filtrar a lista de projetos por tags, facilitando a busca por categorias específicas.                                                                                                          | ✅ Implementado |
+| RF-GER005  | Permitir filtrar a lista de projetos por status (ex.: concluído, em andamento).                                                                                                                         | ✅ Implementado |
+| RF-GER006  | Oferecer um botão para limpar todos os filtros aplicados e retornar à lista completa de projetos.                                                                                                       | ✅ Implementado |
+| RF-GER007  | Exibir cards de projetos com metadados (título, status, tags, datas, etc.) de forma clara e organizada.                                                                                                 | ✅ Implementado |
+| RF-GER008  | Permitir que o usuário visualize detalhes completos de um projeto ao clicar em um card.                                                                                                                 | ✅ Implementado |
+| RF-GER009  | Disponibilizar links relacionados a cada projeto (ex.: repositório GitHub, Drive, YouTube, Site em Deploy, etc.).                                                                                       | ✅ Implementado |
+| RF-GER010  | Incluir um botão flutuante para retornar ao topo da página, melhorando a navegabilidade.                                                                                                                | ✅ Implementado |
+| RF-GER011  | Exibir um "caminho" ou "camadas de acesso" na página de detalhes do projeto, indicando a localização atual no site.                                                                                     | ✅ Implementado |
+| RF-GER012  | Permitir que o usuário envie um e-mail para contato diretamente pelo site, usando um formulário simples.                                                                                                | ✅ Implementado |
+| RF-GER013  | Exibir links para redes sociais em um menu suspenso.                                                                                                                                                    | ✅ Implementado |
+| RF-GER014  | Garantir que todos os textos sejam legíveis em ambos os temas (claro e escuro), com contraste adequado.                                                                                                 | ⚠️ Parcialmente |
+| RF-GER015  | Aplicar um efeito de "vidro" (glassmorphism) na barra de navegação para um visual moderno.                                                                                                              | ✅ Implementado |
+| RF-GER016  | Permitir a exclusão de tags que não estão mais em uso no sistema, mantendo a base de dados organizada.                                                                                                   | ⏳ Não Iniciado |
+| RF-GER017  | Permitir a ordenação da lista de projetos por data de criação, data de conclusão ou título.                                                                                                             | ⏳ Não Iniciado |
+| RF-GER018  | Exibir um indicador visual (ex.: ícone ou badge) nos Cards de Projetos para destacar o status.                                                                                                          | ⏳ Não Iniciado |
+| RF-GER019  | Exibir um contador de projetos na lista.                                                                                                                                                                | ⏳ Não Iniciado |
 
 ### 2.2 Requisitos Funcionais para Administradores
 
-| ID          | REQUISITOS ADMINISTRADORES | STATUS           |
-|-------------|---------------------------|------------------|
-| RF-ADM001   | Permitir a criação de novos projetos, com campos para capa, título, descrição, tags, status, datas, conteúdo principal e links. | ✅ Implementado |
-| RF-ADM002   | Integrar o editor tinyMCE para facilitar a formatação de textos nos conteúdos dos projetos (ex.: negrito, listas, links). | ✅ Implementado |
-| RF-ADM003   | Permitir o upload de imagens para serem usadas como capa dos projetos. | ✅ Implementado |
-| RF-ADM004   | Garantir que o tema do editor tinyMCE mude automaticamente ao alternar entre os temas claro e escuro do sistema. | ✅ Implementado |
-| RF-ADM005   | Permitir a edição de projetos já criados, com atualização em tempo real dos dados. | ✅ Implementado |
-| RF-ADM006   | Permitir a exclusão de projetos, com confirmação do usuário antes da remoção definitiva. | ✅ Implementado |
-| RF-ADM007   | Exibir uma tela de confirmação antes da exclusão de um projeto, para evitar remoções acidentais. | ✅ Implementado |
-| RF-ADM008   | Implementar um sistema de pré-visualização de projetos antes de publicá-los. | ⏳ Não Iniciado |
+| ID         | REQUISITOS ADMINISTRADORES                                                                                                                                                     | STATUS          |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
+| RF-ADM001  | Permitir a criação de novos projetos, com campos para capa, título, descrição, tags, status, datas, conteúdo principal e links.                                                | ✅ Implementado |
+| RF-ADM002  | Integrar o editor tinyMCE para facilitar a formatação de textos nos conteúdos dos projetos (ex.: negrito, listas, links).                                                      | ✅ Implementado |
+| RF-ADM003  | Permitir o upload de imagens para serem usadas como capa dos projetos.                                                                                                         | ✅ Implementado |
+| RF-ADM004  | Garantir que o tema do editor tinyMCE mude automaticamente ao alternar entre os temas claro e escuro do sistema.                                                                | ✅ Implementado |
+| RF-ADM005  | Permitir a edição de projetos já criados, com atualização em tempo real dos dados.                                                                                             | ✅ Implementado |
+| RF-ADM006  | Permitir a exclusão de projetos, com confirmação do usuário antes da remoção definitiva.                                                                                       | ✅ Implementado |
+| RF-ADM007  | Exibir uma tela de confirmação antes da exclusão de um projeto, para evitar remoções acidentais.                                                                               | ✅ Implementado |
+| RF-ADM008  | Implementar um sistema de pré-visualização de projetos antes de publicá-los.                                                                                                   | ⏳ Não Iniciado |
 
 ## Quer ajudar? Bora!
 
