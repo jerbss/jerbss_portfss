@@ -166,36 +166,94 @@
                     <h3 class="h5 mb-3">
                         <i class="fas fa-music me-2"></i>Artistas
                     </h3>
+
                     <!-- TWICE -->
-                    <div class="d-flex align-items-center mb-3">
-                        <img
-                            src="{% static 'images/twice.jpg' %}"
-                            alt="TWICE"
-                            class="rounded-circle me-3"
-                            style="width: 60px; height: 60px; object-fit: cover;"
-                        />
+                    <div class="d-flex align-items-center mb-3" 
+                         style="position: relative;">
+                        <a href="https://open.spotify.com/intl-pt/artist/7n2Ycct7Beij7Dj7meI4X0?si=QSiHYw83SzitxPlsvUkkbg"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/twice.jpg' %}"
+                                alt="TWICE"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fab fa-spotify"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #1DB954;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
                         <span>TWICE</span>
                     </div>
+
                     <!-- Wesley Safadão -->
-                    <div class="d-flex align-items-center mb-3">
-                        <img
-                            src="{% static 'images/safadao.jpg' %}"
-                            alt="Wesley Safadão"
-                            class="rounded-circle me-3"
-                            style="width: 60px; height: 60px; object-fit: cover;"
-                        />
+                    <div class="d-flex align-items-center mb-3" 
+                         style="position: relative;">
+                        <a href="https://open.spotify.com/intl-pt/artist/1AL2GKpmRrKXkYIcASuRFa?si=i777P_PVSr28B9MgKTvWZQ"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/safadao.jpg' %}"
+                                alt="Wesley Safadão"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fab fa-spotify"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #1DB954;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
                         <span>Wesley Safadão</span>
                     </div>
+
                     <!-- ANRI -->
-                    <div class="d-flex align-items-center mb-3">
-                        <img
-                            src="{% static 'images/anri.jpg' %}"
-                            alt="ANRI"
-                            class="rounded-circle me-3"
-                            style="width: 60px; height: 60px; object-fit: cover;"
-                        />
+                    <div class="d-flex align-items-center mb-3" 
+                         style="position: relative;">
+                        <a href="https://open.spotify.com/intl-pt/artist/0xGtOrmB2hnrNRLG3vhpSo?si=dQlFWdRkSYqNp8hDqB5hGA"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/anri.jpg' %}"
+                                alt="ANRI"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fab fa-spotify"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #1DB954;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
                         <span>ANRI</span>
                     </div>
+
                     <p class="text-muted fst-italic small mt-2">
                         <i class="fas fa-laugh-wink me-1"></i>
                         K-pop, forró e city pop... Se juntar os três, dá pra fazer um remix de "Vai Safadão" com "Last Dance" em coreano!
