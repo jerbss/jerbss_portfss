@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-@@(i9_xc12wx-@1f%esrr8ra3a^-4cnmxsv5odef!t&g4do=+6
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'https://jerbss-portfss.onrender.com',
+    'jerbss-portfss.onrender.com',
 ]
 
 
