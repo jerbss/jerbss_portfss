@@ -62,13 +62,18 @@ p.lead {
     color: var(--bg-color); /* Usa a variável de cor do tema */
 }
 
-/* Estilos para a imagem de perfil */
+/* Estilos para a imagem de perfil - otimizado para diferentes dispositivos */
 .img-fluid.rounded-circle {
     max-width: 100%;
     height: auto;
     border-radius: 50%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 0 auto; /* Centraliza a imagem */
+    width: 400px; /* Largura padrão para desktop */
+    max-height: 400px; /* Limita altura máxima */
+    object-fit: cover; /* Mantém proporção da imagem */
 }
 
 .img-fluid.rounded-circle:hover {
@@ -77,6 +82,12 @@ p.lead {
 }
 
 /* Ajustes para telas menores */
+@media (max-width: 992px) {
+    .img-fluid.rounded-circle {
+        width: 350px; /* Tamanho para tablets */
+    }
+}
+
 @media (max-width: 768px) {
     .display-4.fw-bold {
         font-size: 2rem;
@@ -94,6 +105,13 @@ p.lead {
 
     .img-fluid.rounded-circle {
         margin-top: 2rem;
+        width: 250px; /* Tamanho para dispositivos móveis */
+    }
+}
+
+@media (max-width: 576px) {
+    .img-fluid.rounded-circle {
+        width: 200px; /* Tamanho para dispositivos móveis pequenos */
     }
 }
 
