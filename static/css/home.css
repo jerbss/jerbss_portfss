@@ -120,6 +120,22 @@ p.lead {
     display: inline-block;
 }
 
+/* Estilos de gradiente para o modo claro */
+.gradient-light {
+    background: linear-gradient(45deg, #0d6efd, #4f93ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* Estilos de gradiente para o modo escuro */
+.gradient-dark {
+    background: linear-gradient(45deg, #64b5f6, #2196f3);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
 .greeting-animation.fade {
     opacity: 0;
     transform: translateY(-20px) scale(0.8);

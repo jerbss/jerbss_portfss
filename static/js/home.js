@@ -14,6 +14,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adiciona classe inicial
     greetingElement.classList.add('initial');
     
+    // Função para verificar o tema atual
+    function isDarkMode() {
+        return document.body.classList.contains('dark-mode');
+    }
+    
+    // Função para aplicar a classe de gradiente apropriada
+    function applyGradientClass() {
+        // Remove ambas as classes de gradiente primeiro
+        greetingElement.classList.remove('gradient-light', 'gradient-dark');
+        // Aplica a classe apropriada baseada no tema
+        greetingElement.classList.add(isDarkMode() ? 'gradient-dark' : 'gradient-light');
+    }
+    
+    // Aplica o gradiente inicial
+    applyGradientClass();
+    
+    // Observer para mudanças de tema
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            // Pequeno delay para esperar a mudança de tema acontecer
+            setTimeout(applyGradientClass, 100);
+        });
+    }
+    
     // Aguarda 800ms antes de iniciar as animações
     setTimeout(() => {
         // Remove a classe inicial e mostra o primeiro greeting
@@ -29,6 +54,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 greetingElement.textContent = greetings[currentIndex];
                 greetingElement.classList.remove('fade');
                 greetingElement.classList.add('show');
+                // Reaplica o gradiente depois de mudar o texto
+                applyGradientClass();
             }, 300);
         }
         
