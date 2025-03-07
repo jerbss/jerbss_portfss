@@ -168,3 +168,21 @@ p.lead {
     opacity: 0;
     transform: translateY(20px) scale(0.8);
 }
+
+/* Estilo para os apelidos */
+.nicknames {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.85;
+    transition: all 0.3s ease;
+}
+
+/* Ajuste responsivo para os apelidos */
+@media (max-width: 768px) {
+    .nicknames {
+        font-size: 1.1rem;
+    }
+}
