@@ -96,3 +96,19 @@ p.lead {
         margin-top: 2rem;
     }
 }
+
+/* Adicione isso ao seu arquivo CSS */
+.list-unstyled li {
+    margin-bottom: 0.5rem; /* Ajuste o valor conforme necessário */
+}
+
+.card-body ul {
+  /* Ensures indentation and spacing */
+  margin-left: 1.5rem;
+}
+
+.card-body li {
+  /* Adds space between topics */
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}
