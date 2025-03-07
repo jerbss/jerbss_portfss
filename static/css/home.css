@@ -91,10 +91,12 @@ p.lead {
 @media (max-width: 768px) {
     .display-4.fw-bold {
         font-size: 2rem;
+        margin-bottom: 0.5rem; /* Reduzir espaçamento após o título */
     }
 
     .lead {
         font-size: 1.1rem;
+        margin-top: 0.5rem; /* Adicionar margem acima do texto após a imagem */
     }
 
     .btn-primary.btn-lg,
@@ -104,8 +106,20 @@ p.lead {
     }
 
     .img-fluid.rounded-circle {
-        margin-top: 2rem;
+        /* Remove margin-top since image is now above text */
+        margin-top: 0.5rem;
+        margin-bottom: 1.5rem;
         width: 250px; /* Tamanho para dispositivos móveis */
+    }
+    
+    .nicknames {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem; /* Adicionar margem abaixo dos apelidos */
+    }
+    
+    /* Add top margin to first section after hero to create better spacing */
+    .container.py-5 + .container.my-5 {
+        margin-top: 1rem !important;
     }
 }
 

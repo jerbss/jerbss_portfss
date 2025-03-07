@@ -11,16 +11,42 @@
 <!-- Hero Section -->
 <div class="container py-5">
     <div class="row align-items-center">
-        <div class="col-md-6">
+        <!-- Coluna para todo o texto (desktop) e para saudação/nome/apelidos (mobile) -->
+        <div class="col-md-6 order-1">
+            <!-- Saudação, nome e apelidos (visíveis em todos os dispositivos) -->
             <h1 class="display-4 fw-bold">
                 <div id="greeting" class="greeting-animation mb-2">Olá!</div>
                 <div>Eu sou Jerbesson</div>
                 <div class="nicknames">Mas pode me chamar de Jerb, Jerbin, Jerbinho, Jherber, Jejé, GG ou Jerdelicia</div>
             </h1>
+            
+            <!-- Bio e botões (visíveis apenas em desktop) -->
+            <div class="d-none d-md-block">
+                <p class="lead mb-4">
+                    Tenho 23 anos, moro em Fortaleza/CE e sou estudante de Sistemas e Mídias Digitais na UFC.
+                </p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <a href="{% url 'main:projects' %}" class="btn btn-primary btn-lg px-4 me-md-2">
+                        <i class="fas fa-code me-2"></i>Ver Meus Projetos
+                    </a>
+                    <a href="{% url 'main:contact' %}" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="fas fa-paper-plane me-2"></i>Me Mande um Salve!
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Imagem em desktop (à direita) e mobile (após apelidos) -->
+        <div class="col-12 col-md-6 order-2 text-center mb-4 mb-md-0">
+            <img src="{% static 'images/profile_photo_1.png' %}" class="img-fluid rounded-circle" alt="Foto de Perfil">
+        </div>
+        
+        <!-- Bio e botões apenas em mobile (após a imagem) -->
+        <div class="col-12 d-md-none order-3">
             <p class="lead mb-4">
                 Tenho 23 anos, moro em Fortaleza/CE e sou estudante de Sistemas e Mídias Digitais na UFC.
             </p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <div class="d-grid gap-2">
                 <a href="{% url 'main:projects' %}" class="btn btn-primary btn-lg px-4 me-md-2">
                     <i class="fas fa-code me-2"></i>Ver Meus Projetos
                 </a>
@@ -29,12 +55,8 @@
                 </a>
             </div>
         </div>
-        <div class="col-md-6">
-            <img src="{% static 'images/profile_photo_1.png' %}" class="img-fluid rounded-circle" alt="Foto de Perfil">
-        </div>
     </div>
 </div>
-
 
 <!-- Professional Experience Section -->
 <div class="container my-5">
