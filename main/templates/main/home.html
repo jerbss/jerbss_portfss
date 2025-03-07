@@ -163,14 +163,94 @@
                     <h3 class="h5 mb-3">
                         <i class="fas fa-film me-2"></i>Filmes
                     </h3>
-                    <ol class="list-unstyled">
-                        <li class="mb-2">O Irlandês</li>
-                        <li class="mb-2">Mad Max: Estrada da Fúria</li>
-                        <li>O Lobo de Wall Street</li>
-                    </ol>
+
+                    <!-- O Irlandês -->
+                    <div class="d-flex align-items-center mb-3">
+                        <a href="https://www.imdb.com/pt/title/tt1302006/?ref_=ext_shr_lnk"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/o_irlandes.png' %}"
+                                alt="O Irlandês"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fas fa-film"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #f3ce13;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
+                        <span>O Irlandês</span>
+                    </div>
+
+                    <!-- Mad Max -->
+                    <div class="d-flex align-items-center mb-3">
+                        <a href="https://www.imdb.com/pt/title/tt1392190/?ref_=ext_shr_lnk"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/madmax.jpeg' %}"
+                                alt="Mad Max: Estrada da Fúria"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fas fa-film"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #f3ce13;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
+                        <span>Mad Max: Estrada da Fúria</span>
+                    </div>
+
+                    <!-- O Lobo de Wall Street -->
+                    <div class="d-flex align-items-center mb-3">
+                        <a href="https://www.imdb.com/pt/title/tt0993846/?ref_=ext_shr_lnk"
+                           target="_blank"
+                           style="position: relative; display: inline-block;">
+                            <img
+                                src="{% static 'images/wallstreet.jpeg' %}"
+                                alt="O Lobo de Wall Street"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <!-- Ícone aparece no hover -->
+                            <i class="fas fa-film"
+                               style="
+                                   position: absolute;
+                                   top: 50%;
+                                   left: 50%;
+                                   transform: translate(-50%, -50%);
+                                   color: #f3ce13;
+                                   font-size: 24px;
+                                   opacity: 0;
+                                   transition: opacity 0.3s;
+                               ">
+                            </i>
+                        </a>
+                        <span>O Lobo de Wall Street</span>
+                    </div>
+
                     <p class="text-muted fst-italic small mt-2">
                         <i class="fas fa-laugh-wink me-1"></i>
-                        Scorsese tão presente que até Mad Max virou um filme de máfia italiana!
+                        <span class="fst-italic">Scorsese tão presente que até Mad Max virou um filme de máfia italiana!</span> 😎🎬
                     </p>
                 </div>
             </div>
@@ -272,7 +352,7 @@
 
                     <p class="text-muted fst-italic small mt-2">
                         <i class="fas fa-laugh-wink me-1"></i>
-                        TWICE, Safadão e ANRI: um mix de idiomas e estilos, mas o clima é sempre o mesmo: sol, praia e aquele som de verão que não sai da cabeça! 😎🏖️🎶
+                        TWICE, Safadão e ANRI: uma mistura muito louca de idiomas, gêneros e estilos, mas o clima é sempre o mesmo: sol, praia e aquele som de verão que não sai da cabeça! 😎🏖️🎶
                     </p>
                 </div>
             </div>
