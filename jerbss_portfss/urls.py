@@ -24,3 +24,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Adicionar estas linhas no final do arquivo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Em produção, WhiteNoise serve arquivos estáticos, incluindo mídia

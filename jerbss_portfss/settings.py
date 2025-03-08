@@ -89,23 +89,26 @@ WSGI_APPLICATION = 'jerbss_portfss.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Configuração para o Railway - usa DATABASE_URL se estiver disponível
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default=''),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# Database configuration - revised for Railway deployment
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-# Fallback para desenvolvimento local se DATABASE_URL não estiver definido
-if not DATABASES['default']:
+if DATABASE_URL:
+    # Production database (Railway)
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Development database (local or Supabase)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'postgres',
             'USER': 'postgres.wiqgrihiravesamlblau',
-            'PASSWORD': config('DB_PASSWORD'),
+            'PASSWORD': config('DB_PASSWORD', default=''),
             'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
             'PORT': '5432',
         }
@@ -144,17 +147,26 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    os.path.join(BASE_DIR, 'static'),
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# WhiteNoise configuração
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Middleware WhiteNoise já está configurado corretamente
+
+# Media files configuration
+# Em produção, usamos o mesmo diretório que static temporariamente
+# Isso permite que as imagens funcionem no Railway sem storage externo
+if not DEBUG:
+    MEDIA_URL = '/static/media/'
+    MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configurações do CKEditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
