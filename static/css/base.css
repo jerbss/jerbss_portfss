@@ -730,6 +730,26 @@ h1, h2, h3, h4, h5, h6,
     letter-spacing: -0.02em;
 }
 
+/* Estilos padronizados para títulos de páginas */
+.display-4 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Responsividade para títulos de páginas */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-4 {
+        font-size: 1.75rem;
+    }
+}
+
 /* Navbar styles */
 .navbar .nav-link {
     font-family: var(--font-heading);
