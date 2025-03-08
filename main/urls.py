@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import test_cloudinary
 
 app_name = 'main'
 
@@ -11,4 +12,5 @@ urlpatterns = [
     path('projects/<slug:slug>/edit/', views.edit_project, name='edit_project'),
     path('projects/<slug:slug>/delete/', views.delete_project, name='delete_project'),
     path('contact/', views.contact, name='contact'),
+    path('test-cloudinary/', test_cloudinary, name='test_cloudinary'),
 ]

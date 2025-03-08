@@ -25,7 +25,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Adicionar estas linhas no final do arquivo
+# Always add media URL patterns in development mode
+# This ensures that even with Cloudinary, local references still work for existing files
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# Em produção, WhiteNoise serve arquivos estáticos, incluindo mídia

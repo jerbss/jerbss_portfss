@@ -4,7 +4,7 @@
     "buildCommand": "python manage.py collectstatic --noinput"
   },
   "deploy": {
-    "startCommand": "gunicorn jerbss_portfss.wsgi:application",
+    "startCommand": "python manage.py migrate && gunicorn jerbss_portfss.wsgi:application",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }

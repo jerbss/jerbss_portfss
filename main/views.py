@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.http import JsonResponse
+from cloudinary.uploader import upload
+import os
 from .models import Project, Tag
 from .forms import ProjectForm, ContactForm
 
@@ -135,3 +138,21 @@ def project_detail(request, slug):
         'project': project,
         'related_projects': related_projects
     })
+
+def test_cloudinary(request):
+    """Test function to verify Cloudinary configuration."""
+    try:
+        # Small test upload
+        result = upload("https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg", 
+                        public_id="test_connection")
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Successfully connected to Cloudinary',
+            'result': result
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': f'Error connecting to Cloudinary: {str(e)}'
+        })

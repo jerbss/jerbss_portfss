@@ -156,13 +156,16 @@ STATICFILES_DIRS = [
 if DEBUG:
     # Local development - use WhiteNoise for static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    # Hybrid approach: Use Cloudinary for new uploads but keep access to local files
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 else:
     # Production - use Cloudinary for both static and media files
     STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    MEDIA_URL = '/media/'  # This remains the same, Cloudinary handles the actual storage
+    MEDIA_URL = '/media/'
 
 # WhiteNoise configuration (used in development)
 WHITENOISE_MIMETYPES = {
@@ -173,14 +176,6 @@ WHITENOISE_MIMETYPES = {
     '.png': 'image/png',
     '.gif': 'image/gif',
 }
-
-# Media files configuration
-if not DEBUG:
-    MEDIA_URL = '/static/media/'
-    MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configurações do CKEditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -234,6 +229,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-
-# Configuração para servir arquivos estáticos com WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
