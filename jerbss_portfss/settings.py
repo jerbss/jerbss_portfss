@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-@@(i9_xc12wx-@1f%esrr8ra3a^-4cnmxsv5odef!t&g4do=+6')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = [
     'jerbss-portfolio.up.railway.app',
@@ -34,7 +34,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '127.0.0.1:8000',
-    '.railway.app',  # Permite todos os subdomínios do railway.app
+    '.railway.app',
+    'jerbssfolio.up.railway.app/',
 ]
 
 
