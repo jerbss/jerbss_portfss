@@ -828,3 +828,369 @@ body.dark-mode .status-filter .btn-outline-primary:hover *:not(.badge),
 body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     color: #121212 !important;
 }
+
+/* ============================
+   NOVO DESIGN DE CARD DE PROJETOS
+   ============================ */
+
+/* Variáveis específicas para os cards */
+:root {
+    --card-radius: 16px;
+    --card-shadow: 0 2px 20px rgba(0,0,0,0.07);
+    --card-shadow-hover: 0 4px 25px rgba(0,0,0,0.12);
+    --card-bg-light: #ffffff;
+    --card-bg-dark: #1e1e1e;
+    --card-transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    --tag-bg-light: rgba(13, 110, 253, 0.08);
+    --tag-bg-dark: rgba(100, 181, 246, 0.08);
+    --tag-text-light: #0d6efd;
+    --tag-text-dark: #64b5f6;
+}
+
+/* Base do Card */
+.project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--card-bg-light);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: var(--card-transition);
+}
+
+body.dark-mode .project-card {
+    background-color: var(--card-bg-dark);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* Cabeçalho do Card com Imagem */
+.project-card__header {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.project-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.project-card:hover .project-card__image {
+    transform: scale(1.05);
+}
+
+/* Badge de Destaque */
+.project-card__featured {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(255, 87, 34, 0.3);
+    z-index: 2;
+}
+
+/* Badge de Status */
+.project-card__status {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: auto;
+    z-index: 2;
+}
+
+/* Gradiente sobreposto à imagem */
+.project-card__header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.2) 0%,
+        transparent 40%,
+        transparent 60%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    z-index: 1;
+}
+
+/* Corpo do Card */
+.project-card__body {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Título do Projeto */
+.project-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+body.dark-mode .project-card__title {
+    color: #ffffff;
+}
+
+/* Descrição do Projeto */
+.project-card__description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--text-color);
+    opacity: 0.9;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.dark-mode .project-card__description {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Tags do Projeto */
+.project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+}
+
+.project-card__tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background-color: var(--tag-bg-light);
+    color: var(--tag-text-light);
+    transition: var(--card-transition);
+}
+
+body.dark-mode .project-card__tag {
+    background-color: var(--tag-bg-dark);
+    color: var(--tag-text-dark);
+}
+
+/* Data do Projeto */
+.project-card__date {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+body.dark-mode .project-card__date {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.project-card__date i {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+body.dark-mode .project-card__date i {
+    color: var(--primary-dark);
+}
+
+/* Rodapé do Card com Botões */
+.project-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+body.dark-mode .project-card__footer {
+    border-top-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Botões dentro do card */
+.project-card__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: var(--card-transition);
+}
+
+/* Botão primário */
+.project-card__btn--primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+body.dark-mode .project-card__btn--primary {
+    background-color: var(--primary-dark);
+    color: #121212;
+}
+
+.project-card__btn--primary:hover {
+    background-color: var(--hover-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+body.dark-mode .project-card__btn--primary:hover {
+    background-color: var(--hover-dark);
+    color: #121212;
+    transform: translateY(-2px);
+}
+
+/* Botão de ícone */
+.project-card__btn--icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    border-radius: 50%;
+    font-size: 0.9rem;
+}
+
+body.dark-mode .project-card__btn--icon {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.project-card__btn--icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+body.dark-mode .project-card__btn--icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Botão de perigo (excluir) */
+.project-card__btn--danger {
+    color: #dc3545;
+}
+
+body.dark-mode .project-card__btn--danger {
+    color: #ff6b6b;
+}
+
+.project-card__btn--danger:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+body.dark-mode .project-card__btn--danger:hover {
+    background-color: rgba(255, 107, 107, 0.2);
+}
+
+/* Grupo de controles de admin */
+.project-card__admin-controls {
+    display: flex;
+    gap: 8px;
+}
+
+/* Responsividade dos cards */
+@media (max-width: 576px) {
+    .project-card__body {
+        padding: 16px;
+        gap: 8px;
+    }
+    
+    .project-card__title {
+        font-size: 1.1rem;
+    }
+    
+    .project-card__description {
+        -webkit-line-clamp: 2;
+        font-size: 0.9rem;
+    }
+    
+    .project-card__footer {
+        padding: 12px 16px;
+    }
+    
+    .project-card__btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Estilo para o tipo de projeto */
+.project-card__type-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+}
+
+.project-card__type {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cores para cada tipo de projeto */
+.project-card__type--academic {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.project-card__type--personal {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.project-card__type--professional {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Ajustar posicionamento quando há featured badge */
+.project-card__featured + .project-card__type-badge {
+    top: 56px; /* Dá espaço para a badge de destaque */
+}
+
+/* Reposicionar o status para a esquerda */
+.project-card__status {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: auto;
+    z-index: 2;
+}

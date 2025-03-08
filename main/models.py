@@ -25,7 +25,7 @@ class Tag(models.Model):
 
 class Project(models.Model):
     STATUS_CHOICES = (
-        ('in_progress', 'Em andamento'),
+        ('in_progress', 'Em Andamento'),  # Corrigido para "Em Andamento" com A maiúsculo
         ('completed', 'Concluído'),
     )
     
@@ -67,8 +67,8 @@ class Project(models.Model):
     @property
     def get_status_display_html(self):
         status_classes = {
-            'in_progress': 'badge bg-warning text-dark',  # Added text-dark for better contrast
-            'completed': 'badge bg-success text-light'    # Added text-light for better contrast
+            'in_progress': 'badge bg-warning text-dark',
+            'completed': 'badge bg-success text-light'
         }
         status_class = status_classes.get(self.status, 'badge bg-secondary text-light')
         return mark_safe(f'<span class="{status_class}">{self.get_status_display()}</span>')
@@ -80,7 +80,18 @@ class Project(models.Model):
         
         if self.status == 'completed' and self.end_date:
             return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - {self.end_date.strftime("%d/%m/%Y")}</span>')
-        return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - Em andamento</span>')
+        return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - Em Andamento</span>')  # Corrigido "Em Andamento"
+    
+    @property
+    def get_type_display_html(self):
+        """Retorna o tipo do projeto com formatação HTML adequada"""
+        type_classes = {
+            'academic': 'project-card__type project-card__type--academic',
+            'personal': 'project-card__type project-card__type--personal',
+            'professional': 'project-card__type project-card__type--professional'
+        }
+        type_class = type_classes.get(self.project_type, 'project-card__type')
+        return mark_safe(f'<span class="{type_class}">{self.get_project_type_display()}</span>')
 
     @property
     def safe_image_url(self):

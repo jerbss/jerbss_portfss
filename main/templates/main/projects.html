@@ -108,56 +108,69 @@
         <div class="col project-item" 
              data-tags="{% for tag in project.tags.all %}{{ tag.name }} {% endfor %}"
              data-status="{{ project.status }}">
-            <div class="card h-100">
-                {% if project.featured %}
-                <div class="featured-badge">
-                    <i class="fas fa-star"></i> Destaque
-                </div>
-                {% endif %}
-                
-                <div class="card-img-wrapper">
+            <article class="project-card">
+                <!-- Card Header: Image + Status Badge -->
+                <div class="project-card__header">
                     {% if project.image %}
-                        <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}" 
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-card__image" 
                              onerror="this.src='{% static 'images/default-project.jpeg' %}'; this.onerror='';">
                     {% else %}
-                        <img src="{% static 'images/default-project.jpeg' %}" class="card-img-top" alt="{{ project.title }}">
+                        <img src="{% static 'images/default-project.jpeg' %}" alt="{{ project.title }}" class="project-card__image">
                     {% endif %}
-                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                        <div class="project-status">
-                            {{ project.get_status_display_html|safe }}
-                            <span class="project-date ms-2">
-                                <i class="far fa-calendar-alt"></i> {{ project.get_date_display|safe }}
-                            </span>
-                        </div>
+                    
+                    {% if project.featured %}
+                    <div class="project-card__featured">
+                        <i class="fas fa-star"></i><span class="ms-1">Destaque</span>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Adicionar o tipo de projeto -->
+                    <div class="project-card__type-badge">
+                        {{ project.get_type_display_html|safe }}
+                    </div>
+                    
+                    <div class="project-card__status">
+                        {{ project.get_status_display_html|safe }}
                     </div>
                 </div>
                 
-                <div class="card-body">
-                    <h3 class="card-title h5">{{ project.title }}</h3>
-                    <p class="card-text text-body">{{ project.short_description }}</p>
-                    <div class="project-tags mb-3">
+                <!-- Card Body: Content -->
+                <div class="project-card__body">
+                    <h3 class="project-card__title">{{ project.title }}</h3>
+                    <p class="project-card__description">{{ project.short_description }}</p>
+                    
+                    <!-- Tags -->
+                    <div class="project-card__tags">
                         {% for tag in project.tags.all %}
-                        <span class="badge bg-secondary">{{ tag.name }}</span>
+                        <span class="project-card__tag">{{ tag.name }}</span>
                         {% endfor %}
                     </div>
+                    
+                    <!-- Date -->
+                    <div class="project-card__date">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{ project.get_date_display|striptags }}</span>
+                    </div>
                 </div>
                 
-                <div class="card-footer d-flex justify-content-between align-items-center">
-                    <a href="{% url 'main:project_detail' project.slug %}" class="btn btn-sm btn-primary">Ver Detalhes</a>
+                <!-- Card Footer: Actions -->
+                <div class="project-card__footer">
+                    <a href="{% url 'main:project_detail' project.slug %}" class="project-card__btn project-card__btn--primary">
+                        Ver Detalhes
+                    </a>
                     
-                    <!-- Controles de Admin para Superuser -->
                     {% if user.is_superuser %}
-                    <div class="admin-controls">
-                        <a href="{% url 'main:edit_project' project.slug %}" class="btn btn-sm btn-warning">
+                    <div class="project-card__admin-controls">
+                        <a href="{% url 'main:edit_project' project.slug %}" class="project-card__btn project-card__btn--icon" aria-label="Editar projeto">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a href="{% url 'main:delete_project' project.slug %}" class="btn btn-sm btn-danger">
+                        <a href="{% url 'main:delete_project' project.slug %}" class="project-card__btn project-card__btn--icon project-card__btn--danger" aria-label="Excluir projeto">
                             <i class="fas fa-trash"></i>
                         </a>
                     </div>
                     {% endif %}
                 </div>
-            </div>
+            </article>
         </div>
         {% empty %}
         <div class="col-12">
