@@ -1,2 +1,2 @@
-web: mkdir -p staticfiles staticfiles/media && python manage.py collectstatic --noinput --clear && python manage.py migrate && gunicorn jerbss_portfss.wsgi:application --bind 0.0.0.0:$PORT
+web: python manage.py collectstatic --no-input && gunicorn jerbss_portfss.wsgi
 build: bash build.sh
