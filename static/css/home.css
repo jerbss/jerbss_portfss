@@ -209,6 +209,14 @@ p.lead {
     transition: all 0.2s ease;
 }
 
+/* Estilos para os ícones nos cards TOP 3 no modo claro */
+.fa-paw,
+.fa-glass-cheers,
+.fa-film,
+.fa-music {
+    color: var(--primary-color);
+}
+
 /* Efeito hover sutil para os termos destacados */
 .highlight:hover {
     color: var(--hover-color);
@@ -221,4 +229,45 @@ body.dark-mode .highlight {
 
 body.dark-mode .highlight:hover {
     color: #90caf9;
+}
+
+/* Estilos para cards no modo escuro */
+body.dark-mode .card {
+    background-color: #2d2d2d;
+    border-color: #444;
+}
+
+body.dark-mode .card-body {
+    color: #e1e1e1;
+}
+
+body.dark-mode .card .h5 {
+    color: #ffffff;
+}
+
+body.dark-mode .text-muted {
+    color: #b0b0b0 !important;
+}
+
+/* Estilos específicos para os cards TOP 3 no modo escuro */
+body.dark-mode .container.my-5 .card {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .fa-paw,
+body.dark-mode .fa-glass-cheers,
+body.dark-mode .fa-film,
+body.dark-mode .fa-music {
+    color: var(--primary-dark, #64b5f6);
+}
+
+/* Hover para os links de filmes e artistas em modo escuro */
+body.dark-mode a:hover .fab.fa-spotify,
+body.dark-mode a:hover .fas.fa-film {
+    opacity: 1 !important;
+}
+
+/* Garantir que os textos fiquem legíveis em modo escuro */
+body.dark-mode .fst-italic {
+    color: #b0b0b0;
 }
