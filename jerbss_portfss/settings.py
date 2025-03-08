@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'django_cleanup.apps.CleanupConfig',
     'tinymce',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +138,13 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Cloudinary configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -143,10 +152,19 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Simplified static file serving for production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Configure storage based on environment
+if DEBUG:
+    # Local development - use WhiteNoise for static files
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    # Production - use Cloudinary for both static and media files
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    MEDIA_URL = '/media/'  # This remains the same, Cloudinary handles the actual storage
 
-# WhiteNoise settings
+# WhiteNoise configuration (used in development)
 WHITENOISE_MIMETYPES = {
     '.css': 'text/css',
     '.js': 'application/javascript',
