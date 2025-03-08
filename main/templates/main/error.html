@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Erro - Portfolio{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <h2 class="h4 mb-0">Erro no Sistema</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span>{{ error_message }}</span>
+            </div>
+            
+            {% if debug %}
+            <div class="mt-4">
+                <h4>Detalhes Técnicos (apenas em modo DEBUG):</h4>
+                <div class="bg-light p-3 mt-2 rounded">
+                    <pre class="mb-0">{{ error_details }}</pre>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="mt-4">
+                <a href="{% url 'main:home' %}" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Voltar para a página inicial
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,52 +2,64 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.http import JsonResponse
-from cloudinary.uploader import upload
+from django.http import JsonResponse, HttpResponse
 import cloudinary
 import cloudinary.api
 import os
+import logging
 from django.conf import settings
+from cloudinary.uploader import upload
 from .models import Project, Tag
 from .forms import ProjectForm, ContactForm
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, 'main/home.html')
 
 def projects(request):
-    projects = Project.objects.all().order_by('-created_at')
-    tags = Tag.objects.all()
-    
-    # Contexto para renderização do template
-    context = {
-        'projects': projects,
-        'tags': tags,
-    }
-    
-    # Para superuser, adicionar funcionalidades de gerenciamento
-    if request.user.is_superuser:
-        # Lidar com formulários de criação/edição apenas se for superuser
-        if request.method == 'POST':
-            form = ProjectForm(request.POST, request.FILES)
-            if form.is_valid():
-                project = form.save()
+    try:
+        projects = Project.objects.all().order_by('-created_at')
+        tags = Tag.objects.all()
+        
+        # Contexto para renderização do template
+        context = {
+            'projects': projects,
+            'tags': tags,
+        }
+        
+        # Para superuser, adicionar funcionalidades de gerenciamento
+        if request.user.is_superuser:
+            # Lidar com formulários de criação/edição apenas se for superuser
+            if request.method == 'POST':
+                form = ProjectForm(request.POST, request.FILES)
+                if form.is_valid():
+                    project = form.save()
+                    
+                    # Processar tags
+                    tags = request.POST.get('tags', '').split(',')
+                    for tag_name in tags:
+                        tag_name = tag_name.strip()
+                        if tag_name:
+                            tag, created = Tag.objects.get_or_create(name=tag_name)
+                            project.tags.add(tag)
+                            
+                    messages.success(request, 'Projeto criado com sucesso!')
+                    return redirect('main:projects')
+            else:
+                form = ProjectForm()
                 
-                # Processar tags
-                tags = request.POST.get('tags', '').split(',')
-                for tag_name in tags:
-                    tag_name = tag_name.strip()
-                    if tag_name:
-                        tag, created = Tag.objects.get_or_create(name=tag_name)
-                        project.tags.add(tag)
-                        
-                messages.success(request, 'Projeto criado com sucesso!')
-                return redirect('main:projects')
-        else:
-            form = ProjectForm()
-            
-        context['form'] = form
-    
-    return render(request, 'main/projects.html', context)
+            context['form'] = form
+        
+        return render(request, 'main/projects.html', context)
+    except Exception as e:
+        logger.error(f"Error in projects view: {str(e)}")
+        return render(request, 'main/error.html', {
+            'error_message': 'Houve um problema ao carregar os projetos. Por favor, tente novamente mais tarde.',
+            'error_details': str(e),
+            'debug': settings.DEBUG
+        }, status=500)
 
 @login_required
 def create_project(request):

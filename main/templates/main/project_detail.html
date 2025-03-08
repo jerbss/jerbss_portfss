@@ -50,7 +50,12 @@
                     <!-- Coluna da imagem -->
                     <div class="col-md-5">
                         <div class="project-cover h-100">
-                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-start h-100 w-100">
+                            {% if project.image %}
+                                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid rounded-start h-100 w-100"
+                                     onerror="this.src='{% static 'images/default-project.jpeg' %}'; this.onerror='';">
+                            {% else %}
+                                <img src="{% static 'images/default-project.jpeg' %}" alt="{{ project.title }}" class="img-fluid rounded-start h-100 w-100">
+                            {% endif %}
                         </div>
                     </div>
                     
