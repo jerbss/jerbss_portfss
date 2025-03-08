@@ -153,14 +153,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# WhiteNoise configuração
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# WhiteNoise configuration - replace the existing STATICFILES_STORAGE line
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'  # Changed from CompressedManifestStaticFilesStorage
 
-# Middleware WhiteNoise já está configurado corretamente
+# WhiteNoise settings
+WHITENOISE_MIMETYPES = {
+    '.css': 'text/css',
+    '.js': 'application/javascript',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+}
 
 # Media files configuration
-# Em produção, usamos o mesmo diretório que static temporariamente
-# Isso permite que as imagens funcionem no Railway sem storage externo
 if not DEBUG:
     MEDIA_URL = '/static/media/'
     MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
@@ -222,4 +228,4 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # Configuração para servir arquivos estáticos com WhiteNoise
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
