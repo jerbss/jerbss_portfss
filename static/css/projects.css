@@ -347,6 +347,26 @@ body.dark-mode .btn-outline-primary:hover {
     border-color: var(--primary-dark);
 }
 
+/* Correção do hover dos botões no tema escuro - inversão de cores */
+body.dark-mode .btn-outline-primary:hover {
+    background-color: #64b5f6; /* Cor sólida no fundo */
+    color: #121212; /* Cor do texto escura para contraste */
+    border-color: #64b5f6;
+}
+
+/* Garantir que o hover no botão limpar filtros também seja consistente */
+body.dark-mode .btn-secondary:hover {
+    background-color: #e1e1e1;
+    color: #121212;
+    border-color: #e1e1e1;
+}
+
+/* Tags nos botões também devem manter o contraste adequado no hover */
+body.dark-mode .tags-container .btn:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+}
+
 /* Keep active state consistent in dark mode */
 body.dark-mode .filters .btn.active,
 body.dark-mode .status-filter .btn.active,
@@ -642,4 +662,74 @@ body.dark-mode .status-filter .btn[data-status="all"]:not(.active) span,
 body.dark-mode .status-filter .btn[data-status="in_progress"]:not(.active) span,
 body.dark-mode .status-filter .btn[data-status="completed"]:not(.active) span {
     color: #64b5f6;
+}
+
+/* Correção do comportamento de hover para os botões no tema escuro - para inverter cores como no tema claro */
+
+/* Estado padrão dos botões outline no tema escuro */
+body.dark-mode .btn-outline-primary,
+body.dark-mode .status-filter .btn-outline-primary,
+body.dark-mode .tags-container .btn-outline-primary {
+    color: #64b5f6;
+    border-color: #64b5f6;
+    background-color: transparent;
+}
+
+/* Estado hover - inversão de cores no tema escuro */
+body.dark-mode .btn-outline-primary:hover,
+body.dark-mode .status-filter .btn-outline-primary:hover,
+body.dark-mode .tags-container .btn-outline-primary:hover,
+body.dark-mode .filters .btn-outline-primary:hover {
+    color: #121212 !important; /* Texto preto */
+    background-color: #64b5f6 !important; /* Fundo azul */
+    border-color: #64b5f6 !important; /* Borda azul */
+}
+
+/* Garantir que os botões ativos mantenham as cores invertidas */
+body.dark-mode .btn-outline-primary.active,
+body.dark-mode .status-filter .btn-outline-primary.active,
+body.dark-mode .tags-container .btn-outline-primary.active {
+    background-color: #64b5f6;
+    color: #121212;
+    border-color: #64b5f6;
+}
+
+/* Regra mais específica para os ícones no hover */
+body.dark-mode .status-filter .btn-outline-primary:hover i,
+body.dark-mode .tags-container .btn-outline-primary:hover i {
+    color: #121212 !important;
+}
+
+/* Garantir que badges também invertem cores no hover */
+body.dark-mode .tags-container .btn-outline-primary:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+}
+
+/* Correção específica para o texto dos botões no tema escuro durante o hover */
+body.dark-mode .btn-outline-primary:hover,
+body.dark-mode .status-filter .btn-outline-primary:hover,
+body.dark-mode .tags-container .btn-outline-primary:hover {
+    color: #121212 !important; /* Garante que o texto fique preto */
+    background-color: #64b5f6 !important; /* Fundo azul */
+}
+
+/* Garante que os spans dentro dos botões também mudem de cor */
+body.dark-mode .status-filter .btn-outline-primary:hover span,
+body.dark-mode .tags-container .btn-outline-primary:hover span {
+    color: #121212 !important;
+}
+
+/* Força a mudança de cor para os textos dentro dos botões de status */
+body.dark-mode .status-filter .btn-outline-primary:hover [data-status="all"] span,
+body.dark-mode .status-filter .btn-outline-primary:hover [data-status="in_progress"] span,
+body.dark-mode .status-filter .btn-outline-primary:hover [data-status="completed"] span {
+    color: #121212 !important;
+}
+
+/* Reforça a regra para todos os elementos dentro dos botões durante o hover */
+body.dark-mode .btn-outline-primary:hover *,
+body.dark-mode .status-filter .btn-outline-primary:hover *,
+body.dark-mode .tags-container .btn-outline-primary:hover * {
+    color: #121212 !important;
 }
