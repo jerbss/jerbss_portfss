@@ -577,6 +577,30 @@ body.dark-mode .tags-container .btn .badge {
     color: #e1e1e1;
 }
 
+/* Melhoria para os contadores de tag no tema escuro */
+body.dark-mode .tags-container .btn .badge {
+    background-color: rgba(100, 181, 246, 0.2);
+    color: #64b5f6;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+    font-weight: 500;
+    margin-left: 0.4rem;
+}
+
+/* Estado hover do contador de tag no tema escuro */
+body.dark-mode .tags-container .btn:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border-color: #121212;
+}
+
+/* Estado ativo do contador de tag no tema escuro */
+body.dark-mode .tags-container .btn.active .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border-color: #121212;
+    font-weight: 600;
+}
+
 body.dark-mode .tags-container .btn:hover .badge,
 body.dark-mode .tags-container .btn.active .badge {
     background-color: rgba(0, 0, 0, 0.3);
@@ -731,5 +755,76 @@ body.dark-mode .status-filter .btn-outline-primary:hover [data-status="completed
 body.dark-mode .btn-outline-primary:hover *,
 body.dark-mode .status-filter .btn-outline-primary:hover *,
 body.dark-mode .tags-container .btn-outline-primary:hover * {
+    color: #121212 !important;
+}
+
+/* Estilos unificados para os contadores de tags - aplicados a ambos os temas */
+.tags-container .btn .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.25em 0.6em;
+    border-radius: 10px;
+    margin-left: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* Tema claro - estado normal */
+.tags-container .btn .badge {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+/* Tema claro - estado hover */
+.tags-container .btn:hover .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Tema claro - estado ativo */
+.tags-container .btn.active .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Tema escuro - estado normal */
+body.dark-mode .tags-container .btn .badge {
+    background-color: rgba(100, 181, 246, 0.2);
+    color: #64b5f6;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+}
+
+/* Tema escuro - estado hover */
+body.dark-mode .tags-container .btn:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+/* Tema escuro - estado ativo */
+body.dark-mode .tags-container .btn.active .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Garantir que os números nunca fiquem ilegíveis durante o hover */
+body.dark-mode .tags-container .btn-outline-primary:hover .badge {
+    color: #64b5f6 !important;
+    background-color: #121212 !important;
+    border: 1px solid #64b5f6 !important;
+}
+
+/* Sobreescrever o comportamento anterior para garantir legibilidade do badge */
+body.dark-mode .btn-outline-primary:hover *:not(.badge),
+body.dark-mode .status-filter .btn-outline-primary:hover *:not(.badge),
+body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     color: #121212 !important;
 }
