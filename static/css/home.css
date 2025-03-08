@@ -248,6 +248,29 @@ body.dark-mode .img-fluid.rounded-circle {
     color: var(--primary-color);
 }
 
+/* Aplicando cor azul aos títulos h5/h3 no tema claro também */
+.card-body .h5.mb-3 {
+    color: var(--primary-color);
+}
+
+/* Efeito hover sutil para os termos destacados */
+.highlight:hover {
+    color: var(--hover-color);
+}
+
+/* Para o modo escuro */
+body.dark-mode .highlight {
+    color: var(--primary-dark, #64b5f6);
+}
+
+/* Estilos para os ícones nos cards TOP 3 no modo claro */
+.fa-paw,
+.fa-glass-cheers,
+.fa-film,
+.fa-music {
+    color: var(--primary-color);
+}
+
 /* Efeito hover sutil para os termos destacados */
 .highlight:hover {
     color: var(--hover-color);
