@@ -200,3 +200,25 @@ p.lead {
         font-size: 1.1rem;
     }
 }
+
+/* Estilo para destacar palavras-chave no texto */
+.highlight {
+    font-weight: 600;
+    color: var(--primary-color);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Efeito hover sutil para os termos destacados */
+.highlight:hover {
+    color: var(--hover-color);
+}
+
+/* Para o modo escuro */
+body.dark-mode .highlight {
+    color: var(--primary-dark, #64b5f6);
+}
+
+body.dark-mode .highlight:hover {
+    color: #90caf9;
+}
