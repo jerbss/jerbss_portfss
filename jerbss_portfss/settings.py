@@ -138,12 +138,18 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Cloudinary configuration
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
-}
+# Cloudinary configuration with error handling
+CLOUDINARY_STORAGE = {}
+try:
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': config('CLOUDINARY_API_KEY'),
+        'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    }
+    CLOUDINARY_URL = config('CLOUDINARY_URL', default=None)
+    CLOUDINARY_ENABLED = all(CLOUDINARY_STORAGE.values())
+except Exception:
+    CLOUDINARY_ENABLED = False
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
@@ -152,22 +158,22 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Configure storage based on environment
+# Always use WhiteNoise for static files in development and build processes
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configure storage based on environment and availability
 if DEBUG:
-    # Local development - use WhiteNoise for static files
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
-    # Hybrid approach: Use Cloudinary for new uploads but keep access to local files
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    # For local development with Cloudinary media
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' if CLOUDINARY_ENABLED else 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 else:
-    # Production - use Cloudinary for both static and media files
-    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    # For production, use Cloudinary for media only
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage' if CLOUDINARY_ENABLED else 'django.core.files.storage.FileSystemStorage'
     MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# WhiteNoise configuration (used in development)
+# WhiteNoise configuration (used in both development and production)
 WHITENOISE_MIMETYPES = {
     '.css': 'text/css',
     '.js': 'application/javascript',
