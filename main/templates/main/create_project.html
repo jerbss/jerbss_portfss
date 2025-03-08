@@ -11,6 +11,27 @@
 
 {% block content %}
 <div class="container py-5">
+    <h1 class="display-4 fw-bold mb-4">{{ is_edit|yesno:"Editar,Criar Novo" }} Projeto</h1>
+    
+    <!-- Mensagens de feedback específicas para projetos -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'project' in message.tags %}
+            <div class="alert alert-{{ message.tags|cut:'project '|default:'info' }} alert-dismissible fade show mb-4" role="alert">
+                <div class="d-flex align-items-center">
+                    {% if 'success' in message.tags %}
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle me-2"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    
     <div class="row">
         <div class="col-md-10 mx-auto">
             <div class="card">

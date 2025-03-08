@@ -12,6 +12,25 @@
 <div class="container py-5">
     <h1 class="display-4 fw-bold mb-4">Entre em Contato</h1>
     
+    <!-- Mensagens de feedback específicas para contato - REPOSICIONADAS -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'contact' in message.tags %}
+            <div class="alert alert-{{ message.tags|cut:'contact '|default:'info' }} alert-dismissible fade show mb-4" role="alert">
+                <div class="d-flex align-items-center">
+                    {% if 'success' in message.tags %}
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle me-2"></i>
+                    {% endif %}
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    
     <!-- Formulário de contato expandido -->
     <div class="card contact-card">
         <div class="card-body p-4 p-md-5">
@@ -19,25 +38,6 @@
             
             <div class="card-text">
                 <p class="mb-4 intro-text">Projetos, oportunidades ou apenas um bate-papo? Estou a um formulário de distância! Compartilhe sua mensagem abaixo e prometo retornar em breve.</p>
-                
-                <!-- Mensagens de feedback específicas para contato -->
-                {% if messages %}
-                    {% for message in messages %}
-                        {% if 'contact' in message.tags %}
-                        <div class="alert alert-{{ message.tags|cut:'contact '|default:'info' }} alert-dismissible fade show" role="alert">
-                            <div class="d-flex align-items-center">
-                                {% if 'success' in message.tags %}
-                                    <i class="fas fa-check-circle text-success me-2"></i>
-                                {% else %}
-                                    <i class="fas fa-info-circle me-2"></i>
-                                {% endif %}
-                                {{ message }}
-                            </div>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
                 
                 <form method="POST" class="contact-form" novalidate>
                     {% csrf_token %}

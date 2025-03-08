@@ -771,3 +771,65 @@ h1, h2, h3, h4, h5, h6,
     font-family: var(--font-heading) !important;
     letter-spacing: -0.02em;
 }
+
+/* Estilos padronizados para alertas de feedback */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    animation: alertFadeIn 0.4s ease-out;
+}
+
+@keyframes alertFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.alert-danger, .alert-error {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.alert-info {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+body.dark-mode .alert-success {
+    background-color: rgba(25, 135, 84, 0.15);
+    color: #2dd4ac;
+}
+
+body.dark-mode .alert-danger, 
+body.dark-mode .alert-error {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: #ff6b6b;
+}
+
+body.dark-mode .alert-info {
+    background-color: rgba(13, 110, 253, 0.15);
+    color: #64b5f6;
+}
+
+body.dark-mode .alert-warning {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #ffd54f;
+}

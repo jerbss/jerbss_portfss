@@ -10,28 +10,28 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row">
-        <!-- Mensagens de feedback específicas para projetos -->
-        {% if messages %}
-        <div class="col-12 mb-4">
-            {% for message in messages %}
-                {% if 'project' in message.tags %}
-                <div class="alert alert-{{ message.tags|cut:'project '|default:'info' }} alert-dismissible fade show" role="alert">
-                    <div class="d-flex align-items-center">
-                        {% if 'success' in message.tags %}
-                            <i class="fas fa-check-circle text-success me-2"></i>
-                        {% else %}
-                            <i class="fas fa-info-circle me-2"></i>
-                        {% endif %}
-                        {{ message }}
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    <h1 class="display-4 fw-bold mb-4">{{ project.title }}</h1>
+    
+    <!-- Mensagens de feedback específicas para projetos - REPOSICIONADAS -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'project' in message.tags %}
+            <div class="alert alert-{{ message.tags|cut:'project '|default:'info' }} alert-dismissible fade show mb-4" role="alert">
+                <div class="d-flex align-items-center">
+                    {% if 'success' in message.tags %}
+                        <i class="fas fa-check-circle text-success me-2"></i>
+                    {% else %}
+                        <i class="fas fa-info-circle me-2"></i>
+                    {% endif %}
+                    {{ message }}
                 </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    
+    <div class="row">
         <!-- Breadcrumbs -->
         <div class="col-12 mb-4">
             <nav aria-label="breadcrumb">
