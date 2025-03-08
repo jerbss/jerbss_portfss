@@ -166,14 +166,14 @@ def test_cloudinary_connection():
 def create_project(request):
     # Garantir que apenas superusers possam criar
     if not request.user.is_superuser:
-        messages.error(request, 'Você não tem permissão para criar projetos.')
+        messages.error(request, 'Você não tem permissão para criar projetos.', extra_tags='project')
         return redirect('main:projects')
     
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save()
-            messages.success(request, 'Projeto criado com sucesso!')
+            messages.success(request, 'Projeto criado com sucesso!', extra_tags='project')
             return redirect('main:project_detail', slug=project.slug)
     else:
         form = ProjectForm()
@@ -191,6 +191,7 @@ def edit_project(request, slug):
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             project = form.save()
+            messages.success(request, 'Projeto atualizado com sucesso!', extra_tags='project')
             return redirect('main:project_detail', slug=project.slug)
     else:
         form = ProjectForm(instance=project)
@@ -208,7 +209,7 @@ def delete_project(request, slug):
     
     if request.method == 'POST':
         project.delete()
-        messages.success(request, 'Projeto excluído com sucesso!')
+        messages.success(request, 'Projeto excluído com sucesso!', extra_tags='project')
         return redirect('main:projects')
     
     return render(request, 'main/delete_project.html', {'project': project})
@@ -232,12 +233,12 @@ def contact(request):
             send_mail(
                 subject,
                 body,
-                sender_email,  # Remetente (opcional: pode ser um endereço fixo)
-                ['jerbessonc@gmail.com'],  # Destinatário
+                sender_email,
+                ['jerbessonc@gmail.com'],
                 fail_silently=False,
             )
             
-            messages.success(request, 'Sua mensagem foi enviada com sucesso!')
+            messages.success(request, 'Sua mensagem foi enviada com sucesso!', extra_tags='contact')
             return redirect('main:contact')
     else:
         form = ContactForm()
