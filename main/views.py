@@ -7,6 +7,8 @@ import cloudinary
 import cloudinary.api
 import os
 import logging
+import traceback
+import sys
 from django.conf import settings
 from cloudinary.uploader import upload
 from .models import Project, Tag
@@ -20,7 +22,32 @@ def home(request):
 
 def projects(request):
     try:
+        logger.info("Entering projects view")
         projects = Project.objects.all().order_by('-created_at')
+        
+        # Debug info - check number of projects and their image fields
+        project_info = []
+        for p in projects:
+            try:
+                has_image = bool(p.image)
+                image_url = str(p.image.url) if p.image else "No image URL"
+                project_info.append({
+                    'id': p.id,
+                    'title': p.title,
+                    'has_image': has_image,
+                    'image_url': image_url
+                })
+            except Exception as img_err:
+                logger.error(f"Error accessing image for project {p.id}: {str(img_err)}")
+                project_info.append({
+                    'id': p.id,
+                    'title': p.title,
+                    'has_image': "ERROR",
+                    'image_error': str(img_err)
+                })
+        
+        logger.debug(f"Project info: {project_info}")
+        
         tags = Tag.objects.all()
         
         # Contexto para renderização do template
@@ -55,11 +82,79 @@ def projects(request):
         return render(request, 'main/projects.html', context)
     except Exception as e:
         logger.error(f"Error in projects view: {str(e)}")
+        # Get detailed traceback
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        tb_lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        tb_text = ''.join(tb_lines)
+        logger.error(f"Full traceback: {tb_text}")
+        
         return render(request, 'main/error.html', {
             'error_message': 'Houve um problema ao carregar os projetos. Por favor, tente novamente mais tarde.',
-            'error_details': str(e),
+            'error_details': f"{str(e)}\n\n{tb_text if settings.DEBUG else ''}",
             'debug': settings.DEBUG
         }, status=500)
+
+# Add a new debug view
+def debug_projects(request):
+    """Debug view to inspect projects and diagnose issues"""
+    if not request.user.is_superuser:
+        return HttpResponse("Unauthorized", status=401)
+    
+    try:
+        # Get all project data with detailed info
+        projects = Project.objects.all()
+        project_data = []
+        
+        for p in projects:
+            project_info = {
+                'id': p.id,
+                'title': p.title,
+                'slug': p.slug,
+                'image_field_type': type(p.image).__name__,
+                'has_image': bool(p.image),
+                'tags': [t.name for t in p.tags.all()]
+            }
+            
+            # Try to get image URL
+            try:
+                if p.image:
+                    project_info['image_url'] = p.image.url
+                    project_info['cloudinary_public_id'] = getattr(p.image, 'public_id', 'N/A')
+                else:
+                    project_info['image_url'] = None
+            except Exception as img_err:
+                project_info['image_error'] = str(img_err)
+                
+            project_data.append(project_info)
+        
+        # Get storage configuration
+        storage_info = {
+            'DEFAULT_FILE_STORAGE': settings.DEFAULT_FILE_STORAGE,
+            'CLOUDINARY_ENABLED': settings.CLOUDINARY_ENABLED,
+            'CLOUDINARY_STORAGE': {k: "***" if k == "API_SECRET" else v 
+                                 for k, v in settings.CLOUDINARY_STORAGE.items()}
+        }
+        
+        # Return as JSON for easy debugging
+        return JsonResponse({
+            'projects': project_data,
+            'storage_config': storage_info,
+            'cloudinary_health': test_cloudinary_connection()
+        })
+    except Exception as e:
+        return JsonResponse({
+            'error': str(e),
+            'traceback': traceback.format_exc() if settings.DEBUG else 'Enable DEBUG for traceback'
+        }, status=500)
+
+def test_cloudinary_connection():
+    """Test Cloudinary connection and return status"""
+    try:
+        # Simple test to check if Cloudinary is properly configured
+        result = cloudinary.api.ping()
+        return {'success': True, 'status': 'Connected', 'details': result}
+    except Exception as e:
+        return {'success': False, 'status': 'Error', 'details': str(e)}
 
 @login_required
 def create_project(request):

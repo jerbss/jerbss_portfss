@@ -7,6 +7,10 @@ import uuid
 from datetime import date
 from tinymce.models import HTMLField
 from cloudinary.models import CloudinaryField
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
@@ -72,6 +76,16 @@ class Project(models.Model):
         if self.status == 'completed' and self.end_date:
             return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - {self.end_date.strftime("%d/%m/%Y")}</span>')
         return mark_safe(f'<span class="text-body">{self.start_date.strftime("%d/%m/%Y")} - Em andamento</span>')
+
+    @property
+    def safe_image_url(self):
+        """Safely get image URL with fallback"""
+        try:
+            if self.image:
+                return self.image.url
+        except Exception as e:
+            logger.error(f"Error getting image URL for project {self.id}: {str(e)}")
+        return None
 
     def save(self, *args, **kwargs):
         if not self.slug:

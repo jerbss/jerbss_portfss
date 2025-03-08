@@ -123,7 +123,12 @@
                     {% for related in related_projects %}
                     <div class="col">
                         <div class="card h-100">
-                            <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.title }}">
+                            {% if related.image %}
+                                <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.title }}"
+                                     onerror="this.src='{% static 'images/default-project.jpeg' %}'; this.onerror='';">
+                            {% else %}
+                                <img src="{% static 'images/default-project.jpeg' %}" class="card-img-top" alt="{{ related.title }}">
+                            {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ related.title }}</h5>
                                 <p class="card-text small">{{ related.short_description|truncatechars:100 }}</p>

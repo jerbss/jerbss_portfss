@@ -13,4 +13,5 @@ urlpatterns = [
     path('projects/<slug:slug>/delete/', views.delete_project, name='delete_project'),
     path('contact/', views.contact, name='contact'),
     path('test-cloudinary/', test_cloudinary, name='test_cloudinary'),
+    path('debug/projects/', views.debug_projects, name='debug_projects'),  # Add this line
 ]
