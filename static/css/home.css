@@ -271,3 +271,36 @@ body.dark-mode a:hover .fas.fa-film {
 body.dark-mode .fst-italic {
     color: #b0b0b0;
 }
+
+/* Estilos para os links de redirecionamento com hover */
+.hover-darken {
+    transition: filter 0.3s ease;
+}
+
+a:hover .hover-darken {
+    filter: brightness(70%);
+}
+
+.redirect-icon {
+    position: absolute;
+    top: 50%;
+    left: 30px; /* Centralizar com base na largura da imagem (60/2) */
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+a:hover .redirect-icon {
+    opacity: 1;
+}
+
+/* Cores do ícone de acordo com o tema */
+body:not(.dark-mode) .redirect-icon {
+    color: #0d6efd; /* Cor azul mais escura para tema claro */
+}
+
+body.dark-mode .redirect-icon {
+    color: #64b5f6; /* Cor azul mais clara para tema escuro */
+}

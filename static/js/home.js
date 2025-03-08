@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Adicionando as classes hover-darken para todas as imagens que precisam do efeito
+    document.querySelectorAll('.d-flex.align-items-center.mb-3 a img').forEach(img => {
+        img.classList.add('hover-darken');
+    });
+    
     // Aguarda 800ms antes de iniciar as animações
     setTimeout(() => {
         // Remove a classe inicial e mostra o primeiro greeting
