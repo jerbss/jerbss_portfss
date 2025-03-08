@@ -38,6 +38,12 @@ ALLOWED_HOSTS = [
     'jerbssfolio.up.railway.app/',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://jerbss-portfolio.up.railway.app',
+    'https://jerbssfolio.onrender.com',
+    'https://jerbssfolio.up.railway.app',
+]
+
 
 # Application definition
 
