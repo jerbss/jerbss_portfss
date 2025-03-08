@@ -304,3 +304,29 @@ body:not(.dark-mode) .redirect-icon {
 body.dark-mode .redirect-icon {
     color: #64b5f6; /* Cor azul mais clara para tema escuro */
 }
+
+/* Estilos para cards de interesses com altura de cabeçalho uniforme */
+.card-header-custom {
+    min-height: 3.5rem; /* Altura mínima para acomodar títulos com duas linhas */
+    display: flex;
+    align-items: flex-start;
+}
+
+.card-header-custom .h5 {
+    margin-bottom: 0; /* Remove margem padrão do Bootstrap */
+}
+
+.card-content {
+    flex-grow: 1; /* Permite que o conteúdo ocupe o espaço restante no card */
+}
+
+.card-body.d-flex.flex-column {
+    padding: 1.5rem; /* Padding consistente */
+}
+
+/* Em telas menores, não precisamos controlar tanto a altura */
+@media (max-width: 992px) {
+    .card-header-custom {
+        min-height: 0; /* Permitir altura natural em telas menores */
+    }
+}
