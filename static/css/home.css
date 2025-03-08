@@ -361,3 +361,126 @@ body.dark-mode .redirect-icon {
         min-height: 0; /* Permitir altura natural em telas menores */
     }
 }
+
+/* Estilo para a seção de sugestão de TOP 3 */
+.top3-suggestion {
+    background-color: rgba(13, 110, 253, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px dashed var(--primary-color);
+}
+
+.top3-suggestion p {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.top3-suggestion .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.top3-suggestion .btn-primary:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.top3-suggestion .btn-primary i {
+    transition: transform 0.3s ease;
+}
+
+.top3-suggestion .btn-primary:hover i {
+    transform: rotate(15deg);
+}
+
+/* Versão para modo escuro */
+body.dark-mode .top3-suggestion {
+    background-color: rgba(100, 181, 246, 0.1);
+    border-color: var(--primary-dark);
+}
+
+/* Estilo para o CTA de sugestão de TOP 3 */
+.top3-cta {
+    transition: box-shadow 0.3s ease;
+    border: none;
+    background-color: var(--bg-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.top3-cta:hover {
+    /* Removido transform: translateY(-5px); */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.top3-cta h3 {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.top3-cta p {
+    font-size: 1.1rem;
+}
+
+.top3-cta .btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.top3-cta .btn-primary:hover {
+    /* Removido transform: translateY(-2px); */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Versão para modo escuro */
+body.dark-mode .top3-cta {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .top3-cta h3 {
+    color: var(--primary-dark);
+}
+
+/* Aplicando cor azul ao texto Error 404 tanto para tema claro como escuro */
+.card-body .h5.mb-4 {
+    color: var(--primary-color);
+}
+
+/* Aplicando cor azul ao texto Error 404 para tema escuro - já está implementado */
+body.dark-mode .card-body .h5.mb-4 {
+    color: var(--primary-dark);
+}
+
+/* Aplicando cor azul aos títulos h5/h3 no tema escuro */
+body.dark-mode .h5.mb-3 {
+    color: var(--primary-dark);
+}
+
+/* Aplicando cor azul ao texto Error 404 */
+body.dark-mode .card-body .h5.mb-4 {
+    color: var(--primary-dark);
+}
+
+/* Estilo para o card de experiência profissional - abordagem universal */
+.container.my-5:nth-of-type(2) .card {
+    border: none;
+    background-color: var(--bg-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.container.my-5:nth-of-type(2) .card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Versão para modo escuro */
+body.dark-mode .container.my-5:nth-of-type(2) .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
