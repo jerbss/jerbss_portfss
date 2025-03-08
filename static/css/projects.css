@@ -562,3 +562,84 @@ body.dark-mode .tags-container .btn.active .badge {
     background-color: rgba(0, 0, 0, 0.3);
     color: var(--primary-dark);
 }
+
+/* Correção das cores para o tema escuro na página de projetos */
+/* Botões de filtro (tags e status) */
+body.dark-mode .btn-outline-primary {
+    color: #64b5f6;
+    border-color: #64b5f6;
+    background-color: transparent;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    background-color: rgba(100, 181, 246, 0.15);
+    color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+body.dark-mode .btn-outline-primary:focus {
+    box-shadow: 0 0 0 0.25rem rgba(100, 181, 246, 0.25);
+}
+
+/* Ícones nos botões de filtro */
+body.dark-mode .tags-container .btn i,
+body.dark-mode .status-filter .btn i {
+    color: #64b5f6;
+}
+
+/* Status específicos */
+body.dark-mode .status-filter .btn[data-status="all"] i,
+body.dark-mode .status-filter .btn[data-status="in_progress"] i,
+body.dark-mode .status-filter .btn[data-status="completed"] i {
+    color: #64b5f6;
+}
+
+body.dark-mode .status-filter .btn[data-status="all"] span,
+body.dark-mode .status-filter .btn[data-status="in_progress"] span,
+body.dark-mode .status-filter .btn[data-status="completed"] span {
+    color: #e1e1e1;
+}
+
+/* Manter estado ativo coerente */
+body.dark-mode .filters .btn.active,
+body.dark-mode .status-filter .btn.active,
+body.dark-mode .tags-container .btn.active {
+    color: #121212;
+    background-color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+/* Garantir que os ícones nos botões ativos tenham contraste adequado */
+body.dark-mode .filters .btn.active i,
+body.dark-mode .status-filter .btn.active i,
+body.dark-mode .tags-container .btn.active i,
+body.dark-mode .filters .btn.active span,
+body.dark-mode .status-filter .btn.active span,
+body.dark-mode .tags-container .btn.active span {
+    color: #121212;
+}
+
+/* Botão de limpar filtros no tema escuro */
+body.dark-mode .btn-secondary {
+    background-color: #2d2d2d;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #3a3a3a;
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* Correção para os textos nos botões de status (inativos) no tema escuro */
+body.dark-mode .status-filter .btn:not(.active) span {
+    color: #64b5f6;
+}
+
+/* Especificidade maior para garantir que todos os botões de status inativos usem a cor azul */
+body.dark-mode .status-filter .btn[data-status="all"]:not(.active) span,
+body.dark-mode .status-filter .btn[data-status="in_progress"]:not(.active) span,
+body.dark-mode .status-filter .btn[data-status="completed"]:not(.active) span {
+    color: #64b5f6;
+}
