@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'jerbss_portfss.wsgi.application'
 # Database configuration - revised for Railway deployment
 DATABASES = {
     'default': dj_database_url.parse(
-        'postgresql://postgres.wiqgrihiravesamlblau:OaHd8MupsHGVo4NE@aws-0-sa-east-1.pooler.supabase.com:5432/postgres'
+        'postgresql://postgres:NqplEvFISzSOFziMsJmLyqsJuKPqkTom@shinkansen.proxy.rlwy.net:41455/railway'
     )
 }
 
