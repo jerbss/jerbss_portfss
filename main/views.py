@@ -4,7 +4,10 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from cloudinary.uploader import upload
+import cloudinary
+import cloudinary.api
 import os
+from django.conf import settings
 from .models import Project, Tag
 from .forms import ProjectForm, ContactForm
 
@@ -142,14 +145,33 @@ def project_detail(request, slug):
 def test_cloudinary(request):
     """Test function to verify Cloudinary configuration."""
     try:
+        # Check configuration
+        config_info = {
+            'cloud_name': settings.CLOUDINARY_STORAGE.get('CLOUD_NAME'),
+            'is_setup': bool(settings.CLOUDINARY_STORAGE.get('CLOUD_NAME') and 
+                            settings.CLOUDINARY_STORAGE.get('API_KEY') and 
+                            settings.CLOUDINARY_STORAGE.get('API_SECRET')),
+            'storage_backend': str(settings.DEFAULT_FILE_STORAGE),
+            'debug_mode': settings.DEBUG,
+        }
+        
         # Small test upload
-        result = upload("https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg", 
-                        public_id="test_connection")
+        test_upload = upload("https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg", 
+                      public_id="test_connection")
+        
+        # Check existing resources
+        resources = cloudinary.api.resources(
+            resource_type="image",
+            max_results=5,
+            type="upload"
+        )
         
         return JsonResponse({
             'success': True,
             'message': 'Successfully connected to Cloudinary',
-            'result': result
+            'configuration': config_info,
+            'test_upload': test_upload,
+            'existing_files': resources.get('resources', [])[:5]  # Show first 5 files
         })
     except Exception as e:
         return JsonResponse({

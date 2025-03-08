@@ -6,6 +6,7 @@ from django.urls import reverse
 import uuid
 from datetime import date
 from tinymce.models import HTMLField
+from cloudinary.models import CloudinaryField
 
 class Tag(models.Model):
     name = models.CharField(max_length=50)
@@ -29,7 +30,7 @@ class Project(models.Model):
     slug = models.SlugField(unique=True, blank=True, max_length=255)
     short_description = models.CharField('Breve Descrição', max_length=200, default='')  # Limite de 200 caracteres
     content = models.TextField('Conteúdo Completo', default='')
-    image = models.ImageField('Capa do Projeto', upload_to='projects/')
+    image = CloudinaryField('image', folder='projects', blank=True, null=True)
     status = models.CharField('Status', max_length=50, choices=STATUS_CHOICES, default='in_progress')
     project_type = models.CharField(
         'Tipo',

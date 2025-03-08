@@ -1,9 +1,21 @@
 from django import forms
-from .models import Project, Tag
+from .models import Project, Tag, Contact
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from cloudinary.forms import CloudinaryFileField
 
 class ProjectForm(forms.ModelForm):
+    # Replace standard ImageField with CloudinaryFileField
+    image = CloudinaryFileField(
+        options={
+            'folder': 'projects',
+            'use_filename': True,
+            'unique_filename': True,
+            'overwrite': False,
+        },
+        required=False,
+        label="Imagem do Projeto",
+    )
     tags_input = forms.CharField(
         label='Tags *',
         required=True,
@@ -147,27 +159,7 @@ class ProjectForm(forms.ModelForm):
                 raise ValidationError('Pelo menos uma tag é necessária.')
         return tags
 
-class ContactForm(forms.Form):
-    name = forms.CharField(
-        max_length=100,
-        label='Nome',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Seu nome'
-        })
-    )
-    email = forms.EmailField(
-        label='Seu e-mail',
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'email@exemplo.com'
-        })
-    )
-    message = forms.CharField(
-        label='Mensagem',
-        widget=forms.Textarea(attrs={
-            'class': 'form-control',
-            'rows': 5,
-            'placeholder': 'Digite sua mensagem'
-        })
-    )
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'message']
