@@ -92,29 +92,11 @@ WSGI_APPLICATION = 'jerbss_portfss.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # Database configuration - revised for Railway deployment
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
-if DATABASE_URL:
-    # Production database (Railway)
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
-    }
-else:
-    # Development database (local or Supabase)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'postgres.wiqgrihiravesamlblau',
-            'PASSWORD': config('DB_PASSWORD', default=''),
-            'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
-            'PORT': '5432',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://postgres.wiqgrihiravesamlblau:OaHd8MupsHGVo4NE@aws-0-sa-east-1.pooler.supabase.com:5432/postgres'
+    )
+}
 
 
 # Password validation
