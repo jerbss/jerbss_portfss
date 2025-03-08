@@ -23,16 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@@(i9_xc12wx-@1f%esrr8ra3a^-4cnmxsv5odef!t&g4do=+6'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-@@(i9_xc12wx-@1f%esrr8ra3a^-4cnmxsv5odef!t&g4do=+6')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
+    'jerbss-portfolio.up.railway.app',
     'jerbssfolio.onrender.com',
     'localhost',
     '127.0.0.1',
-    '127.0.0.1:8000'
+    '127.0.0.1:8000',
+    '.railway.app',  # Permite todos os subdomínios do railway.app
 ]
 
 
@@ -87,16 +89,27 @@ WSGI_APPLICATION = 'jerbss_portfss.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Configuração para o Railway - usa DATABASE_URL se estiver disponível
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.wiqgrihiravesamlblau',
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default=''),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
+
+# Fallback para desenvolvimento local se DATABASE_URL não estiver definido
+if not DATABASES['default']:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres.wiqgrihiravesamlblau',
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': 'aws-0-sa-east-1.pooler.supabase.com',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -195,3 +208,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Configuração para servir arquivos estáticos com WhiteNoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
