@@ -1,4 +1,3 @@
-<!-- filepath: /c:/PROJETO/jerbss_portfss/main/templates/main/projects.html -->
 {% extends "main/base.html" %}
 {% load static %}
 {% load django_bootstrap5 %}
@@ -56,7 +55,7 @@
         <div class="card-body">
             <div class="row">
                 <!-- Tags Filter -->
-                <div class="col-md-8 mb-3 mb-md-0">
+                <div class="col-lg-5 col-md-12 mb-3">
                     <label class="form-label">Tags</label>
                     <div class="tags-container">
                         <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-filter="all">
@@ -71,8 +70,27 @@
                     </div>
                 </div>
                 
+                <!-- Type Filter -->
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <label class="form-label">Tipo</label>
+                    <div class="type-container">
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-type="all">
+                            <i class="fas fa-layer-group me-1"></i>Todos
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="academic">
+                            <i class="fas fa-graduation-cap me-1"></i>Acadêmico
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="personal">
+                            <i class="fas fa-user me-1"></i>Pessoal
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="professional">
+                            <i class="fas fa-briefcase me-1"></i>Profissional
+                        </button>
+                    </div>
+                </div>
+                
                 <!-- Status Filter -->
-                <div class="col-md-4">
+                <div class="col-lg-4 col-md-6 mb-3">
                     <div class="status-filter">
                         <label class="form-label">Status</label>
                         <div class="btn-group" role="group">
@@ -107,7 +125,8 @@
         {% for project in projects %}
         <div class="col project-item" 
              data-tags="{% for tag in project.tags.all %}{{ tag.name }} {% endfor %}"
-             data-status="{{ project.status }}">
+             data-status="{{ project.status }}"
+             data-type="{{ project.project_type }}">
             <article class="project-card">
                 <!-- Card Header: Image + Status Badge -->
                 <div class="project-card__header">
@@ -187,11 +206,13 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const tagButtons = document.querySelectorAll('.tags-container button');
+    const typeButtons = document.querySelectorAll('.type-container button');
     const statusButtons = document.querySelectorAll('.btn-group button');
     const clearFiltersBtn = document.querySelector('.clear-filters');
     const projectItems = document.querySelectorAll('.project-item');
     
     let currentTag = 'all';
+    let currentType = 'all';
     let currentStatus = 'all';
     
     function filterProjects() {
@@ -199,11 +220,13 @@ document.addEventListener('DOMContentLoaded', function() {
         projectItems.forEach(item => {
             const tags = item.getAttribute('data-tags');
             const status = item.getAttribute('data-status');
+            const type = item.getAttribute('data-type');
             
             const tagMatch = currentTag === 'all' || tags.includes(currentTag);
+            const typeMatch = currentType === 'all' || type === currentType;
             const statusMatch = currentStatus === 'all' || status === currentStatus;
             
-            if (tagMatch && statusMatch) {
+            if (tagMatch && typeMatch && statusMatch) {
                 item.style.display = '';
                 item.classList.add('fade-in');
                 visibleCount++;
@@ -238,6 +261,11 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.toggle('active', btn.getAttribute('data-filter') === currentTag);
         });
         
+        // Update type buttons
+        typeButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-type') === currentType);
+        });
+        
         // Update status buttons
         statusButtons.forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-status') === currentStatus);
@@ -248,6 +276,15 @@ document.addEventListener('DOMContentLoaded', function() {
     tagButtons.forEach(button => {
         button.addEventListener('click', function() {
             currentTag = this.getAttribute('data-filter');
+            updateActiveStates();
+            filterProjects();
+        });
+    });
+    
+    // Type filter handlers
+    typeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            currentType = this.getAttribute('data-type');
             updateActiveStates();
             filterProjects();
         });
@@ -265,6 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Clear filters handler
     clearFiltersBtn.addEventListener('click', function() {
         currentTag = 'all';
+        currentType = 'all';
         currentStatus = 'all';
         updateActiveStates();
         filterProjects();
