@@ -4,27 +4,90 @@
 
 {% block title %}Contato - Portfolio{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
-    <h1 class="mb-4">Entre em Contato</h1>
+    <h2 class="display-6 fw-bold mb-4">Entre em Contato</h2>
     
-    <!-- Mensagens de feedback -->
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
+    <!-- Formulário de contato expandido -->
+    <div class="card contact-card">
+        <div class="card-body p-4 p-md-5">
+            <h3 class="h5 mb-4 card-title">Me mande um salve!</h3>
+            
+            <div class="card-text">
+                <p class="mb-4 intro-text">Projetos, oportunidades ou apenas um bate-papo? Estou a um formulário de distância! Compartilhe sua mensagem abaixo e prometo retornar em breve.</p>
+                
+                <!-- Mensagens de feedback -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            <div class="d-flex align-items-center">
+                                {% if message.tags == 'success' %}
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                {% else %}
+                                    <i class="fas fa-info-circle me-2"></i>
+                                {% endif %}
+                                {{ message }}
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" class="contact-form" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Nome</label>
+                            {% bootstrap_field form.name show_label=False placeholder="Seu nome completo" %}
+                        </div>
+                        
+                        <div class="col-md-6 mb-4">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                            {% bootstrap_field form.email show_label=False placeholder="seu@email.com" %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.message.id_for_label }}" class="form-label">Mensagem</label>
+                        {% bootstrap_field form.message show_label=False placeholder="Escreva sua mensagem aqui..." %}
+                    </div>
+                    
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                        <div class="response-note mb-3 mb-md-0">
+                            <p class="small mb-0"><i class="fas fa-clock me-2"></i> Costumo responder em até 48 horas</p>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                            <span class="button-text">Enviar mensagem</span>
+                            <i class="fas fa-paper-plane ms-2"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-      {% endfor %}
-    {% endif %}
-    
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        
-        {% bootstrap_form form layout="horizontal" %}
-        
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-paper-plane me-2"></i> Enviar
-        </button>
-    </form>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.contact-form');
+        const submitBtn = document.querySelector('.submit-btn');
+        const buttonText = document.querySelector('.button-text');
+        
+        if (form) {
+            form.addEventListener('submit', function() {
+                submitBtn.disabled = true;
+                buttonText.innerText = 'Enviando...';
+                submitBtn.innerHTML = '<span class="button-text">Enviando...</span> <i class="fas fa-spinner fa-spin ms-2"></i>';
+            });
+        }
+    });
+</script>
 {% endblock %}

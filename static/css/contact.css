@@ -1,0 +1,258 @@
+/* Estilos para a página de contato */
+.contact-card,
+.contact-info-card {
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.contact-card:hover,
+.contact-info-card:hover {
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilos para os títulos */
+.card-title {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-family: var(--font-heading);
+}
+
+/* Texto de introdução - garante legibilidade no tema escuro */
+.intro-text {
+    color: var(--text-color);
+}
+
+/* Estilos para o formulário */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-family: var(--font-heading);
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+    border-color: var(--primary-color);
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 0.5;
+}
+
+/* Botão de envio */
+.submit-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: var(--hover-color);
+    border-color: var(--hover-color);
+}
+
+/* Estilos para a seção de outras formas de contato */
+.contact-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.contact-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+.contact-info li:hover .contact-icon-wrapper {
+    transform: scale(1.1);
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+.response-note {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: #6c757d;
+}
+
+.response-note i {
+    color: var(--primary-color);
+}
+
+/* Estilos para as redes sociais */
+.social-links-container hr {
+    margin: 1.5rem 0;
+    opacity: 0.1;
+}
+
+.social-icons {
+    gap: 1rem;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border-radius: 50%;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    background-color: rgba(13, 110, 253, 0.2);
+    color: var(--hover-color);
+}
+
+/* Estilos para alertas */
+.alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.1);
+    color: #198754;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Estilos para dispositivos menores */
+@media (max-width: 767.98px) {
+    .contact-info-card {
+        margin-top: 1.5rem;
+    }
+    .submit-btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para o modo escuro */
+body.dark-mode .contact-card,
+body.dark-mode .contact-info-card {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .card-title {
+    color: var(--primary-dark);
+}
+
+/* Corrigindo legibilidade do texto no tema escuro */
+body.dark-mode .intro-text {
+    color: #e1e1e1;
+}
+
+body.dark-mode .form-control {
+    background-color: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #a0a0a0;
+    opacity: 0.5;
+}
+
+body.dark-mode .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(100, 181, 246, 0.2);
+    border-color: var(--primary-dark);
+}
+
+body.dark-mode .form-label {
+    color: #e1e1e1;
+}
+
+body.dark-mode .submit-btn {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+body.dark-mode .submit-btn:hover {
+    background-color: var(--hover-dark);
+    border-color: var(--hover-dark);
+}
+
+body.dark-mode .contact-icon-wrapper {
+    background-color: rgba(100, 181, 246, 0.15);
+    color: var(--primary-dark);
+}
+
+body.dark-mode .contact-link {
+    color: var(--primary-dark);
+}
+
+body.dark-mode .contact-link:hover {
+    color: var(--hover-dark);
+}
+
+body.dark-mode .response-note {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #a0a0a0;
+}
+
+body.dark-mode .response-note i {
+    color: var(--primary-dark);
+}
+
+body.dark-mode .social-links-container hr {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .text-muted {
+    color: #a0a0a0 !important;
+}
+
+body.dark-mode .social-icon {
+    background-color: rgba(100, 181, 246, 0.15);
+    color: var(--primary-dark);
+}
+
+body.dark-mode .social-icon:hover {
+    color: var(--hover-dark);
+    background-color: rgba(100, 181, 246, 0.25);
+}
+
+body.dark-mode .alert-success {
+    background-color: rgba(25, 135, 84, 0.2);
+    color: #2dd4ac;
+}
+
+body.dark-mode .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #ff6b6b;
+}
