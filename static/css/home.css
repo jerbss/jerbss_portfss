@@ -68,17 +68,48 @@ p.lead {
     height: auto;
     border-radius: 50%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: block;
     margin: 0 auto; /* Centraliza a imagem */
     width: 400px; /* Largura padrão para desktop */
     max-height: 400px; /* Limita altura máxima */
     object-fit: cover; /* Mantém proporção da imagem */
+    animation: profile-shadow-pulse 4s ease-in-out infinite; /* Duração mais longa para sutileza */
 }
 
-.img-fluid.rounded-circle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+/* Animação mais sutil para a foto de perfil */
+@keyframes profile-shadow-pulse {
+    0% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25); /* Sombra menos intensa e opacidade reduzida */
+        transform: scale(1.01); /* Escala bem mais sutil */
+    }
+    100% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+        transform: scale(1);
+    }
+}
+
+/* Versão para modo escuro */
+body.dark-mode .img-fluid.rounded-circle {
+    animation-name: profile-shadow-pulse-dark;
+}
+
+@keyframes profile-shadow-pulse-dark {
+    0% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 8px 20px rgba(100, 181, 246, 0.35); /* Sombra menos intensa e opacidade reduzida */
+        transform: scale(1.01); /* Escala bem mais sutil */
+    }
+    100% { 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+        transform: scale(1);
+    }
 }
 
 /* Ajustes para telas menores */
