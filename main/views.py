@@ -9,6 +9,7 @@ import os
 import logging
 import traceback
 import sys
+from django.db.models import Count
 from django.conf import settings
 from cloudinary.uploader import upload
 from .models import Project, Tag
@@ -48,12 +49,17 @@ def projects(request):
         
         logger.debug(f"Project info: {project_info}")
         
-        tags = Tag.objects.all()
+        # Buscar apenas tags que estão em uso e ordená-las por frequência e depois alfabeticamente
+        tags_with_count = Tag.objects.annotate(
+            project_count=Count('projects')
+        ).filter(
+            project_count__gt=0
+        ).order_by('-project_count', 'name')
         
         # Contexto para renderização do template
         context = {
             'projects': projects,
-            'tags': tags,
+            'tags': tags_with_count,
         }
         
         # Para superuser, adicionar funcionalidades de gerenciamento

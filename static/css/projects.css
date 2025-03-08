@@ -86,7 +86,7 @@
     font-size: 0.9rem;
     margin-bottom: 1rem;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -140,7 +140,7 @@ body.dark-mode .card-img-overlay {
     
     .card-text {
         font-size: 0.85rem;
-        -webkit-line-clamp: 2;
+        line-clamp: 2;
     }
 }
 
@@ -527,4 +527,38 @@ body.dark-mode .tags-container .btn.active {
 .admin-panel {
     transition: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para os contadores de tags */
+.tags-container .btn .badge {
+    font-size: 0.7rem;
+    font-weight: 400;
+    padding: 0.2em 0.5em;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+    box-shadow: none;
+    transition: all 0.3s ease;
+}
+
+.tags-container .btn:hover .badge {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+}
+
+.tags-container .btn.active .badge {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+}
+
+/* Estilos para modo escuro */
+body.dark-mode .tags-container .btn .badge {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
+}
+
+body.dark-mode .tags-container .btn:hover .badge,
+body.dark-mode .tags-container .btn.active .badge {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--primary-dark);
 }

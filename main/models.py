@@ -8,15 +8,20 @@ from datetime import date
 from tinymce.models import HTMLField
 from cloudinary.models import CloudinaryField
 import logging
+from django.db.models.signals import m2m_changed, post_delete
+from django.dispatch import receiver
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']  # Ordem alfabética padrão
 
 class Project(models.Model):
     STATUS_CHOICES = (
@@ -99,3 +104,17 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+# Signal para limpar tags órfãs quando um projeto for excluído
+@receiver(post_delete, sender=Project)
+def clean_orphan_tags(sender, instance, **kwargs):
+    """Remove tags that are not associated with any projects"""
+    Tag.objects.annotate(project_count=models.Count('projects')).filter(project_count=0).delete()
+
+# Signal para limpar tags quando um projeto é atualizado e tags são removidas
+@receiver(m2m_changed, sender=Project.tags.through)
+def clean_tags_on_m2m_change(sender, instance, action, **kwargs):
+    """Clean orphan tags when they are removed from a project"""
+    if action in ['post_remove', 'post_clear']:
+        # Apenas execute a limpeza após as operações de remoção
+        Tag.objects.annotate(project_count=models.Count('projects')).filter(project_count=0).delete()
