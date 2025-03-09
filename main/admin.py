@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Tag, Contact
+from .models import Project, Tag, Contact, Top3Card
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -20,3 +20,27 @@ class ContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'created_at')
     search_fields = ('name', 'email', 'message')
     readonly_fields = ('created_at',)
+
+class Top3CardAdmin(admin.ModelAdmin):
+    list_display = ('title', 'display_order', 'created_at')
+    list_editable = ('display_order',)
+    search_fields = ('title',)
+    fieldsets = (
+        ('Card Information', {
+            'fields': ('icon_class', 'title', 'display_order')
+        }),
+        ('First Item', {
+            'fields': ('item1_image', 'item1_name', 'item1_link')
+        }),
+        ('Second Item', {
+            'fields': ('item2_image', 'item2_name', 'item2_link')
+        }),
+        ('Third Item', {
+            'fields': ('item3_image', 'item3_name', 'item3_link')
+        }),
+        ('Additional Information', {
+            'fields': ('fun_comment',)
+        }),
+    )
+
+admin.site.register(Top3Card, Top3CardAdmin)

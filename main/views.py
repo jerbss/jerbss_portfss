@@ -12,7 +12,7 @@ import sys
 from django.db.models import Count
 from django.conf import settings
 from cloudinary.uploader import upload
-from .models import Project, Tag
+from .models import Project, Tag, Top3Card
 from .forms import ProjectForm, ContactForm
 from django.utils import timezone
 from django.template.loader import render_to_string
@@ -21,7 +21,14 @@ from django.template.loader import render_to_string
 logger = logging.getLogger(__name__)
 
 def home(request):
-    return render(request, 'main/home.html')
+    # Get all dynamic TOP 3 cards
+    dynamic_top3_cards = Top3Card.objects.all()
+    
+    context = {
+        'dynamic_top3_cards': dynamic_top3_cards,
+    }
+    
+    return render(request, 'main/home.html', context)
 
 def projects(request):
     try:

@@ -145,6 +145,7 @@
 <!-- TOP 3 Section -->
 <div class="container my-5">
     <h2 class="display-6 fw-bold mb-4">Meus TOP 3</h2>
+    <!-- First row of static cards (Animals and Drinks) -->
     <div class="row g-4">
         <!-- Animals -->
         <div class="col-md-6">
@@ -255,6 +256,7 @@
             </div>
         </div>
     </div>
+    <!-- Second row of static cards (Movies and Artists) -->
     <div class="row g-4 mt-1">
         <!-- Movies -->
         <div class="col-md-6">
@@ -331,8 +333,7 @@
                     </h3>
 
                     <!-- TWICE -->
-                    <div class="d-flex align-items-center mb-3" 
-                         style="position: relative;">
+                    <div class="d-flex align-items-center mb-3">
                         <a href="https://open.spotify.com/intl-pt/artist/7n2Ycct7Beij7Dj7meI4X0?si=QSiHYw83SzitxPlsvUkkbg"
                            target="_blank"
                            style="position: relative; display: inline-block;">
@@ -349,8 +350,7 @@
                     </div>
 
                     <!-- Wesley Safadão -->
-                    <div class="d-flex align-items-center mb-3" 
-                         style="position: relative;">
+                    <div class="d-flex align-items-center mb-3">
                         <a href="https://open.spotify.com/intl-pt/artist/1AL2GKpmRrKXkYIcASuRFa?si=i777P_PVSr28B9MgKTvWZQ"
                            target="_blank"
                            style="position: relative; display: inline-block;">
@@ -367,8 +367,7 @@
                     </div>
 
                     <!-- ANRI -->
-                    <div class="d-flex align-items-center mb-3" 
-                         style="position: relative;">
+                    <div class="d-flex align-items-center mb-3">
                         <a href="https://open.spotify.com/intl-pt/artist/0xGtOrmB2hnrNRLG3vhpSo?si=dQlFWdRkSYqNp8hDqB5hGA"
                            target="_blank"
                            style="position: relative; display: inline-block;">
@@ -393,6 +392,106 @@
         </div>
     </div>
     
+    <!-- Dynamic TOP 3 Cards - Added by Admin -->
+    {% if dynamic_top3_cards %}
+    <div class="row g-4 mt-1">
+        {% for card in dynamic_top3_cards %}
+            <div class="col-md-6 {% if forloop.counter|divisibleby:2 %}mt-4{% endif %}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h3 class="h5 mb-3">
+                            <i class="{{ card.icon_class }}"></i>{{ card.title }}
+                        </h3>
+
+                        <!-- First item -->
+                        <div class="d-flex align-items-center mb-3">
+                            {% if card.item1_link %}
+                            <a href="{{ card.item1_link }}" target="_blank" style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item1_image.url }}"
+                                    alt="{{ card.item1_name }}"
+                                    class="rounded-circle me-3 hover-darken"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                                <i class="fas fa-external-link-alt redirect-icon"></i>
+                            </a>
+                            {% else %}
+                            <div style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item1_image.url }}"
+                                    alt="{{ card.item1_name }}"
+                                    class="rounded-circle me-3"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                            </div>
+                            {% endif %}
+                            <span>{{ card.item1_name }}</span>
+                        </div>
+
+                        <!-- Second item -->
+                        <div class="d-flex align-items-center mb-3">
+                            {% if card.item2_link %}
+                            <a href="{{ card.item2_link }}" target="_blank" style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item2_image.url }}"
+                                    alt="{{ card.item2_name }}"
+                                    class="rounded-circle me-3 hover-darken"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                                <i class="fas fa-external-link-alt redirect-icon"></i>
+                            </a>
+                            {% else %}
+                            <div style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item2_image.url }}"
+                                    alt="{{ card.item2_name }}"
+                                    class="rounded-circle me-3"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                            </div>
+                            {% endif %}
+                            <span>{{ card.item2_name }}</span>
+                        </div>
+
+                        <!-- Third item -->
+                        <div class="d-flex align-items-center mb-3">
+                            {% if card.item3_link %}
+                            <a href="{{ card.item3_link }}" target="_blank" style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item3_image.url }}"
+                                    alt="{{ card.item3_name }}"
+                                    class="rounded-circle me-3 hover-darken"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                                <i class="fas fa-external-link-alt redirect-icon"></i>
+                            </a>
+                            {% else %}
+                            <div style="position: relative; display: inline-block;">
+                                <img
+                                    src="{{ card.item3_image.url }}"
+                                    alt="{{ card.item3_name }}"
+                                    class="rounded-circle me-3"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                />
+                            </div>
+                            {% endif %}
+                            <span>{{ card.item3_name }}</span>
+                        </div>
+
+                        <p class="text-muted fst-italic small mt-2">
+                            <i class="fas fa-laugh-wink me-1"></i>
+                            {{ card.fun_comment }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 and not forloop.last %}
+                </div><div class="row g-4 mt-1">
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
     <!-- CTA para Sugestões de TOP 3 - Versão Reformulada -->
     <div class="row mt-4">
         <div class="col-12">
@@ -413,3 +512,4 @@
 {% block extra_js %}
 <script src="{% static 'js/home.js' %}"></script>
 {% endblock %}
+

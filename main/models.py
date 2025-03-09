@@ -116,6 +116,42 @@ class Contact(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+class Top3Card(models.Model):
+    icon_class = models.CharField(max_length=100, help_text="Font Awesome icon class (e.g., 'fas fa-paw me-2')")
+    title = models.CharField(max_length=100)
+    
+    # First item
+    item1_image = CloudinaryField('image')
+    item1_name = models.CharField(max_length=100)
+    item1_link = models.URLField(blank=True, null=True)
+    
+    # Second item
+    item2_image = CloudinaryField('image')
+    item2_name = models.CharField(max_length=100)
+    item2_link = models.URLField(blank=True, null=True)
+    
+    # Third item
+    item3_image = CloudinaryField('image')
+    item3_name = models.CharField(max_length=100)
+    item3_link = models.URLField(blank=True, null=True)
+    
+    # Comment
+    fun_comment = models.TextField(help_text="A fun comment about the TOP 3 items")
+    
+    # Order for display
+    display_order = models.PositiveIntegerField(default=0)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['display_order', 'created_at']
+        verbose_name = "TOP 3 Card"
+        verbose_name_plural = "TOP 3 Cards"
+    
+    def __str__(self):
+        return f"TOP 3 {self.title}"
+
 # Signal para limpar tags órfãs quando um projeto for excluído
 @receiver(post_delete, sender=Project)
 def clean_orphan_tags(sender, instance, **kwargs):
