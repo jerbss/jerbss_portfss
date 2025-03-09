@@ -205,8 +205,8 @@
         const tagsInput = document.getElementById('id_tags_input');
         tagsInput.addEventListener('change', function() {
             const tags = this.value.split(',').filter(tag => tag.trim().length > 0);
-            if (tags.length > 3) {
-                this.setCustomValidity('Máximo de 3 tags permitidas');
+            if (tags.length > 7) {
+                this.setCustomValidity('Máximo de 7 tags permitidas');
             } else {
                 this.setCustomValidity('');
             }

@@ -17,13 +17,12 @@ class ProjectForm(forms.ModelForm):
         label="Imagem do Projeto",
     )
     tags_input = forms.CharField(
-        label='Tags *',
-        required=True,
+        label='Tags',
+        required=False,
+        help_text='Adicione até 7 tags separadas por vírgula.',
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Separe as tags por vírgula (máximo 3)'
-        }),
-        help_text='Separe as tags por vírgula (ex.: django, python, web). Máximo 3 tags.'
+            'placeholder': 'Ex: python, django, web'
+        })
     )
     
     class Meta:
@@ -153,8 +152,8 @@ class ProjectForm(forms.ModelForm):
         tags = self.cleaned_data.get('tags_input')
         if tags:
             tag_list = [t.strip() for t in tags.split(',') if t.strip()]
-            if len(tag_list) > 3:
-                raise ValidationError('Máximo de 3 tags permitidas.')
+            if len(tag_list) > 7:  # Atualizado de 3 para 7
+                raise ValidationError('Máximo de 7 tags permitidas.')
             if len(tag_list) == 0:
                 raise ValidationError('Pelo menos uma tag é necessária.')
         return tags
