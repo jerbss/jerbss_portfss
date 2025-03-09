@@ -111,11 +111,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Criar sumário
-        let tocHtml = '<div class="toc-wrapper" style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9;">';
-        tocHtml += '<h3 style="margin-top: 0;">Índice</h3>';
-        tocHtml += '<div style="margin-bottom: 10px;"><small><i class="fas fa-info-circle"></i> Se algum link não funcionar, use o botão "Inserir Âncora Manual" para definir manualmente os IDs.</small></div>';
-        tocHtml += '<ul class="toc" style="list-style-type: none; padding-left: 10px;">';
+        // Detectar se o tema escuro está ativo
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        // Definir cores com base no tema atual
+        const bgColor = isDarkMode ? '#2d2d2d' : '#f9f9f9';
+        const textColor = isDarkMode ? '#e1e1e1' : '#212529';
+        const borderColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : '#ddd';
+        const linkColor = isDarkMode ? '#64b5f6' : '#007bff';
+        const linkHoverColor = isDarkMode ? '#90caf9' : '#0056b3';
+        const infoTextColor = isDarkMode ? '#b0b0b0' : '#6c757d';
+        
+        // Criar sumário com uma classe específica para tema
+        const themeClass = isDarkMode ? 'dark-theme-toc' : 'light-theme-toc';
+        
+        // Criar sumário com cores responsivas ao tema usando classe
+        let tocHtml = `<div class="toc-wrapper ${themeClass}" style="margin-bottom: 20px; padding: 15px; border-radius: 5px;">`;
+        tocHtml += `<h3 style="margin-top: 0;">Índice</h3>`;
+        tocHtml += `<div style="margin-bottom: 10px;"><small><i class="fas fa-info-circle"></i> Se algum link não funcionar, use o botão "Inserir Âncora Manual" para definir manualmente os IDs.</small></div>`;
+        tocHtml += `<ul class="toc" style="list-style-type: none; padding-left: 10px;">`;
         
         // Array para armazenar os IDs usados para verificar duplicações
         const usedIds = new Set();
@@ -159,10 +173,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Adicionar os itens do sumário
+        // Adicionar os itens do sumário com cores apropriadas para o tema
         tocItems.forEach(item => {
             const indent = (item.level - 1) * 20; // Indentação baseada no nível do cabeçalho
-            tocHtml += `<li style="margin-left: ${indent}px; margin-bottom: 5px;"><a href="#${item.id}" style="text-decoration: none;">${item.text}</a></li>`;
+            tocHtml += `<li style="margin-left: ${indent}px; margin-bottom: 5px;"><a href="#${item.id}" style="text-decoration: none; color: ${linkColor};">${item.text}</a></li>`;
         });
         
         tocHtml += '</ul></div><hr>';
@@ -173,21 +187,109 @@ document.addEventListener('DOMContentLoaded', function() {
         // Primeiro inserir o sumário no início
         editor.setContent(tocHtml + updatedContent);
         
-        // Adicionar comportamento de scroll suave para os links de âncora
+        // Adicionar comportamento de scroll suave para os links de âncora com CSS para ambos os temas
         const smoothScrollCss = `
         <style>
             html {
                 scroll-behavior: smooth;
             }
             
-            .toc a {
-                color: #007bff;
-                transition: color 0.2s;
+            /* Âncoras com estilos respeitando o tema atual */
+            [id] {
+                scroll-margin-top: 120px;
+                scroll-padding-top: 120px;
             }
             
-            .toc a:hover {
-                color: #0056b3;
+            /* Estilos específicos e fortes para sobrescrever inline styles */
+            .toc-wrapper.light-theme-toc {
+                background-color: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+                color: #212529 !important;
+            }
+            
+            .toc-wrapper.dark-theme-toc {
+                background-color: #2d2d2d !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: #e1e1e1 !important;
+            }
+            
+            .toc-wrapper.light-theme-toc h3 {
+                color: #212529 !important;
+            }
+            
+            .toc-wrapper.light-theme-toc small {
+                color: #6c757d !important;
+            }
+            
+            .toc-wrapper.light-theme-toc a {
+                color: #007bff !important;
+            }
+            
+            .toc-wrapper.light-theme-toc a:hover {
+                color: #0056b3 !important;
                 text-decoration: underline !important;
+            }
+            
+            .toc-wrapper.dark-theme-toc h3 {
+                color: #e1e1e1 !important;
+            }
+            
+            .toc-wrapper.dark-theme-toc small {
+                color: #b0b0b0 !important;
+            }
+            
+            .toc-wrapper.dark-theme-toc a {
+                color: #64b5f6 !important;
+            }
+            
+            .toc-wrapper.dark-theme-toc a:hover {
+                color: #90caf9 !important;
+                text-decoration: underline !important;
+            }
+            
+            /* Estilos para funcionar quando mudar o tema depois de carregar a página */
+            body.dark-mode .toc-wrapper.light-theme-toc {
+                background-color: #2d2d2d !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: #e1e1e1 !important;
+            }
+            
+            body.dark-mode .toc-wrapper.light-theme-toc h3 {
+                color: #e1e1e1 !important;
+            }
+            
+            body.dark-mode .toc-wrapper.light-theme-toc small {
+                color: #b0b0b0 !important;
+            }
+            
+            body.dark-mode .toc-wrapper.light-theme-toc a {
+                color: #64b5f6 !important;
+            }
+            
+            body.dark-mode .toc-wrapper.light-theme-toc a:hover {
+                color: #90caf9 !important;
+            }
+            
+            body:not(.dark-mode) .toc-wrapper.dark-theme-toc {
+                background-color: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+                color: #212529 !important;
+            }
+            
+            body:not(.dark-mode) .toc-wrapper.dark-theme-toc h3 {
+                color: #212529 !important;
+            }
+            
+            body:not(.dark-mode) .toc-wrapper.dark-theme-toc small {
+                color: #6c757d !important;
+            }
+            
+            body:not(.dark-mode) .toc-wrapper.dark-theme-toc a {
+                color: #007bff !important;
+            }
+            
+            body:not(.dark-mode) .toc-wrapper.dark-theme-toc a:hover {
+                color: #0056b3 !important;
             }
         </style>`;
         

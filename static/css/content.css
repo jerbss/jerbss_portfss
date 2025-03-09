@@ -28,6 +28,82 @@
     overflow-x: auto;
 }
 
+/* Sumário (TOC) - estilos compartilhados */
+.toc-wrapper {
+    margin-bottom: 20px; 
+    padding: 15px; 
+    border-radius: 5px;
+    margin-top: 1rem;
+    clear: both;
+}
+
+.toc {
+    list-style-type: none;
+    padding-left: 10px;
+    margin-bottom: 0;
+}
+
+.toc li {
+    margin-bottom: 5px;
+}
+
+.toc a {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.toc a:hover {
+    text-decoration: underline !important;
+}
+
+/* Sumário (TOC) - tema claro */
+body:not(.dark-mode) .toc-wrapper {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    color: #212529;
+}
+
+body:not(.dark-mode) .toc-wrapper h3 {
+    color: #212529;
+    margin-top: 0;
+}
+
+body:not(.dark-mode) .toc-wrapper small {
+    color: #6c757d;
+}
+
+body:not(.dark-mode) .toc a {
+    color: #007bff;
+}
+
+body:not(.dark-mode) .toc a:hover {
+    color: #0056b3;
+}
+
+/* Sumário (TOC) - tema escuro */
+body.dark-mode .toc-wrapper {
+    background-color: #2d2d2d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e1e1e1;
+}
+
+body.dark-mode .toc-wrapper h3 {
+    color: #e1e1e1;
+    margin-top: 0;
+}
+
+body.dark-mode .toc-wrapper small {
+    color: #b0b0b0;
+}
+
+body.dark-mode .toc a {
+    color: #64b5f6;
+}
+
+body.dark-mode .toc a:hover {
+    color: #90caf9;
+}
+
 /* Dark mode adjustments */
 body.dark-mode .content pre {
     background-color: #2d2d2d;
