@@ -138,14 +138,14 @@ class Top3Card(models.Model):
     # Comment
     fun_comment = models.TextField(help_text="A fun comment about the TOP 3 items")
     
-    # Order for display
+    # Order for display (mantido para compatibilidade mas não é mais usado como ordenação principal)
     display_order = models.PositiveIntegerField(default=0)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['display_order', 'created_at']
+        ordering = ['created_at']  # Alterado para ordenar apenas por data de criação
         verbose_name = "TOP 3 Card"
         verbose_name_plural = "TOP 3 Cards"
     

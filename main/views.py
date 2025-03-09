@@ -371,7 +371,6 @@ def add_top3(request):
             top3.item3_name = request.POST.get('item3_name')
             top3.item3_link = request.POST.get('item3_link') or None
             top3.fun_comment = request.POST.get('fun_comment')
-            top3.display_order = request.POST.get('display_order', 0)
             
             # Atualizar imagens apenas se fornecidas
             if 'item1_image' in request.FILES:
@@ -395,8 +394,7 @@ def add_top3(request):
                 item2_link=request.POST.get('item2_link') or None,
                 item3_name=request.POST.get('item3_name'),
                 item3_link=request.POST.get('item3_link') or None,
-                fun_comment=request.POST.get('fun_comment'),
-                display_order=request.POST.get('display_order', 0)
+                fun_comment=request.POST.get('fun_comment')
             )
             
             # Adicionar imagens
@@ -437,7 +435,6 @@ def get_top3(request, top3_id):
         'item3_name': top3.item3_name,
         'item3_link': top3.item3_link or '',
         'item3_image_url': top3.item3_image.url,
-        'fun_comment': top3.fun_comment,
-        'display_order': top3.display_order
+        'fun_comment': top3.fun_comment
     }
     return JsonResponse(data)
