@@ -1,0 +1,500 @@
+/* Estilos para a página de exclusão de projeto */
+
+/* Garantir que o conteúdo tenha altura mínima para empurrar o footer para baixo */
+.container.py-5 {
+    min-height: calc(100vh - 200px); /* Ajuste conforme a altura do header e footer */
+}
+
+/* Estilização do card principal */
+.delete-project-card {
+    margin-bottom: 3rem;
+}
+
+.delete-project-card .card {
+    border: none;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Header com ícone de aviso */
+.delete-project-card .card-header {
+    padding: 1.25rem 1.5rem;
+    font-weight: 500;
+    border-bottom: none;
+}
+
+.delete-project-card .card-header i {
+    font-size: 1.2rem;
+}
+
+/* Corpo do card com espaçamento adequado */
+.delete-project-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Informações do projeto a ser excluído */
+.project-info {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.project-thumbnail {
+    flex-shrink: 0;
+    width: 120px;
+    height: 80px;
+    margin-right: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.project-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.project-details {
+    flex-grow: 1;
+}
+
+.project-meta {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/* Estilizando as tags consistentes com as páginas de projetos */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0.5rem;
+}
+
+.project-tag {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+/* Usar o mesmo estilo de tipo de projeto do card de projetos */
+.project-card__type {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project-card__type--academic {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.project-card__type--personal {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.project-card__type--professional {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Garantir que o estilo do status seja consistente */
+.status-badge .badge {
+    padding: 0.5em 0.85em;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+/* Alerta de aviso simplificado */
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border: none;
+    border-left: 4px solid #ffc107;
+    color: #664d03;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+}
+
+.alert-icon {
+    color: #ffc107;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+}
+
+/* Checkbox de confirmação */
+.confirmation-checkbox {
+    padding: 1.25rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    transition: background-color 0.3s ease;
+}
+
+.form-check-label {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Botões de ação */
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn {
+    padding: 0.6rem 1.25rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.btn i {
+    margin-right: 0.5rem;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.2);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.4);
+}
+
+.btn-danger:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    color: #6c757d;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #e9ecef;
+    color: #495057;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Estilos para modo escuro */
+body.dark-mode .delete-project-card .card {
+    background-color: #232323;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .card-header {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .project-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .project-thumbnail {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .project-details h3 {
+    color: #ffffff;
+}
+
+body.dark-mode .project-details p {
+    color: #b0b0b0;
+}
+
+body.dark-mode .project-tag {
+    background-color: rgba(100, 181, 246, 0.1);
+    color: #64b5f6;
+    border-color: rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode .project-type-badge {
+    background-color: #2a2a2a;
+    color: #e1e1e1;
+}
+
+body.dark-mode .alert-warning {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left-color: #ffc107;
+    color: #ffda85;
+}
+
+body.dark-mode .alert-warning strong {
+    color: #ffda85;
+}
+
+body.dark-mode .alert-warning h5,
+body.dark-mode .alert-warning p,
+body.dark-mode .alert-warning ul {
+    color: #ffd54f;
+}
+
+body.dark-mode .confirmation-checkbox {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-check-label {
+    color: #e1e1e1;
+}
+
+body.dark-mode .form-check-input {
+    background-color: #333;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .form-check-input:checked {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #343a40;
+    border-color: #343a40;
+    color: #e1e1e1;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #23272b;
+    border-color: #23272b;
+    color: #ffffff;
+}
+
+/* Reorganização dos metadados do projeto */
+.project-metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Estilização de cada item de metadado */
+.metadata-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.01);
+    border-radius: 6px;
+    padding: 0.75rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Ícone para cada item de metadado */
+.metadata-icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteúdo com rótulo e valor */
+.metadata-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.metadata-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    opacity: 0.7;
+}
+
+.metadata-value {
+    font-weight: 500;
+}
+
+/* Estilos específicos para Status */
+.status-item .metadata-icon {
+    background-color: rgba(0, 123, 255, 0.1); /* Fundo azul neutro */
+    color: #0d6efd; /* Azul como cor neutra para informação */
+}
+
+/* Status específico: Em andamento (amarelo/laranja) */
+.status-item.status-in-progress .metadata-icon {
+    background-color: rgba(255, 193, 7, 0.1); /* Fundo amarelo suave */
+    color: #ffc107; /* Amarelo - indica processo em andamento */
+}
+
+/* Status específico: Concluído (verde) */
+.status-item.status-completed .metadata-icon {
+    background-color: rgba(40, 167, 69, 0.1); /* Fundo verde suave */
+    color: #28a745; /* Verde - indica conclusão bem-sucedida */
+}
+
+/* Estilos específicos para Tipo */
+.type-item .metadata-icon {
+    background-color: rgba(25, 135, 84, 0.15); /* Um verde mais suave */
+    color: #198754; /* Verde para indicar tipo/categoria */
+}
+
+/* Estilos específicos para Tags */
+.tags-item .metadata-icon {
+    background-color: rgba(13, 110, 253, 0.15); /* Um azul mais suave */
+    color: #0d6efd; /* Azul para tags/etiquetas */
+}
+
+/* Estilos melhorados para as tags */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+/* Tema escuro para metadados */
+body.dark-mode .metadata-item {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .metadata-icon {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .metadata-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.dark-mode .status-item .metadata-icon {
+    background-color: rgba(13, 110, 253, 0.2); /* Azul escuro */
+    color: #64b5f6; /* Azul mais claro para melhor visibilidade */
+}
+
+body.dark-mode .status-item.status-in-progress .metadata-icon {
+    background-color: rgba(255, 193, 7, 0.25); /* Fundo amarelo mais vibrante */
+    color: #ffd54f; /* Cor amarela mais clara e vibrante */
+}
+
+body.dark-mode .status-item.status-completed .metadata-icon {
+    background-color: rgba(40, 167, 69, 0.25); /* Fundo verde mais vibrante */
+    color: #4ade80; /* Cor verde mais clara e vibrante */
+}
+
+body.dark-mode .type-item .metadata-icon {
+    background-color: rgba(40, 167, 69, 0.25); /* Fundo verde mais vibrante */
+    color: #2ed1a2; /* Cor verde mais clara e vibrante */
+}
+
+body.dark-mode .tags-item .metadata-icon {
+    background-color: rgba(13, 110, 253, 0.25); /* Fundo azul mais vibrante */
+    color: #64b5f6; /* Cor azul mais clara e vibrante */
+}
+
+/* Responsividade para os metadados */
+@media (max-width: 576px) {
+    .metadata-item {
+        padding: 0.6rem;
+    }
+    
+    .metadata-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .project-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .project-thumbnail {
+        width: 100%;
+        height: 140px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column-reverse;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .project-details h3 {
+        font-size: 1.2rem;
+    }
+    
+    .confirmation-checkbox {
+        padding: 1rem;
+    }
+    
+    .alert-warning {
+        padding: 0.75rem 1rem;
+    }
+    
+    .alert-icon {
+        font-size: 1.1rem;
+    }
+    
+    .btn-lg {
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    .d-flex.justify-content-between {
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+    
+    .d-flex.justify-content-between .btn {
+        width: 100%;
+    }
+}

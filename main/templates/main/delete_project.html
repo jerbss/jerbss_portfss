@@ -4,13 +4,25 @@
 
 {% block title %}Excluir Projeto{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/project-delete.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container py-5">
-    <!-- Reestruturar para alinhar o título com o card -->
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <!-- Título movido para dentro da mesma coluna do card -->
-            <h1 class="display-4 fw-bold mb-4">Excluir Projeto</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Breadcrumbs para navegação contextual -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'main:home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'main:projects' %}">Projetos</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'main:project_detail' slug=project.slug %}">{{ project.title }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Excluir</li>
+                </ol>
+            </nav>
+
+            <h1 class="display-5 fw-bold mb-4">Excluir Projeto</h1>
             
             <!-- Mensagens de feedback específicas para projetos -->
             {% if messages %}
@@ -31,28 +43,134 @@
                 {% endfor %}
             {% endif %}
             
-            <div class="card">
-                <div class="card-header bg-danger text-white">
-                    <h2 class="h4 mb-0">Excluir Projeto</h2>
-                </div>
-                <div class="card-body">
-                    <p class="mb-4">
-                        Tem certeza que deseja excluir <strong>"{{ project.title }}"</strong>? Esta ação não pode ser desfeita.
-                    </p>
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url 'main:project_detail' slug=project.slug %}" class="btn btn-secondary">
-                                Cancelar
-                            </a>
-                            <button type="submit" class="btn btn-danger">
-                                Confirmar Exclusão
-                            </button>
+            <div class="delete-project-card">
+                <div class="card">
+                    <div class="card-header bg-danger text-white d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <h2 class="h4 mb-0">Confirmar Exclusão</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <!-- Informações resumidas do projeto -->
+                        <div class="project-info">
+                            {% if project.image %}
+                                <div class="project-thumbnail">
+                                    <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-thumbnail"
+                                         onerror="this.src='{% static 'images/default-project.jpeg' %}'; this.onerror='';">
+                                </div>
+                            {% endif %}
+                            
+                            <div class="project-details">
+                                <h3 class="h4 mb-2">{{ project.title }}</h3>
+                                
+                                <!-- Organização hierárquica dos metadados -->
+                                <div class="project-metadata">
+                                    <!-- Tipo de projeto com ícone e rótulo - MOVIDO PARA PRIMEIRO -->
+                                    <div class="metadata-item type-item">
+                                        <div class="metadata-icon">
+                                            {% if project.project_type == 'academic' %}
+                                                <i class="fas fa-graduation-cap"></i>
+                                            {% elif project.project_type == 'personal' %}
+                                                <i class="fas fa-user"></i>
+                                            {% elif project.project_type == 'professional' %}
+                                                <i class="fas fa-briefcase"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="metadata-content">
+                                            <div class="metadata-label">Tipo</div>
+                                            <div class="metadata-value">
+                                                {{ project.get_type_display_html|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Status do projeto com ícone e rótulo - MOVIDO PARA SEGUNDO -->
+                                    <div class="metadata-item status-item {% if project.status == 'completed' %}status-completed{% else %}status-in-progress{% endif %}">
+                                        <div class="metadata-icon">
+                                            {% if project.status == 'completed' %}
+                                                <i class="fas fa-check-circle"></i>
+                                            {% else %}
+                                                <i class="fas fa-spinner fa-spin-pulse"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="metadata-content">
+                                            <div class="metadata-label">Status</div>
+                                            <div class="metadata-value">
+                                                {{ project.get_status_display_html|safe }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tags com ícone e rótulo -->
+                                    {% if project.tags.all %}
+                                    <div class="metadata-item tags-item">
+                                        <div class="metadata-icon">
+                                            <i class="fas fa-tags"></i>
+                                        </div>
+                                        <div class="metadata-content">
+                                            <div class="metadata-label">Tags</div>
+                                            <div class="project-tags">
+                                                {% for tag in project.tags.all %}
+                                                    <span class="project-tag">{{ tag.name }}</span>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                        
+                        <!-- Alerta de aviso simplificado -->
+                        <div class="alert alert-warning mt-4">
+                            <div class="d-flex">
+                                <div class="alert-icon me-3">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div>
+                                    <p class="mb-0"><strong>Esta ação é permanente.</strong> Ao excluir este projeto, você removerá permanentemente todas as informações, imagens e tags associadas.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form method="post" id="deleteForm">
+                            {% csrf_token %}
+                            
+                            <div class="confirmation-checkbox">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="confirmDelete" required>
+                                    <label class="form-check-label" for="confirmDelete">
+                                        Eu confirmo que desejo excluir "<strong>{{ project.title }}</strong>"
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <a href="{% url 'main:project_detail' slug=project.slug %}" class="btn btn-secondary">
+                                    <i class="fas fa-times me-2"></i>Cancelar
+                                </a>
+                                <button type="submit" class="btn btn-danger" id="deleteButton" disabled>
+                                    <i class="fas fa-trash me-2"></i>Excluir Permanentemente
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const confirmCheckbox = document.getElementById('confirmDelete');
+        const deleteButton = document.getElementById('deleteButton');
+        
+        confirmCheckbox.addEventListener('change', function() {
+            deleteButton.disabled = !this.checked;
+        });
+    });
+</script>
 {% endblock %}
