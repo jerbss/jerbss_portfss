@@ -377,26 +377,31 @@ body.dark-mode .preview-note {
     background-color: #17a2b8;
     border-color: #17a2b8;
     color: white;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 #previewButton:hover {
     background-color: #138496;
     border-color: #138496;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    /* Removido transform e box-shadow no hover */
 }
 
 #previewButton i {
-    color: white; /* Garantir que o ícone seja branco no tema claro */
+    color: #ffffff; /* Garantir que o ícone seja branco no tema claro */
 }
 
 body.dark-mode #previewButton {
     background-color: #138496;
     border-color: #138496;
+    color: #121212; /* Alterado para preto no tema escuro */
 }
 
 body.dark-mode #previewButton:hover {
     background-color: #0f6674;
     border-color: #0f6674;
+    /* Sem efeitos adicionais no hover */
+}
+
+body.dark-mode #previewButton i {
+    color: #121212; /* Ícone preto no tema escuro */
 }
