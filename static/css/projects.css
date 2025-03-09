@@ -1442,15 +1442,11 @@ body.dark-mode .type-container .btn.active i {
         min-width: auto;
     }
     
-    /* Melhoria para layout em tablets */
+    /* Melhoria para layout em tablets - removendo a borda que causa a linha horizontal */
     .card-body .col-md-6:not(:last-child) {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); - removido */
         padding-bottom: 1rem;
         margin-bottom: 1rem;
-    }
-    
-    body.dark-mode .card-body .col-md-6:not(:last-child) {
-        border-bottom-color: rgba(255, 255, 255, 0.1);
     }
 }
 
