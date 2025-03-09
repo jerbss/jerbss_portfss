@@ -1,82 +1,124 @@
+{% load static %}
 <div class="project-preview-container">
-    <!-- Header com título do projeto -->
-    <div class="preview-header">
-        <h2 class="preview-title">{{ project.title }}</h2>
+    <!-- Project Header -->
+    <div class="project-header card mb-4">
+        <div class="row g-0">
+            <!-- Coluna da imagem -->
+            <div class="col-md-5">
+                <div class="project-cover h-100">
+                    <img src="{% static 'images/kobeni.jpg' %}" alt="{{ project.title }}" class="img-fluid rounded-start h-100 w-100">
+                </div>
+            </div>
+            
+            <!-- Coluna dos metadados principais -->
+            <div class="col-md-7">
+                <div class="card-body">
+                    <!-- Cabeçalho com título e tipo de projeto -->
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h1 class="card-title h2 fw-bold mb-0">{{ project.title }}</h1>
+                        <!-- Badge de tipo de projeto -->
+                        <div class="project-badge">
+                            {% if project.project_type == 'academic' %}
+                                <span class="project-card__type project-card__type--academic">Acadêmico</span>
+                            {% elif project.project_type == 'personal' %}
+                                <span class="project-card__type project-card__type--personal">Pessoal</span>
+                            {% elif project.project_type == 'professional' %}
+                                <span class="project-card__type project-card__type--professional">Profissional</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Status do projeto (badge) -->
+                    <div class="project-status mb-4">
+                        {% if project.status == 'in_progress' %}
+                            <span class="badge bg-warning text-dark">Em Andamento</span>
+                        {% else %}
+                            <span class="badge bg-success">Concluído</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Informações temporais organizadas -->
+                    <div class="project-meta mb-4">
+                        <h5 class="text-muted fs-6 fw-bold mb-3">
+                            <i class="far fa-clock me-2"></i>CRONOLOGIA
+                        </h5>
+                        
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex align-items-center">
+                                <span class="project-meta-icon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                <span class="project-meta-label">Período:</span>
+                                <span class="project-meta-value">
+                                    {% if project.end_date %}
+                                        {{ project.start_date|date:"d/m/Y" }} - {{ project.end_date|date:"d/m/Y" }}
+                                    {% else %}
+                                        {{ project.start_date|date:"d/m/Y" }} - Em Andamento
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tags com estilo aprimorado -->
+                    <div class="project-tags mb-4">
+                        <h5 class="text-muted fs-6 fw-bold mb-3">
+                            <i class="fas fa-tags me-2"></i>TAGS
+                        </h5>
+                        <div class="tag-cloud">
+                            {% for tag in tags %}
+                                <span class="project-tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Links do projeto -->
+                    <div class="project-links">
+                        <h5 class="text-muted fs-6 fw-bold mb-3">
+                            <i class="fas fa-link me-2"></i>LINKS
+                        </h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if project.url %}
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-external-link-alt me-2"></i>Ver Projeto
+                            </a>
+                            {% endif %}
+                            
+                            {% if project.github_url %}
+                            <a href="#" class="btn btn-dark">
+                                <i class="fab fa-github me-2"></i>Código no GitHub
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
-        <div class="preview-meta">
-            <!-- Status do projeto -->
-            <div class="preview-status mb-3">
-                {% if project.status == 'in_progress' %}
-                    <span class="badge bg-warning text-dark">Em Andamento</span>
-                {% else %}
-                    <span class="badge bg-success">Concluído</span>
-                {% endif %}
-                
-                <!-- Tipo de projeto -->
-                <span class="ms-2">
-                    {% if project.project_type == 'academic' %}
-                        <span class="project-card__type project-card__type--academic">Acadêmico</span>
-                    {% elif project.project_type == 'personal' %}
-                        <span class="project-card__type project-card__type--personal">Pessoal</span>
-                    {% elif project.project_type == 'professional' %}
-                        <span class="project-card__type project-card__type--professional">Profissional</span>
-                    {% endif %}
-                </span>
-            </div>
-            
-            <!-- Datas -->
-            <div class="preview-dates mb-3">
-                <i class="far fa-calendar-alt me-1"></i>
-                {% if project.end_date %}
-                    <span>{{ project.start_date|date:"d/m/Y" }} - {{ project.end_date|date:"d/m/Y" }}</span>
-                {% else %}
-                    <span>{{ project.start_date|date:"d/m/Y" }} - Em Andamento</span>
-                {% endif %}
-            </div>
-            
-            <!-- Tags -->
-            <div class="preview-tags mb-3">
-                <i class="fas fa-tags me-1"></i>
-                {% for tag in tags %}
-                    <span class="project-tag">{{ tag.name }}</span>
-                {% endfor %}
+        <!-- Descrição curta abaixo da imagem e metadados -->
+        <div class="card-footer bg-transparent">
+            <div class="project-short-description">
+                <h5 class="text-muted fs-6 fw-bold mb-3">
+                    <i class="fas fa-info-circle me-2"></i>DESCRIÇÃO BREVE
+                </h5>
+                <p class="lead mb-0">{{ project.short_description }}</p>
             </div>
         </div>
     </div>
     
-    <!-- Descrição curta -->
-    <div class="preview-short-description mb-3">
-        <h5 class="text-muted fs-6 fw-bold mb-2">DESCRIÇÃO BREVE</h5>
-        <p class="lead">{{ project.short_description }}</p>
-    </div>
-    
-    <!-- Links -->
-    <div class="preview-links mb-3">
-        {% if project.url %}
-            <a href="#" class="btn btn-sm btn-primary me-2">
-                <i class="fas fa-external-link-alt me-1"></i>Ver Projeto
-            </a>
-        {% endif %}
-        {% if project.github_url %}
-            <a href="#" class="btn btn-sm btn-dark">
-                <i class="fab fa-github me-1"></i>Código no GitHub
-            </a>
-        {% endif %}
-    </div>
-    
-    <!-- Conteúdo principal -->
-    <div class="preview-content">
-        <h5 class="text-muted fs-6 fw-bold mb-2">CONTEÚDO DO PROJETO</h5>
+    <!-- Conteúdo do projeto -->
+    <div class="project-content mb-4">
+        <h5 class="text-muted fs-6 fw-bold mb-3">CONTEÚDO DO PROJETO</h5>
         <div class="content-wrapper">
             {{ project.content|safe }}
         </div>
     </div>
     
     <!-- Nota de preview -->
-    <div class="preview-note mt-4 p-2 bg-light text-center rounded">
-        <small class="text-muted">
-            <i class="fas fa-info-circle me-1"></i>
-            Esta é apenas uma visualização prévia. O projeto ainda não foi salvo.
-        </small>
+    <div class="preview-note mt-4 p-3 text-center rounded">
+        <span class="text-muted">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Visualização prévia:</strong> Este é apenas um preview de como o projeto ficará após ser salvo.
+        </span>
     </div>
 </div>

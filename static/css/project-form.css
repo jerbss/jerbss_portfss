@@ -526,3 +526,229 @@ body.dark-mode .preview-content .content-wrapper blockquote {
     padding: 10px;
     color: #e1e1e1;
 }
+
+/* Estilos do projeto adaptados para o preview */
+.project-preview-container {
+    padding: 1rem;
+    color: var(--text-color);
+}
+
+.project-preview-container .project-header {
+    margin-bottom: 2rem;
+    border: none;
+    border-radius: 0.375rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background-color: var(--bg-color);
+}
+
+.project-preview-container .card-body {
+    padding: 1.5rem;
+    background-color: var(--bg-color);
+}
+
+.project-preview-container .card-footer {
+    background-color: rgba(0, 0, 0, 0.01);
+    border-color: rgba(0, 0, 0, 0.05);
+    padding: 1.25rem 1.5rem;
+}
+
+/* Imagem de capa no preview */
+.project-preview-container .project-cover {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+    overflow: hidden;
+}
+
+.project-preview-container .project-cover img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para os metadados */
+.project-preview-container .project-meta {
+    padding: 0.75rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.project-preview-container .project-meta-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.project-preview-container .project-meta-label {
+    font-weight: 600;
+    margin-right: 8px;
+    color: var(--text-color);
+    opacity: 0.8;
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.project-preview-container .project-meta-value {
+    color: var(--text-color);
+}
+
+/* Estilos para as tags */
+.project-preview-container .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.project-preview-container .project-tag {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Badge de tipo de projeto */
+.project-preview-container .project-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.project-preview-container .project-card__type {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project-preview-container .project-card__type--academic {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.project-preview-container .project-card__type--personal {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.project-preview-container .project-card__type--professional {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Cabeçalhos para as seções */
+.project-preview-container .text-muted.fs-6.fw-bold {
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+    color: #6c757d !important;
+    font-size: 0.8rem !important;
+}
+
+/* Conteúdo principal */
+.project-preview-container .project-content {
+    padding: 1rem;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.project-preview-container .project-content .content-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+/* Nota de preview */
+.project-preview-container .preview-note {
+    background-color: rgba(13, 110, 253, 0.05);
+    border: 1px dashed rgba(13, 110, 253, 0.2);
+}
+
+/* Tema escuro para o preview */
+body.dark-mode .project-preview-container {
+    color: #e1e1e1;
+}
+
+body.dark-mode .project-preview-container .project-header {
+    background-color: #232323;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .project-preview-container .card-body {
+    background-color: #232323;
+}
+
+body.dark-mode .project-preview-container .card-footer {
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .project-preview-container .project-cover {
+    background-color: #1a1a1a;
+}
+
+body.dark-mode .project-preview-container .project-meta {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .project-preview-container .project-meta-icon {
+    color: #64b5f6;
+}
+
+body.dark-mode .project-preview-container .project-meta-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.dark-mode .project-preview-container .project-meta-value {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .project-preview-container .project-tag {
+    background-color: rgba(100, 181, 246, 0.1);
+    color: #64b5f6;
+    border-color: rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode .project-preview-container .text-muted.fs-6.fw-bold {
+    color: #a0a0a0 !important;
+}
+
+body.dark-mode .project-preview-container .project-content {
+    background-color: #232323;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .project-preview-container .preview-note {
+    background-color: rgba(100, 181, 246, 0.05);
+    border-color: rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode .project-preview-container .preview-note .text-muted {
+    color: #a0a0a0 !important;
+}
