@@ -866,7 +866,7 @@ body.dark-mode .project-card {
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px); /* Reduzido de -5px para -3px para um efeito mais sutil */
     box-shadow: var(--card-shadow-hover);
 }
 
@@ -885,7 +885,7 @@ body.dark-mode .project-card {
 }
 
 .project-card:hover .project-card__image {
-    transform: scale(1.05);
+    transform: none; /* Removido o efeito scale(1.05) */
 }
 
 /* Badge de Destaque */
@@ -1052,6 +1052,7 @@ body.dark-mode .project-card__footer {
 .project-card__btn--primary {
     background-color: var(--primary-color);
     color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 body.dark-mode .project-card__btn--primary {
@@ -1062,7 +1063,7 @@ body.dark-mode .project-card__btn--primary {
 .project-card__btn--primary:hover {
     background-color: var(--hover-color);
     color: white;
-    transform: translateY(-2px);
+    transform: translateY(-2px); /* Mantido apenas no botão principal */
 }
 
 body.dark-mode .project-card__btn--primary:hover {
@@ -1080,6 +1081,7 @@ body.dark-mode .project-card__btn--primary:hover {
     color: var(--text-color);
     border-radius: 50%;
     font-size: 0.9rem;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 body.dark-mode .project-card__btn--icon {
@@ -1088,12 +1090,14 @@ body.dark-mode .project-card__btn--icon {
 }
 
 .project-card__btn--icon:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
+    background-color: rgba(0, 0, 0, 0.15); /* Cor de fundo mais escura */
+    transform: none; /* Remover movimento vertical */
+    opacity: 0.9; /* Sutil mudança de opacidade */
 }
 
 body.dark-mode .project-card__btn--icon:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.25); /* Cor de fundo mais clara no tema escuro */
+    transform: none; /* Remover movimento vertical */
 }
 
 /* Botão de perigo (excluir) */
@@ -1106,11 +1110,13 @@ body.dark-mode .project-card__btn--danger {
 }
 
 .project-card__btn--danger:hover {
-    background-color: rgba(220, 53, 69, 0.1);
+    background-color: rgba(220, 53, 69, 0.15);
+    transform: none; /* Remover movimento vertical */
 }
 
 body.dark-mode .project-card__btn--danger:hover {
-    background-color: rgba(255, 107, 107, 0.2);
+    background-color: rgba(255, 107, 107, 0.25);
+    transform: none; /* Remover movimento vertical */
 }
 
 /* Grupo de controles de admin */
