@@ -752,3 +752,55 @@ body.dark-mode .project-preview-container .preview-note {
 body.dark-mode .project-preview-container .preview-note .text-muted {
     color: #a0a0a0 !important;
 }
+
+/* Ajustes para iframes de vídeo (YouTube, etc) */
+.project-content iframe {
+    /* Estas propriedades podem estar causando problemas */
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 1.5rem 0;
+    width: 100%;
+}
+
+/* Solução: estilos específicos para iframes de mídia do TinyMCE */
+.mce-content-body iframe.mce-object-iframe {
+    /* Remover estilos que interferem com os controles */
+    aspect-ratio: unset !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    pointer-events: auto !important; /* Garantir que eventos de mouse funcionem */
+    z-index: 1; /* Garantir que o iframe esteja em uma camada acessível */
+}
+
+/* Colocar os estilos decorativos no wrapper em vez do iframe */
+.mce-content-body .mce-preview-object {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
+    padding-bottom: 56.25%; /* Proporção 16:9 */
+    height: 0;
+    width: 100%;
+}
+
+/* Posicionar o iframe corretamente dentro do wrapper */
+.mce-content-body .mce-preview-object iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+}
+
+/* Remover max-height do wrapper de conteúdo que pode cortar vídeos */
+.project-content .content-wrapper {
+    max-height: none !important; /* Override para não limitar a altura */
+}
+
+/* Tema escuro para o wrapper do vídeo */
+body.dark-mode .mce-content-body .mce-preview-object {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

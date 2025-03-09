@@ -188,10 +188,46 @@
 
 .project-content iframe {
     width: 100%;
+    margin: 1.5rem 0;
+}
+
+/* Adicionar estilos específicos para iframes de vídeo incorporados */
+.project-content iframe.media-embed {
     aspect-ratio: 16/9;
     border-radius: 8px;
-    margin: 1.5rem 0;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Corrigir estilos para iframes do YouTube e outras plataformas */
+.project-content .mce-preview-object,
+.project-content .media-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-content .mce-preview-object iframe,
+.project-content .media-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    pointer-events: auto !important;
+}
+
+/* Ajuste para modo escuro */
+body.dark-mode .project-content .mce-preview-object,
+body.dark-mode .project-content .media-wrapper {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .project-content pre {
