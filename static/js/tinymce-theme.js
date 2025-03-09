@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             skin: isDarkMode ? 'oxide-dark' : 'oxide',
                             content_css: isDarkMode ? 'dark' : 'default',
                             content_style: isDarkMode 
-                                ? 'body { background-color: #1a1a1a; color: #e1e1e1; } a { color: #58a6ff; }'
+                                ? 'body { background-color: #1a1a1a; color: #e1e1e1; } a { color: #58a6ff; } [data-mce-placeholder]::before { color: #b0b0b0 !important; opacity: 1 !important; }'
                                 : 'body { background-color: #ffffff; color: #000000; } a { color: #0d6efd; }',
                             relative_urls: false,
                             remove_script_host: false,
