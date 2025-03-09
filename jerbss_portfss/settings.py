@@ -219,7 +219,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme': 'silver',
     'language': 'pt_BR',
     'plugins': 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount help',
-    'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code',
+    'toolbar': 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | anchor | code',
     'menubar': 'file edit view insert format tools table help',
     'toolbar_mode': 'sliding',
     'skin': 'oxide',
