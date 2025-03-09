@@ -27,6 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     checkTocLinks(editor);
                 }
             });
+            
+            // NOVO: Adicionar botão para remover sumário
+            editor.ui.registry.addButton('removetoc', {
+                icon: 'remove',
+                tooltip: 'Remover Sumário',
+                onAction: function() {
+                    removeTableOfContents(editor);
+                }
+            });
         });
     }
     
@@ -345,6 +354,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: message,
                 type: 'warning',
                 timeout: 10000
+            });
+        }
+    }
+    
+    // NOVA FUNÇÃO: Remover o sumário do conteúdo
+    function removeTableOfContents(editor) {
+        // Obter o conteúdo atual
+        const content = editor.getContent();
+        
+        // Verificar se existe um sumário
+        if (!content.includes('toc-wrapper')) {
+            editor.notificationManager.open({
+                text: 'Nenhum sumário encontrado para remover.',
+                type: 'info'
+            });
+            return;
+        }
+        
+        // Criar um elemento temporário para manipular o DOM
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content;
+        
+        // Encontrar e remover o sumário e a linha horizontal que o segue
+        const tocWrapper = tempDiv.querySelector('.toc-wrapper');
+        if (tocWrapper) {
+            // Verificar se há uma tag HR logo após o sumário
+            let nextElement = tocWrapper.nextElementSibling;
+            if (nextElement && nextElement.tagName === 'HR') {
+                nextElement.remove();
+            }
+            
+            // Remover o próprio sumário
+            tocWrapper.remove();
+            
+            // Atualizar o conteúdo do editor
+            editor.setContent(tempDiv.innerHTML);
+            
+            editor.notificationManager.open({
+                text: 'Sumário removido com sucesso!',
+                type: 'success'
             });
         }
     }
