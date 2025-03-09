@@ -8,10 +8,13 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('projects/', views.projects, name='projects'),
     path('projects/create/', views.create_project, name='create_project'),
+    # Colocar a URL de preview ANTES das URLs com parâmetros dinâmicos (slug)
+    path('projects/preview/', views.project_preview, name='project_preview'),
+    # URLs com slugs vêm depois para não capturarem o "preview" como slug
     path('projects/<slug:slug>/', views.project_detail, name='project_detail'),
     path('projects/<slug:slug>/edit/', views.edit_project, name='edit_project'),
     path('projects/<slug:slug>/delete/', views.delete_project, name='delete_project'),
     path('contact/', views.contact, name='contact'),
     path('test-cloudinary/', test_cloudinary, name='test_cloudinary'),
-    path('debug/projects/', views.debug_projects, name='debug_projects'),  # Add this line
+    path('debug/projects/', views.debug_projects, name='debug_projects'),
 ]

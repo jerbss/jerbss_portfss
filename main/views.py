@@ -14,6 +14,8 @@ from django.conf import settings
 from cloudinary.uploader import upload
 from .models import Project, Tag
 from .forms import ProjectForm, ContactForm
+from django.utils import timezone
+from django.template.loader import render_to_string
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -213,6 +215,52 @@ def delete_project(request, slug):
         return redirect('main:projects')
     
     return render(request, 'main/delete_project.html', {'project': project})
+
+@login_required
+def project_preview(request):
+    """Gera uma prévia do projeto sem salvá-lo no banco de dados"""
+    if request.method == 'POST' and request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        try:
+            # Criar uma instância temporária do projeto
+            temp_project = Project(
+                title=request.POST.get('title', 'Título do Projeto'),
+                short_description=request.POST.get('short_description', ''),
+                content=request.POST.get('content', ''),
+                project_type=request.POST.get('project_type', 'personal'),
+                status=request.POST.get('status', 'in_progress'),
+                start_date=request.POST.get('start_date') or timezone.now().date(),
+                url=request.POST.get('url', '#')
+            )
+            
+            # Processar data de término se fornecida
+            end_date = request.POST.get('end_date')
+            if end_date:
+                temp_project.end_date = end_date
+                
+            # Processar URL do GitHub se fornecida
+            github_url = request.POST.get('github_url')
+            if github_url:
+                temp_project.github_url = github_url
+                
+            # Processar tags
+            tags_input = request.POST.get('tags_input', '')
+            tags = []
+            for tag_name in [t.strip() for t in tags_input.split(',') if t.strip()]:
+                tags.append({'name': tag_name})
+                
+            # Renderizar o template de preview
+            html = render_to_string('main/project_preview.html', {
+                'project': temp_project,
+                'tags': tags,
+                'is_preview': True
+            }, request=request)
+            
+            return JsonResponse({'html': html, 'success': True})
+        except Exception as e:
+            logger.error(f"Error in project_preview: {str(e)}")
+            return JsonResponse({'error': str(e), 'success': False}, status=400)
+    
+    return JsonResponse({'error': 'Método não permitido', 'success': False}, status=405)
 
 def contact(request):
     if request.method == 'POST':

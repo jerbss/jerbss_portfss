@@ -21,11 +21,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls')),
-    path('tinymce/', include('tinymce.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Certifique-se de que as URLs do app main estão incluídas na raiz
+    path('', include('main.urls')),  # Esta linha deve estar presente para que as URLs do app main funcionem corretamente
+]
 
-# Always add media URL patterns in development mode
-# This ensures that even with Cloudinary, local references still work for existing files
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

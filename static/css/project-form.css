@@ -284,3 +284,119 @@ body.dark-mode .image-preview-container {
 body.dark-mode .image-preview-overlay {
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+/* Estilos para o Preview */
+.project-preview-container {
+    padding: 1rem;
+}
+
+.preview-header {
+    margin-bottom: 1.5rem;
+}
+
+.preview-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.preview-meta {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+}
+
+.preview-status .badge {
+    padding: 0.5em 1em;
+    font-weight: 500;
+}
+
+.preview-tags .project-tag {
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.preview-short-description {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.01);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.preview-short-description .lead {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+.preview-content {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.preview-content .content-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+/* Tema escuro */
+body.dark-mode .preview-meta {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .preview-tags .project-tag {
+    background-color: rgba(100, 181, 246, 0.1);
+    color: var(--primary-dark);
+    border-color: rgba(100, 181, 246, 0.2);
+}
+
+body.dark-mode .preview-short-description {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .preview-content {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .preview-note {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Estilos para o botão de preview */
+#previewButton {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+#previewButton:hover {
+    background-color: #138496;
+    border-color: #138496;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#previewButton i {
+    color: white; /* Garantir que o ícone seja branco no tema claro */
+}
+
+body.dark-mode #previewButton {
+    background-color: #138496;
+    border-color: #138496;
+}
+
+body.dark-mode #previewButton:hover {
+    background-color: #0f6674;
+    border-color: #0f6674;
+}
