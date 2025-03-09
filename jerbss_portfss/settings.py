@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 from decouple import config
 import dj_database_url
+from dotenv import load_dotenv
+
+# Carrega variáveis do arquivo .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -223,6 +227,12 @@ TINYMCE_DEFAULT_CONFIG = {
     'remove_script_host': False,
     'convert_urls': False
 }
+
+# Configurações do TinyMCE
+TINYMCE_API_KEY = os.environ.get('TINYMCE_API_KEY')
+
+# Email de contato para recebimento de mensagens
+CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

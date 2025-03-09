@@ -182,7 +182,8 @@ def create_project(request):
     
     return render(request, 'main/create_project.html', {
         'form': form,
-        'action': 'create'
+        'action': 'create',
+        'tinymce_api_key': settings.TINYMCE_API_KEY
     })
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -201,7 +202,8 @@ def edit_project(request, slug):
     return render(request, 'main/create_project.html', {
         'form': form,
         'is_edit': True,
-        'project': project
+        'project': project,
+        'tinymce_api_key': settings.TINYMCE_API_KEY
     })
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -280,7 +282,7 @@ def contact(request):
             
             send_mail(
                 subject,
-                body,
+                body,  # Usando a variável de ambiente
                 sender_email,
                 ['jerbessonc@gmail.com'],
                 fail_silently=False,
