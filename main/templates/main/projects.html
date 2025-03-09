@@ -55,15 +55,15 @@
         <div class="card-body">
             <div class="row">
                 <!-- Tags Filter -->
-                <div class="col-lg-5 col-md-12 mb-3">
+                <div class="col-lg-4 col-md-12 mb-3">
                     <label class="form-label">Tags</label>
-                    <div class="tags-container">
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-filter="all">
-                            <i class="fas fa-tags me-1"></i>Todas
+                    <div class="tags-container filter-buttons">
+                        <button class="btn btn-sm btn-outline-primary active" data-filter="all">
+                            <i class="fas fa-tags"></i>Todas
                         </button>
                         {% for tag in tags %}
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-filter="{{ tag.name }}">
-                            <i class="fas fa-tag me-1"></i>{{ tag.name }} 
+                        <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
+                            <i class="fas fa-tag"></i><span>{{ tag.name }}</span>
                             <span class="badge">{{ tag.project_count }}</span>
                         </button>
                         {% endfor %}
@@ -71,41 +71,41 @@
                 </div>
                 
                 <!-- Type Filter -->
-                <div class="col-lg-3 col-md-6 mb-3">
+                <div class="col-lg-4 col-md-6 mb-3">
                     <label class="form-label">Tipo</label>
-                    <div class="type-container">
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2 active" data-type="all">
-                            <i class="fas fa-layer-group me-1"></i>Todos
+                    <div class="type-container filter-buttons">
+                        <button class="btn btn-sm btn-outline-primary active" data-type="all">
+                            <i class="fas fa-layer-group"></i>Todos
                         </button>
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="academic">
-                            <i class="fas fa-graduation-cap me-1"></i>Acadêmico
+                        <button class="btn btn-sm btn-outline-primary" data-type="academic">
+                            <i class="fas fa-graduation-cap"></i>Acadêmico
                         </button>
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="personal">
-                            <i class="fas fa-user me-1"></i>Pessoal
+                        <button class="btn btn-sm btn-outline-primary" data-type="personal">
+                            <i class="fas fa-user"></i>Pessoal
                         </button>
-                        <button class="btn btn-sm btn-outline-primary me-2 mb-2" data-type="professional">
-                            <i class="fas fa-briefcase me-1"></i>Profissional
+                        <button class="btn btn-sm btn-outline-primary" data-type="professional">
+                            <i class="fas fa-briefcase"></i>Profissional
                         </button>
                     </div>
                 </div>
                 
                 <!-- Status Filter -->
                 <div class="col-lg-4 col-md-6 mb-3">
-                    <div class="status-filter">
-                        <label class="form-label">Status</label>
+                    <label class="form-label">Status</label>
+                    <div class="status-container filter-buttons">
+                        <button class="btn btn-sm btn-outline-primary active" data-status="all">
+                            <i class="fas fa-list"></i>Todos
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary" data-status="in_progress">
+                            <i class="fas fa-spinner"></i>Em Andamento
+                        </button>
+                        <button class="btn btn-sm btn-outline-primary" data-status="completed">
+                            <i class="fas fa-check"></i>Concluídos
+                        </button>
+                    </div>
+                    <div class="status-filter" style="display: none;">
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-primary active" data-status="all" data-title="Todos">
-                                <i class="fas fa-list"></i>
-                                <span>Todos</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary" data-status="in_progress" data-title="Em Andamento">
-                                <i class="fas fa-spinner"></i>
-                                <span>Em Andamento</span>
-                            </button>
-                            <button type="button" class="btn btn-outline-primary" data-status="completed" data-title="Concluídos">
-                                <i class="fas fa-check"></i>
-                                <span>Concluídos</span>
-                            </button>
+                            <!-- Mantendo para compatibilidade com o JS existente -->
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tagButtons = document.querySelectorAll('.tags-container button');
     const typeButtons = document.querySelectorAll('.type-container button');
-    const statusButtons = document.querySelectorAll('.btn-group button');
+    const statusButtons = document.querySelectorAll('.status-container button');
     const clearFiltersBtn = document.querySelector('.clear-filters');
     const projectItems = document.querySelectorAll('.project-item');
     

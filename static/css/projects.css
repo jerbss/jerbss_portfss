@@ -962,7 +962,7 @@ body.dark-mode .project-card__title {
     color: var(--text-color);
     opacity: 0.9;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1131,7 +1131,7 @@ body.dark-mode .project-card__btn--danger:hover {
     }
     
     .project-card__description {
-        -webkit-line-clamp: 2;
+        line-clamp: 2;
         font-size: 0.9rem;
     }
     
@@ -1312,4 +1312,256 @@ body.dark-mode .type-container .btn.active i {
         padding: 0.75rem;
         font-size: 1rem;
     }
+}
+
+/* Estilos consistentes para todos os grupos de botões de filtro */
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Remover os estilos específicos do btn-group que afetam a consistência */
+.status-filter .btn-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    box-shadow: none;
+    gap: 0.5rem;
+}
+
+/* Harmonização dos botões de filtro */
+.filter-buttons .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    white-space: normal; /* Permite quebra de texto para tags longas */
+    transition: all 0.3s ease;
+    flex: 1 0 auto; /* Permite que os botões cresçam mas mantém um tamanho mínimo */
+    min-width: 90px; /* Largura mínima para todos os botões */
+    text-align: center;
+    height: auto; /* Remove altura fixa para permitir maior flexibilidade */
+    min-height: 38px; /* Altura mínima para manter consistência */
+    line-height: 1.2; /* Melhora o espaçamento de linha quando há quebra de texto */
+    
+    /* Melhorias para quebra de palavras */
+    word-break: break-word; /* Permite quebras em palavras longas */
+    overflow-wrap: break-word; /* Garante que palavras longas quebrem corretamente */
+    hyphens: auto; /* Adiciona hífens em quebras automáticas de palavras */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* Ícones consistentes em todos os botões - espaçamento fixo melhorado */
+.filter-buttons .btn i {
+    margin-right: 0.7rem; /* Aumentado o espaçamento entre ícone e texto */
+    font-size: 0.9rem;
+    width: 1.1rem; /* Largura fixa para que todos os ícones ocupem o mesmo espaço */
+    text-align: center;
+    flex-shrink: 0; /* Impede que o ícone encolha */
+    display: inline-flex; /* Garante que o ícone mantenha suas dimensões */
+    justify-content: center; /* Centraliza o ícone em seu espaço fixo */
+    align-items: center; /* Alinha o ícone verticalmente */
+}
+
+/* Efeito hover consistente - corrigindo contraste no tema claro */
+.filter-buttons .btn:hover:not(.active) {
+    background-color: var(--primary-color); /* Usa a cor primária como fundo */
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    color: #ffffff; /* Texto branco para garantir legibilidade */
+}
+
+/* Garantir que os ícones também mudem de cor no hover */
+.filter-buttons .btn:hover:not(.active) i {
+    color: #ffffff;
+}
+
+/* Estado ativo para todos os botões de filtro */
+.filter-buttons .btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Efeito hover consistente */
+.filter-buttons .btn:hover:not(.active) {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Layout responsivo para os filtros */
+@media (min-width: 992px) {
+    .filter-buttons {
+        min-height: 100px;
+        align-content: flex-start;
+    }
+
+    /* Layout específico para telas grandes que permite melhor distribuição */
+    .tags-container.filter-buttons {
+        /* Layout de grades para melhor distribuição de tags */
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.5rem; /* Espaçamento consistente com a propriedade gap */
+    }
+    
+    /* Tipos e status com distribuição mais específica */
+    .type-container.filter-buttons,
+    .status-container.filter-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem; /* Espaçamento consistente com a propriedade gap */
+        row-gap: 0.5rem; /* Garantir que o espaço vertical também seja consistente */
+    }
+
+    /* Ajuste para o botão "Todos" ocupar largura total */
+    .type-container.filter-buttons .btn[data-type="all"],
+    .status-container.filter-buttons .btn[data-status="all"],
+    .tags-container.filter-buttons .btn[data-filter="all"] {
+        grid-column: span 2;
+        margin-bottom: 0; /* Remover qualquer margem inferior que possa afetar o espaçamento */
+    }
+    
+    /* Garantir que não haja margens extras nos botões que possam afetar o layout */
+    .filter-buttons .btn {
+        margin: 0;
+    }
+}
+
+/* Ajustes específicos para responsividade */
+@media (max-width: 991.98px) {
+    .filter-buttons .btn {
+        /* Em telas menores, larguras mais flexíveis baseadas no conteúdo */
+        flex: 0 1 auto;
+        min-width: auto;
+    }
+    
+    /* Melhoria para layout em tablets */
+    .card-body .col-md-6:not(:last-child) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    body.dark-mode .card-body .col-md-6:not(:last-child) {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 575.98px) {
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .filter-buttons .btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Tema escuro para os botões de filtro */
+body.dark-mode .filter-buttons .btn {
+    border-color: #64b5f6;
+    color: #64b5f6;
+}
+
+body.dark-mode .filter-buttons .btn i {
+    color: #64b5f6;
+}
+
+body.dark-mode .filter-buttons .btn:hover:not(.active) {
+    background-color: rgba(100, 181, 246, 0.1);
+    border-color: #64b5f6;
+}
+
+body.dark-mode .filter-buttons .btn.active {
+    background-color: #64b5f6;
+    color: #121212;
+    border-color: #64b5f6;
+}
+
+body.dark-mode .filter-buttons .btn.active i {
+    color: #121212;
+}
+
+body.dark-mode .card-body .col-lg-4:not(:last-child) {
+    border-right-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos específicos para as tags com contadores */
+.filter-buttons .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.2em 0.6em;
+    border-radius: 10px;
+    margin-left: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+/* Estado hover do badge */
+.filter-buttons .btn:hover .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Estado ativo do badge */
+.filter-buttons .btn.active .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Badges no tema escuro */
+body.dark-mode .filter-buttons .btn .badge {
+    background-color: rgba(100, 181, 246, 0.2);
+    color: #64b5f6;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+}
+
+body.dark-mode .filter-buttons .btn:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+body.dark-mode .filter-buttons .btn.active .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Garantir que os números nunca fiquem ilegíveis durante o hover no tema escuro */
+body.dark-mode .filter-buttons .btn:hover .badge {
+    color: #64b5f6 !important;
+    background-color: #121212 !important;
+    border: 1px solid #64b5f6 !important;
+}
+
+/* Sobreescrever regras anteriores para garantir consistência visual */
+body.dark-mode .btn-outline-primary:hover *:not(.badge),
+body.dark-mode .status-container .btn-outline-primary:hover *:not(.badge),
+body.dark-mode .type-container .btn-outline-primary:hover *:not(.badge),
+body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
+    color: #121212 !important;
+}
+
+/* Remover botão para todos os filtros - substituído por classes específicas acima */
+.status-filter .btn-group {
+    display: none;
 }
