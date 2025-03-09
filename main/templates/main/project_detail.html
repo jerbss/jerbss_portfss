@@ -83,48 +83,95 @@
                     <!-- Coluna dos metadados principais -->
                     <div class="col-md-7">
                         <div class="card-body">
-                            <h1 class="card-title h2 fw-bold mb-4">{{ project.title }}</h1>
-                            
-                            <div class="project-meta mb-4">
-                                <div class="mb-3">
-                                    {{ project.get_status_display_html }}
-                                </div>
-                                <div class="mb-2">
-                                    <i class="far fa-calendar-alt me-2"></i>{{ project.get_date_display }}
-                                </div>
-                                <div class="mb-3">
-                                    <i class="far fa-clock me-2"></i>Publicado em {{ project.created_at|date:"d/m/Y" }}
+                            <!-- Cabeçalho com título e tipo de projeto -->
+                            <div class="d-flex justify-content-between align-items-start mb-4">
+                                <h1 class="card-title h2 fw-bold mb-0">{{ project.title }}</h1>
+                                <div class="project-type ms-2">
+                                    {{ project.get_type_display_html }}
                                 </div>
                             </div>
                             
-                            <!-- Tags -->
+                            <!-- Status do projeto (badge) -->
+                            <div class="project-status mb-4">
+                                {{ project.get_status_display_html }}
+                            </div>
+                            
+                            <!-- Informações temporais organizadas -->
+                            <div class="project-meta mb-4">
+                                <h5 class="text-muted fs-6 fw-bold mb-3">
+                                    <i class="far fa-clock me-2"></i>CRONOLOGIA
+                                </h5>
+                                
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="d-flex align-items-center">
+                                        <span class="project-meta-icon">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                        <span class="project-meta-label">Período:</span>
+                                        <span class="project-meta-value">{{ project.get_date_display }}</span>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center">
+                                        <span class="project-meta-icon">
+                                            <i class="fas fa-history"></i>
+                                        </span>
+                                        <span class="project-meta-label">Publicado:</span>
+                                        <span class="project-meta-value">{{ project.created_at|date:"d/m/Y" }}</span>
+                                    </div>
+                                    
+                                    {% if project.updated_at and project.updated_at != project.created_at %}
+                                    <div class="d-flex align-items-center">
+                                        <span class="project-meta-icon">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </span>
+                                        <span class="project-meta-label">Atualizado:</span>
+                                        <span class="project-meta-value">{{ project.updated_at|date:"d/m/Y" }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <!-- Tags com estilo aprimorado -->
                             <div class="project-tags mb-4">
-                                {% for tag in project.tags.all %}
-                                    <span class="badge bg-secondary me-2">{{ tag.name }}</span>
-                                {% endfor %}
+                                <h5 class="text-muted fs-6 fw-bold mb-3">
+                                    <i class="fas fa-tags me-2"></i>TAGS
+                                </h5>
+                                <div class="tag-cloud">
+                                    {% for tag in project.tags.all %}
+                                        <span class="project-tag">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                             
                             <!-- Links do projeto -->
                             <div class="project-links">
-                                {% if project.url %}
-                                <a href="{{ project.url }}" target="_blank" class="btn btn-primary me-2">
-                                    <i class="fas fa-external-link-alt me-1"></i> Ver Projeto
-                                </a>
-                                {% endif %}
-                                
-                                {% if project.github_url %}
-                                <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
-                                    <i class="fab fa-github me-1"></i> GitHub
-                                </a>
-                                {% endif %}
+                                <h5 class="text-muted fs-6 fw-bold mb-3">
+                                    <i class="fas fa-link me-2"></i>LINKS
+                                </h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    {% if project.url %}
+                                    <a href="{{ project.url }}" target="_blank" class="btn btn-primary">
+                                        <i class="fas fa-external-link-alt me-2"></i>Ver Projeto
+                                    </a>
+                                    {% endif %}
+                                    
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
+                                        <i class="fab fa-github me-2"></i>Código no GitHub
+                                    </a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Descrição curta abaixo da imagem e metadados -->
-                <div class="card-footer bg-transparent border-top-0">
+                <div class="card-footer bg-transparent">
                     <div class="project-short-description">
+                        <h5 class="text-muted fs-6 fw-bold mb-3">
+                            <i class="fas fa-info-circle me-2"></i>DESCRIÇÃO BREVE
+                        </h5>
                         <p class="lead mb-0">{{ project.short_description }}</p>
                     </div>
                 </div>
