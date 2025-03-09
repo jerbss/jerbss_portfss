@@ -1,5 +1,6 @@
 {% extends "main/base.html" %}
 {% load static %}
+{% load cloudinary_images %}
 
 {% block title %}Home - Portfolio{% endblock %}
 
@@ -38,7 +39,7 @@
         
         <!-- Imagem em desktop (à direita) e mobile (após apelidos) -->
         <div class="col-12 col-md-6 order-2 text-center mb-4 mb-md-0">
-            <img src="{% static 'images/profile_photo_1.png' %}" class="img-fluid rounded-circle" alt="Foto de Perfil">
+            <img src="{% home_image_url 'profile_photo_1.png' %}" class="img-fluid rounded-circle" alt="Foto de Perfil">
         </div>
         
         <!-- Bio e botões apenas em mobile (após a imagem) -->
@@ -157,7 +158,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/rato.jpg' %}"
+                                src="{% home_image_url 'rato.jpg' %}"
                                 alt="Rato"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -170,7 +171,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/capivara.jpeg' %}"
+                                src="{% home_image_url 'capivara.jpeg' %}"
                                 alt="Capivara"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -183,7 +184,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/cavalo.jpeg' %}"
+                                src="{% home_image_url 'cavalo.jpeg' %}"
                                 alt="Cavalo"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -211,7 +212,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/cerveja.png' %}"
+                                src="{% home_image_url 'cerveja.png' %}"
                                 alt="Cerveja"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -224,7 +225,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/cocacola.png' %}"
+                                src="{% home_image_url 'cocacola.png' %}"
                                 alt="Coca-Cola"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -237,7 +238,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <div style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/cafe.png' %}"
+                                src="{% home_image_url 'cafe.png' %}"
                                 alt="Café"
                                 class="rounded-circle me-3"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -269,7 +270,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/o_irlandes.png' %}"
+                                src="{% home_image_url 'o_irlandes.png' %}"
                                 alt="O Irlandês"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -286,7 +287,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/madmax.jpeg' %}"
+                                src="{% home_image_url 'madmax.jpeg' %}"
                                 alt="Mad Max: Estrada da Fúria"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -303,7 +304,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/wallstreet.jpeg' %}"
+                                src="{% home_image_url 'wallstreet.jpeg' %}"
                                 alt="O Lobo de Wall Street"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -336,7 +337,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/twice.jpg' %}"
+                                src="{% home_image_url 'twice.jpg' %}"
                                 alt="TWICE"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -354,7 +355,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/safadao.jpg' %}"
+                                src="{% home_image_url 'safadao.jpg' %}"
                                 alt="Wesley Safadão"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
@@ -372,7 +373,7 @@
                            target="_blank"
                            style="position: relative; display: inline-block;">
                             <img
-                                src="{% static 'images/anri.jpg' %}"
+                                src="{% home_image_url 'anri.jpg' %}"
                                 alt="ANRI"
                                 class="rounded-circle me-3 hover-darken"
                                 style="width: 60px; height: 60px; object-fit: cover;"
