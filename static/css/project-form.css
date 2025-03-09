@@ -405,3 +405,124 @@ body.dark-mode #previewButton:hover {
 body.dark-mode #previewButton i {
     color: #121212; /* Ícone preto no tema escuro */
 }
+
+/* Ajustes adicionais para o Preview no tema escuro */
+body.dark-mode .project-preview-container {
+    color: #e1e1e1;
+    background-color: #232323;
+}
+
+body.dark-mode .preview-title {
+    color: #ffffff;
+}
+
+body.dark-mode .preview-meta {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .preview-status .badge.bg-warning {
+    color: #212529 !important; /* Mantenha o texto escuro para o badge amarelo */
+}
+
+body.dark-mode .preview-status .badge.bg-success {
+    color: #ffffff !important; /* Texto branco para o badge verde */
+}
+
+body.dark-mode .preview-dates,
+body.dark-mode .preview-dates span {
+    color: #e1e1e1;
+}
+
+body.dark-mode .preview-dates i,
+body.dark-mode .preview-tags i {
+    color: #64b5f6; /* Cor azul claro para ícones */
+}
+
+body.dark-mode .preview-short-description h5.text-muted,
+body.dark-mode .preview-content h5.text-muted {
+    color: #a0a0a0 !important; /* Garante que os cabeçalhos sejam visíveis */
+}
+
+body.dark-mode .preview-short-description .lead {
+    color: #e1e1e1;
+}
+
+body.dark-mode .preview-content .content-wrapper {
+    color: #e1e1e1;
+}
+
+/* Botões no tema escuro */
+body.dark-mode .preview-links .btn-primary {
+    background-color: #64b5f6;
+    border-color: #64b5f6;
+    color: #121212; /* Texto escuro para contraste com fundo claro */
+}
+
+body.dark-mode .preview-links .btn-dark {
+    background-color: #333333;
+    border-color: #444444;
+    color: #ffffff;
+}
+
+/* Nota de preview no tema escuro */
+body.dark-mode .preview-note {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.dark-mode .preview-note .text-muted {
+    color: #a0a0a0 !important;
+}
+
+body.dark-mode .preview-note i {
+    color: #64b5f6;
+}
+
+/* Ajustes para o modal no tema escuro */
+body.dark-mode .modal-content {
+    background-color: #232323;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .modal-title {
+    color: #ffffff;
+}
+
+/* Estilos para elementos de conteúdo dentro do preview */
+body.dark-mode .preview-content .content-wrapper h1,
+body.dark-mode .preview-content .content-wrapper h2,
+body.dark-mode .preview-content .content-wrapper h3,
+body.dark-mode .preview-content .content-wrapper h4,
+body.dark-mode .preview-content .content-wrapper h5,
+body.dark-mode .preview-content .content-wrapper h6 {
+    color: #ffffff;
+}
+
+body.dark-mode .preview-content .content-wrapper a {
+    color: #64b5f6;
+}
+
+body.dark-mode .preview-content .content-wrapper pre {
+    background-color: #333333;
+    color: #e1e1e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .preview-content .content-wrapper code {
+    background-color: #333333;
+    color: #e1e1e1;
+}
+
+body.dark-mode .preview-content .content-wrapper blockquote {
+    border-left: 4px solid #64b5f6;
+    background-color: rgba(100, 181, 246, 0.1);
+    padding: 10px;
+    color: #e1e1e1;
+}
