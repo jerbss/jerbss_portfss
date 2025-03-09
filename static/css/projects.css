@@ -1389,13 +1389,6 @@ body.dark-mode .type-container .btn.active i {
     font-weight: 500;
 }
 
-/* Efeito hover consistente */
-.filter-buttons .btn:hover:not(.active) {
-    background-color: rgba(13, 110, 253, 0.1);
-    border-color: var(--primary-color);
-    transform: translateY(-1px);
-}
-
 /* Layout responsivo para os filtros */
 @media (min-width: 992px) {
     .filter-buttons {
