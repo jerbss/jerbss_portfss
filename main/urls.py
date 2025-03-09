@@ -17,4 +17,7 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('test-cloudinary/', test_cloudinary, name='test_cloudinary'),
     path('debug/projects/', views.debug_projects, name='debug_projects'),
+    path('top3/add/', views.add_top3, name='add_top3'),
+    path('top3/delete/<int:top3_id>/', views.delete_top3, name='delete_top3'),
+    path('api/top3/<int:top3_id>/', views.get_top3, name='get_top3'),
 ]

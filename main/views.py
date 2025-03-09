@@ -26,6 +26,7 @@ def home(request):
     
     context = {
         'dynamic_top3_cards': dynamic_top3_cards,
+        'user': request.user,  # Ensure user is available in template
     }
     
     return render(request, 'main/home.html', context)
@@ -349,3 +350,94 @@ def test_cloudinary(request):
             'success': False,
             'message': f'Error connecting to Cloudinary: {str(e)}'
         })
+
+@user_passes_test(lambda u: u.is_superuser)
+def add_top3(request):
+    if request.method == 'POST':
+        top3_id = request.POST.get('top3_id')
+        
+        # Determinar se estamos editando ou criando
+        if top3_id:
+            # Editar TOP3 existente
+            top3 = get_object_or_404(Top3Card, id=top3_id)
+            
+            # Atualizar campos de texto
+            top3.icon_class = request.POST.get('icon_class')
+            top3.title = request.POST.get('title')
+            top3.item1_name = request.POST.get('item1_name')
+            top3.item1_link = request.POST.get('item1_link') or None
+            top3.item2_name = request.POST.get('item2_name')
+            top3.item2_link = request.POST.get('item2_link') or None
+            top3.item3_name = request.POST.get('item3_name')
+            top3.item3_link = request.POST.get('item3_link') or None
+            top3.fun_comment = request.POST.get('fun_comment')
+            top3.display_order = request.POST.get('display_order', 0)
+            
+            # Atualizar imagens apenas se fornecidas
+            if 'item1_image' in request.FILES:
+                top3.item1_image = request.FILES['item1_image']
+            if 'item2_image' in request.FILES:
+                top3.item2_image = request.FILES['item2_image']
+            if 'item3_image' in request.FILES:
+                top3.item3_image = request.FILES['item3_image']
+                
+            top3.save()
+            messages.success(request, 'TOP 3 atualizado com sucesso!')
+            
+        else:
+            # Criar novo TOP3
+            top3 = Top3Card(
+                icon_class=request.POST.get('icon_class'),
+                title=request.POST.get('title'),
+                item1_name=request.POST.get('item1_name'),
+                item1_link=request.POST.get('item1_link') or None,
+                item2_name=request.POST.get('item2_name'),
+                item2_link=request.POST.get('item2_link') or None,
+                item3_name=request.POST.get('item3_name'),
+                item3_link=request.POST.get('item3_link') or None,
+                fun_comment=request.POST.get('fun_comment'),
+                display_order=request.POST.get('display_order', 0)
+            )
+            
+            # Adicionar imagens
+            if 'item1_image' in request.FILES:
+                top3.item1_image = request.FILES['item1_image']
+            if 'item2_image' in request.FILES:
+                top3.item2_image = request.FILES['item2_image']
+            if 'item3_image' in request.FILES:
+                top3.item3_image = request.FILES['item3_image']
+                
+            top3.save()
+            messages.success(request, 'Novo TOP 3 adicionado com sucesso!')
+            
+    return redirect('main:home')
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_top3(request, top3_id):
+    if request.method == 'POST':
+        top3 = get_object_or_404(Top3Card, id=top3_id)
+        top3.delete()
+        messages.success(request, 'TOP 3 excluído com sucesso!')
+    return redirect('main:home')
+
+@user_passes_test(lambda u: u.is_superuser)
+def get_top3(request, top3_id):
+    """API para obter dados de um TOP3 card para edição"""
+    top3 = get_object_or_404(Top3Card, id=top3_id)
+    data = {
+        'id': top3.id,
+        'icon_class': top3.icon_class,
+        'title': top3.title,
+        'item1_name': top3.item1_name,
+        'item1_link': top3.item1_link or '',
+        'item1_image_url': top3.item1_image.url,
+        'item2_name': top3.item2_name,
+        'item2_link': top3.item2_link or '',
+        'item2_image_url': top3.item2_image.url,
+        'item3_name': top3.item3_name,
+        'item3_link': top3.item3_link or '',
+        'item3_image_url': top3.item3_image.url,
+        'fun_comment': top3.fun_comment,
+        'display_order': top3.display_order
+    }
+    return JsonResponse(data)

@@ -144,7 +144,15 @@
 
 <!-- TOP 3 Section -->
 <div class="container my-5">
-    <h2 class="display-6 fw-bold mb-4">Meus TOP 3</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="display-6 fw-bold mb-0">Meus TOP 3</h2>
+        {% if user.is_superuser %}
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTop3Modal">
+                <i class="fas fa-plus-circle me-1"></i> Adicionar TOP 3
+            </button>
+        {% endif %}
+    </div>
+    
     <!-- First row of static cards (Animals and Drinks) -->
     <div class="row g-4">
         <!-- Animals -->
@@ -398,9 +406,26 @@
         {% for card in dynamic_top3_cards %}
             <div class="col-md-6 {% if forloop.counter|divisibleby:2 %}mt-4{% endif %}">
                 <div class="card h-100">
+                    {% if user.is_superuser %}
+                    <div class="card-admin-controls">
+                        <button type="button" class="btn btn-sm btn-primary edit-top3-btn" 
+                                data-id="{{ card.id }}"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#addTop3Modal">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger delete-top3-btn"
+                                data-id="{{ card.id }}"
+                                data-title="{{ card.title }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteTop3Modal">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endif %}
                     <div class="card-body">
                         <h3 class="h5 mb-3">
-                            <i class="{{ card.icon_class }}"></i>{{ card.title }}
+                            <i class="{{ card.icon_class }}"></i><span class="ms-2">{{ card.title }}</span>
                         </h3>
 
                         <!-- First item -->
@@ -507,9 +532,214 @@
         </div>
     </div>
 </div>
+
+<!-- Add TOP3 Modal -->
+{% if user.is_superuser %}
+<div class="modal fade" id="addTop3Modal" tabindex="-1" aria-labelledby="addTop3ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTop3ModalLabel">Adicionar Novo TOP 3</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="top3Form" method="post" action="{% url 'main:add_top3' %}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <input type="hidden" name="top3_id" id="top3_id" value="">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="icon_class" class="form-label">Classe do Ícone <small>(FontAwesome)</small></label>
+                            <input type="text" class="form-control" id="icon_class" name="icon_class" required 
+                                   placeholder="Ex: fas fa-music">
+                            <div class="form-text">Confira ícones em <a href="https://fontawesome.com/icons" target="_blank">FontAwesome</a>. Não é necessário adicionar a classe de espaçamento "me-2".</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="title" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="title" name="title" required
+                                   placeholder="Ex: Músicas">
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">Item 1</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="item1_name" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="item1_name" name="item1_name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="item1_link" class="form-label">Link (opcional)</label>
+                                    <input type="url" class="form-control" id="item1_link" name="item1_link">
+                                </div>
+                                <div class="col-12">
+                                    <label for="item1_image" class="form-label">Imagem</label>
+                                    <input type="file" class="form-control" id="item1_image" name="item1_image" 
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">Item 2</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="item2_name" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="item2_name" name="item2_name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="item2_link" class="form-label">Link (opcional)</label>
+                                    <input type="url" class="form-control" id="item2_link" name="item2_link">
+                                </div>
+                                <div class="col-12">
+                                    <label for="item2_image" class="form-label">Imagem</label>
+                                    <input type="file" class="form-control" id="item2_image" name="item2_image" 
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">Item 3</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="item3_name" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="item3_name" name="item3_name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="item3_link" class="form-label">Link (opcional)</label>
+                                    <input type="url" class="form-control" id="item3_link" name="item3_link">
+                                </div>
+                                <div class="col-12">
+                                    <label for="item3_image" class="form-label">Imagem</label>
+                                    <input type="file" class="form-control" id="item3_image" name="item3_image" 
+                                           accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="fun_comment" class="form-label">Comentário Divertido</label>
+                        <textarea class="form-control" id="fun_comment" name="fun_comment" rows="3" required
+                                  placeholder="Um comentário divertido sobre seus TOP 3 itens!"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="display_order" class="form-label">Ordem de Exibição</label>
+                        <input type="number" class="form-control" id="display_order" name="display_order" 
+                               value="0" min="0">
+                        <div class="form-text">Números menores aparecem primeiro.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar TOP 3</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete TOP3 Confirmation Modal -->
+<div class="modal fade" id="deleteTop3Modal" tabindex="-1" aria-labelledby="deleteTop3ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteTop3ModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o TOP 3 "<span id="deleteTop3Title"></span>"?</p>
+                <p class="text-danger">Esta ação não pode ser desfeita!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <form id="deleteTop3Form" action="{% url 'main:delete_top3' 0 %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/home.js' %}"></script>
+
+{% if user.is_superuser %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup edit buttons
+        const editButtons = document.querySelectorAll('.edit-top3-btn');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                fetchTop3Data(id);
+            });
+        });
+        
+        // Setup delete buttons
+        const deleteButtons = document.querySelectorAll('.delete-top3-btn');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const title = this.getAttribute('data-title');
+                document.getElementById('deleteTop3Title').textContent = title;
+                document.getElementById('deleteTop3Form').action = "{% url 'main:delete_top3' 0 %}".replace('0', id);
+            });
+        });
+        
+        // Reset form when modal is closed
+        document.getElementById('addTop3Modal').addEventListener('hidden.bs.modal', function() {
+            document.getElementById('top3Form').reset();
+            document.getElementById('top3_id').value = '';
+            document.getElementById('addTop3ModalLabel').textContent = 'Adicionar Novo TOP 3';
+            
+            // Reset required attribute for image inputs
+            document.getElementById('item1_image').setAttribute('required', '');
+            document.getElementById('item2_image').setAttribute('required', '');
+            document.getElementById('item3_image').setAttribute('required', '');
+        });
+        
+        // Fetch TOP3 data for editing
+        function fetchTop3Data(id) {
+            fetch(`/api/top3/${id}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Set form title
+                    document.getElementById('addTop3ModalLabel').textContent = 'Editar TOP 3';
+                    
+                    // Populate form fields
+                    document.getElementById('top3_id').value = data.id;
+                    document.getElementById('icon_class').value = data.icon_class;
+                    document.getElementById('title').value = data.title;
+                    document.getElementById('item1_name').value = data.item1_name;
+                    document.getElementById('item1_link').value = data.item1_link || '';
+                    document.getElementById('item2_name').value = data.item2_name;
+                    document.getElementById('item2_link').value = data.item2_link || '';
+                    document.getElementById('item3_name').value = data.item3_name;
+                    document.getElementById('item3_link').value = data.item3_link || '';
+                    document.getElementById('fun_comment').value = data.fun_comment;
+                    document.getElementById('display_order').value = data.display_order;
+                    
+                    // Remove required attribute for image inputs when editing
+                    document.getElementById('item1_image').removeAttribute('required');
+                    document.getElementById('item2_image').removeAttribute('required');
+                    document.getElementById('item3_image').removeAttribute('required');
+                })
+                .catch(error => console.error('Error fetching TOP3 data:', error));
+        }
+    });
+</script>
+{% endif %}
 {% endblock %}
 
