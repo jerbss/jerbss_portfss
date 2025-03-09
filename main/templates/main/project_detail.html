@@ -86,8 +86,9 @@
                             <!-- Cabeçalho com título e tipo de projeto -->
                             <div class="d-flex justify-content-between align-items-start mb-4">
                                 <h1 class="card-title h2 fw-bold mb-0">{{ project.title }}</h1>
-                                <div class="project-type ms-2">
-                                    {{ project.get_type_display_html }}
+                                <!-- Substituir div simples pelo badge padronizado -->
+                                <div class="project-badge">
+                                    {{ project.get_type_display_html|safe }}
                                 </div>
                             </div>
                             

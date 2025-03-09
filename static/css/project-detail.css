@@ -499,3 +499,47 @@ body.dark-mode .project-meta .date-info {
         transform: translateY(0);
     }
 }
+
+/* Badge de tipo de projeto na página de detalhes */
+.project-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Reaproveitando os estilos do card para manter consistência */
+.project-badge .project-card__type {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Assegurando que as cores sejam aplicadas corretamente */
+.project-badge .project-card__type--academic {
+    background-color: #8e44ad;
+    color: white;
+}
+
+.project-badge .project-card__type--personal {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.project-badge .project-card__type--professional {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Responsividade do badge */
+@media (max-width: 767.98px) {
+    .project-badge {
+        margin-top: 0.5rem;
+    }
+}

@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from cloudinary.forms import CloudinaryFileField
 
 class ProjectForm(forms.ModelForm):
-    # Replace standard ImageField with CloudinaryFileField
+    # Replace standard ImageField with CloudinaryFileField with custom widget
     image = CloudinaryFileField(
         options={
             'folder': 'projects',
@@ -15,6 +15,9 @@ class ProjectForm(forms.ModelForm):
         },
         required=False,
         label="Imagem do Projeto",
+        widget=forms.FileInput(attrs={
+            'class': 'form-control',
+        }),
     )
     tags_input = forms.CharField(
         label='Tags',
@@ -111,6 +114,8 @@ class ProjectForm(forms.ModelForm):
         # Inicializar tags_input com as tags existentes
         if self.instance.pk:
             self.fields['tags_input'].initial = ', '.join([tag.name for tag in self.instance.tags.all()])
+            # Não mostrar que a imagem é obrigatória na edição
+            self.fields['image'].label = "Alterar Imagem (opcional)"
     
     def save(self, commit=True):
         instance = super().save(commit=False)

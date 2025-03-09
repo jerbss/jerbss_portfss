@@ -59,9 +59,33 @@
                                 {% if form.instance.image %}
                                 <div class="image-preview-container mb-2">
                                     <img src="{{ form.instance.image.url }}" alt="Preview" id="image-preview" class="img-fluid rounded">
+                                    {% if is_edit %}
+                                    <div class="image-preview-overlay">
+                                        <div class="image-preview-text">Imagem Atual</div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 {% endif %}
-                                {% bootstrap_field form.image layout='' %}
+                                
+                                <div class="mb-3">
+                                    <label for="{{ form.image.id_for_label }}" class="form-label">{{ form.image.label }}</label>
+                                    <input type="{{ form.image.field.widget.input_type }}" 
+                                           name="{{ form.image.name }}" 
+                                           id="{{ form.image.auto_id }}"
+                                           class="form-control {% if form.image.errors %}is-invalid{% endif %}"
+                                           {% if form.image.field.required %}required{% endif %}>
+                                    {% if form.image.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.image.errors }}
+                                    </div>
+                                    {% endif %}
+                                    {% if form.image.help_text %}
+                                    <div class="form-text">{{ form.image.help_text }}</div>
+                                    {% endif %}
+                                    {% if is_edit %}
+                                    <div class="form-text">Upload de uma nova imagem substituirá a imagem atual</div>
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 {% bootstrap_field form.title layout='' %}
