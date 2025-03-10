@@ -17,6 +17,8 @@ from .forms import ProjectForm, ContactForm
 from django.utils import timezone
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+import json
+from django.views.decorators.http import require_POST
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -564,3 +566,29 @@ def get_top3(request, top3_id):
         'fun_comment': top3.fun_comment
     }
     return JsonResponse(data)
+
+@require_POST
+@user_passes_test(lambda u: u.is_superuser)
+def save_top3_order(request):
+    """Salva a nova ordem dos cards TOP 3"""
+    try:
+        data = json.loads(request.body)
+        new_order = data.get('order', [])
+        
+        # Validar entrada
+        if not new_order or not isinstance(new_order, list):
+            return JsonResponse({'success': False, 'error': 'Ordem inválida'})
+        
+        # Atualizar a ordem de exibição
+        for index, card_id in enumerate(new_order):
+            try:
+                card = Top3Card.objects.get(id=card_id)
+                card.display_order = index
+                card.save(update_fields=['display_order'])
+            except Top3Card.DoesNotExist:
+                continue  # Ignora IDs que não existem
+                
+        return JsonResponse({'success': True})
+    except Exception as e:
+        logger.error(f"Error saving TOP3 order: {str(e)}")
+        return JsonResponse({'success': False, 'error': str(e)})

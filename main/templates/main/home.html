@@ -142,149 +142,157 @@
     </div>
 </div>
 
-<!-- TOP 3 Section -->
+<!-- Seção TOP 3 Favoritos -->
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="display-6 fw-bold mb-0">Meus TOP 3</h2>
+        <h2 class="mb-0">TOP 3 Favoritos</h2>
         {% if user.is_superuser %}
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addTop3Modal">
-                <i class="fas fa-plus-circle me-1"></i> Adicionar TOP 3
+        <div>
+            <button type="button" class="btn btn-sm btn-primary" id="saveOrderBtn" style="display: none;">
+                <i class="fas fa-save me-1"></i> Salvar Ordem
             </button>
+            <button type="button" class="btn btn-sm btn-outline-primary" id="reorderBtn">
+                <i class="fas fa-sort me-1"></i> Reordenar
+            </button>
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addTop3Modal">
+                <i class="fas fa-plus me-1"></i> Adicionar
+            </button>
+        </div>
         {% endif %}
     </div>
-    
-    <!-- Dynamic TOP 3 Cards - All cards are now from database -->
-    {% if top3_cards %}
-    <div class="row g-4">
+
+    <div id="top3Container" class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+        <!-- Instruções visuais para reordenação (aparece apenas quando reordenação está ativa) -->
+        <div class="col-12 reordering-active-info" id="reorderingInfo" style="display: none;">
+            <i class="fas fa-info-circle me-2"></i> Arraste os cards para reordenar. Quando terminar, clique em <strong>Salvar Ordem</strong> para confirmar suas alterações.
+        </div>
+        
         {% for card in top3_cards %}
-            <div class="col-md-6 {% if forloop.counter|divisibleby:2 and not forloop.first %}mt-4{% endif %}">
-                <div class="card h-100">
-                    {% if user.is_superuser %}
-                    <div class="card-admin-controls">
-                        <button type="button" class="btn btn-sm btn-primary edit-top3-btn" 
-                                data-id="{{ card.id }}"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#addTop3Modal">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button type="button" class="btn btn-sm btn-danger delete-top3-btn"
-                                data-id="{{ card.id }}"
-                                data-title="{{ card.title }}"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteTop3Modal">
-                            <i class="fas fa-trash"></i>
-                        </button>
+        {% if forloop.last and forloop.counter0|divisibleby:2 == False %}
+        <!-- Último card em número ímpar ocupa toda a linha -->
+        <div class="col-12 top3-item" data-id="{{ card.id }}">
+        {% else %}
+        <div class="col top3-item" data-id="{{ card.id }}">
+        {% endif %}
+            <div class="card h-100">
+                {% if user.is_superuser %}
+                <div class="card-admin-controls">
+                    <button type="button" class="btn btn-sm btn-primary edit-top3-btn" 
+                            data-id="{{ card.id }}"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#addTop3Modal">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger delete-top3-btn"
+                            data-id="{{ card.id }}"
+                            data-title="{{ card.title }}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteTop3Modal">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="h5 mb-3">
+                        <i class="{{ card.icon_class }}"></i><span class="ms-2">{{ card.title }}</span>
+                    </h3>
+
+                    <!-- First item -->
+                    <div class="d-flex align-items-center mb-3">
+                        {% if card.item1_link %}
+                        <a href="{{ card.item1_link }}" target="_blank" style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item1_image.url }}"
+                                alt="{{ card.item1_name }}"
+                                class="rounded-circle me-3 hover-darken"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <i class="fas fa-external-link-alt redirect-icon"></i>
+                        </a>
+                        {% else %}
+                        <div style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item1_image.url }}"
+                                alt="{{ card.item1_name }}"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                        </div>
+                        {% endif %}
+                        <span>{{ card.item1_name }}</span>
                     </div>
-                    {% endif %}
-                    <div class="card-body">
-                        <h3 class="h5 mb-3">
-                            <i class="{{ card.icon_class }}"></i><span class="ms-2">{{ card.title }}</span>
-                        </h3>
 
-                        <!-- First item -->
-                        <div class="d-flex align-items-center mb-3">
-                            {% if card.item1_link %}
-                            <a href="{{ card.item1_link }}" target="_blank" style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item1_image.url }}"
-                                    alt="{{ card.item1_name }}"
-                                    class="rounded-circle me-3 hover-darken"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                                <i class="fas fa-external-link-alt redirect-icon"></i>
-                            </a>
-                            {% else %}
-                            <div style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item1_image.url }}"
-                                    alt="{{ card.item1_name }}"
-                                    class="rounded-circle me-3"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                            </div>
-                            {% endif %}
-                            <span>{{ card.item1_name }}</span>
+                    <!-- Second item -->
+                    <div class="d-flex align-items-center mb-3">
+                        {% if card.item2_link %}
+                        <a href="{{ card.item2_link }}" target="_blank" style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item2_image.url }}"
+                                alt="{{ card.item2_name }}"
+                                class="rounded-circle me-3 hover-darken"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <i class="fas fa-external-link-alt redirect-icon"></i>
+                        </a>
+                        {% else %}
+                        <div style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item2_image.url }}"
+                                alt="{{ card.item2_name }}"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
                         </div>
-
-                        <!-- Second item -->
-                        <div class="d-flex align-items-center mb-3">
-                            {% if card.item2_link %}
-                            <a href="{{ card.item2_link }}" target="_blank" style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item2_image.url }}"
-                                    alt="{{ card.item2_name }}"
-                                    class="rounded-circle me-3 hover-darken"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                                <i class="fas fa-external-link-alt redirect-icon"></i>
-                            </a>
-                            {% else %}
-                            <div style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item2_image.url }}"
-                                    alt="{{ card.item2_name }}"
-                                    class="rounded-circle me-3"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                            </div>
-                            {% endif %}
-                            <span>{{ card.item2_name }}</span>
-                        </div>
-
-                        <!-- Third item -->
-                        <div class="d-flex align-items-center mb-3">
-                            {% if card.item3_link %}
-                            <a href="{{ card.item3_link }}" target="_blank" style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item3_image.url }}"
-                                    alt="{{ card.item3_name }}"
-                                    class="rounded-circle me-3 hover-darken"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                                <i class="fas fa-external-link-alt redirect-icon"></i>
-                            </a>
-                            {% else %}
-                            <div style="position: relative; display: inline-block;">
-                                <img
-                                    src="{{ card.item3_image.url }}"
-                                    alt="{{ card.item3_name }}"
-                                    class="rounded-circle me-3"
-                                    style="width: 60px; height: 60px; object-fit: cover;"
-                                />
-                            </div>
-                            {% endif %}
-                            <span>{{ card.item3_name }}</span>
-                        </div>
-
-                        <p class="text-muted fst-italic small mt-2">
-                            <i class="fas fa-laugh-wink me-1"></i>
-                            {{ card.fun_comment }}
-                        </p>
+                        {% endif %}
+                        <span>{{ card.item2_name }}</span>
                     </div>
+
+                    <!-- Third item -->
+                    <div class="d-flex align-items-center mb-3">
+                        {% if card.item3_link %}
+                        <a href="{{ card.item3_link }}" target="_blank" style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item3_image.url }}"
+                                alt="{{ card.item3_name }}"
+                                class="rounded-circle me-3 hover-darken"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                            <i class="fas fa-external-link-alt redirect-icon"></i>
+                        </a>
+                        {% else %}
+                        <div style="position: relative; display: inline-block;">
+                            <img
+                                src="{{ card.item3_image.url }}"
+                                alt="{{ card.item3_name }}"
+                                class="rounded-circle me-3"
+                                style="width: 60px; height: 60px; object-fit: cover;"
+                            />
+                        </div>
+                        {% endif %}
+                        <span>{{ card.item3_name }}</span>
+                    </div>
+
+                    <p class="text-muted fst-italic small mt-2">
+                        <i class="fas fa-laugh-wink me-1"></i>
+                        {{ card.fun_comment }}
+                    </p>
                 </div>
             </div>
-            {% if forloop.counter|divisibleby:2 and not forloop.last %}
-                </div><div class="row g-4 mt-1">
-            {% endif %}
+        </div>
         {% endfor %}
     </div>
-    {% else %}
-    <div class="alert alert-info">
-        <p>Nenhum cartão TOP 3 encontrado. Adicione seu primeiro TOP 3!</p>
-    </div>
-    {% endif %}
-    
-    <!-- CTA para Sugestões de TOP 3 - Versão Reformulada -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card top3-cta">
-                <div class="card-body text-center py-4">
-                    <h3 class="h5 mb-3">Qual seria o seu TOP 3?</h3>
-                    <p class="mb-4">Compartilhe seus gostos e ideias para novos temas de TOP 3!</p>
-                    <a href="{% url 'main:contact' %}" class="btn btn-primary">
-                        <i class="fas fa-lightbulb me-2"></i>Sugerir um Tema
-                    </a>
-                </div>
+</div>
+
+<!-- CTA para Sugestões de TOP 3 - Versão Reformulada -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card top3-cta">
+            <div class="card-body text-center py-4">
+                <h3 class="h5 mb-3">Qual seria o seu TOP 3?</h3>
+                <p class="mb-4">Compartilhe seus gostos e ideias para novos temas de TOP 3!</p>
+                <a href="{% url 'main:contact' %}" class="btn btn-primary">
+                    <i class="fas fa-lightbulb me-2"></i>Sugerir um Tema
+                </a>
             </div>
         </div>
     </div>
@@ -438,6 +446,7 @@
 <script src="{% static 'js/home.js' %}"></script>
 
 {% if user.is_superuser %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Setup edit buttons
@@ -523,6 +532,129 @@
                 })
                 .catch(error => console.error('Error fetching TOP3 data:', error));
         }
+
+        // Se o usuário for superusuário, inicializar o recurso de ordenação
+        const top3Container = document.getElementById('top3Container');
+        const reorderBtn = document.getElementById('reorderBtn');
+        const saveOrderBtn = document.getElementById('saveOrderBtn');
+        const reorderingInfo = document.getElementById('reorderingInfo');
+        let sortable = null;
+        
+        // Função para habilitar a ordenação
+        function enableSorting() {
+            // Configuração aprimorada do Sortable
+            sortable = new Sortable(top3Container, {
+                animation: 150, // Manter animação suave durante o movimento
+                delay: 100, // Pequeno atraso para evitar iniciar o arrasto acidentalmente
+                delayOnTouchOnly: true, // Apenas em dispositivos móveis
+                touchStartThreshold: 5, // Mais tolerância para iniciar o toque
+                ghostClass: 'sortable-ghost', // Classe para o elemento fantasma (simplificado)
+                chosenClass: 'sortable-chosen', // Classe para o elemento escolhido
+                forceFallback: false, // Usar o arrasto nativo quando possível
+                // Remover onStart handler para simplificar
+                onStart: function(evt) {
+                    const item = evt.item;
+                    item.classList.add('sorting-enabled');
+                },
+                onEnd: function(evt) {
+                    const item = evt.item;
+                    // Remover classe de arrastando
+                    item.classList.remove('sorting-enabled');
+                    
+                    // Mostrar botão para salvar apenas se a ordem mudou
+                    if (evt.oldIndex !== evt.newIndex) {
+                        saveOrderBtn.style.display = 'inline-block';
+                        reorderBtn.style.display = 'none';
+                        
+                        // Adicionar indicador visual para itens com ordem alterada
+                        document.querySelectorAll('.top3-item').forEach(item => {
+                            item.classList.add('order-changed');
+                        });
+                    }
+                }
+            });
+            
+            // Adicionar indicadores visuais que os cards são arrastáveis
+            document.querySelectorAll('.top3-item').forEach(item => {
+                item.classList.add('sortable-enabled');
+            });
+            
+            // Mostrar instruções de uso
+            reorderingInfo.style.display = 'block';
+        }
+        
+        // Função para desabilitar a ordenação
+        function disableSorting() {
+            if (sortable) {
+                sortable.destroy();
+                sortable = null;
+            }
+            
+            // Remover todos os indicadores visuais
+            document.querySelectorAll('.top3-item').forEach(item => {
+                item.classList.remove('sortable-enabled', 'sorting-enabled', 'order-changed');
+            });
+            
+            // Restaurar estado dos botões
+            saveOrderBtn.style.display = 'none';
+            reorderBtn.style.display = 'inline-block';
+            
+            // Ocultar instruções
+            reorderingInfo.style.display = 'none';
+        }
+        
+        // Botão para iniciar reordenação
+        reorderBtn.addEventListener('click', function() {
+            enableSorting();
+        });
+        
+        // Botão para salvar a nova ordem
+        saveOrderBtn.addEventListener('click', function() {
+            const newOrder = Array.from(top3Container.children).map(item => {
+                return item.dataset.id;
+            });
+            
+            // Enviar a nova ordem para o servidor via AJAX
+            fetch('{% url "main:save_top3_order" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({
+                    order: newOrder
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Adicionar feedback visual
+                    const alert = document.createElement('div');
+                    alert.className = 'alert alert-success alert-dismissible fade show mt-3';
+                    alert.innerHTML = `
+                        <i class="fas fa-check-circle me-2"></i>
+                        Ordem dos cards TOP 3 salva com sucesso!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    `;
+                    top3Container.parentNode.insertBefore(alert, top3Container);
+                    
+                    // Auto-fechar alerta após 3 segundos
+                    setTimeout(() => {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    }, 3000);
+                    
+                    // Desabilitar ordenação
+                    disableSorting();
+                } else {
+                    alert('Erro ao salvar a ordem: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao salvar a ordem. Verifique o console para mais detalhes.');
+            });
+        });
     });
 </script>
 {% endif %}

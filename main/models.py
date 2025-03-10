@@ -199,7 +199,7 @@ class Top3Card(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ['created_at']  # Alterado para ordenar apenas por data de criação
+        ordering = ['display_order', 'created_at']
         verbose_name = "TOP 3 Card"
         verbose_name_plural = "TOP 3 Cards"
     
