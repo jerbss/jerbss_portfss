@@ -1,55 +1,41 @@
-# Portfólio de Jerbesson Silva
+# 🚀 Portfólio de Jerbesson Silva
 
-Eita, mah! Bem-vindo(a) ao repositório do meu portfólio. Aqui é onde eu mostro um pouco do que faço, dos projetos que já criei e das tecnologias que uso no dia a dia. Se você tá curioso(a) pra saber mais ou só quer dar uma olhada no que eu ando aprontando, chegou no lugar certo, man!
+Eita, pois não é que você achou meu repositório!? Seja bem-vindo(a) ao meu cantinho digital. Aqui é onde mostro um pouco do que faço, projetos que já criei e as tecnologias que uso no meu dia a dia. Se você tá curioso(a) pra saber mais ou só quer dar uma espiadinha, chegou no lugar certo, viu?!
 
-## O que tem aqui?
+## 💻 Que diaxo é isso aqui?
 
-Esse portfólio foi feito com Django, um framework top em Python, e tá cheio de funcionalidades pra você explorar. Vou te contar rapidinho o que você vai encontrar:
+Este projeto é meu portfólio pessoal desenvolvido com Django. É basicamente um espaço onde mostro meus projetos, habilidades e um pouquinho sobre minha pessoa. Tudo isso com um visual arretado!
 
-- **Projetos**: Uma lista dos meus trabalhos, com título, descrição, status e até tags que eu usei.
-- **Detalhes dos Projetos**: Clicou? Vai ver tudo sobre ele: imagens, links, conteúdo organizado e até projetos parecidos.
-- **Filtros**: Quer ver só projetos de web ou os que ainda tão rolando? É só escolher as tags ou status.
-- **Modo Claro/Escuro**: Escolhe o tema que combina com seu clima. E relaxa, ele lembra sua preferência!
-- **Painel de Admin**: Se você for superusuário (tipo eu), pode criar, editar ou apagar projetos. É tipo ter poderes especiais.
+### ✨ O que você vai encontrar por aqui:
 
-## Tecnologias que eu usei
+- 🏠 **Página inicial** com uma apresentação descontraída sobre mim
+- 🗂️ **Lista de projetos** filtrável por tags, status e tipo
+- 🔍 **Detalhes dos projetos** com descrições completas e links
+- 🌙 **Modo escuro** porque ninguém merece queimar a retina, né?
+- 📱 **Design responsivo** que funciona até no celular da sua vovó
 
-Pra fazer isso tudo virar realidade, juntei umas ferramentas maneiras:
+## 🔧 Tecnologias Usadas
 
-### Front-end:
-- HTML5, CSS3, JavaScript (o combo clássico)
-- Bootstrap 5 (pra deixar tudo bonito em qualquer tela)
-- TinyMCE (pra editar texto com superpoderes)
-- Font Awesome (ícones que dão um tchan)
+- Django (Backend)
+- Bootstrap (Frontend)
+- JavaScript (Interatividade)
+- Cloudinary (Armazenamento de imagens)
+- PostgreSQL (Banco de dados)
 
-### Back-end:
-- Django 5.1.6 (o cérebro do projeto)
-- SQLite3 (banco de dados simples pra desenvolvimento)
-- Django Cleanup (pra não deixar bagunça de arquivo)
+## 💡 Por que criei esse portfólio?
 
-### Extras:
-- Pillow (pra lidar com imagens)
-- Bleach (pra deixar o HTML seguro)
-- Django JS Asset (pra organizar os scripts)
+Rapaz, eu sou daqueles que acredita que uma imagem vale mais que mil palavras. Mas um portfólio interativo vale umas 10 mil, no mínimo! 
 
-## O que você vai ver por aqui?
+A ideia aqui é simples: mostrar meus projetos de um jeito organizado e bonito, que qualquer pessoa consiga navegar sem estresse. Queria uma plataforma onde eu pudesse:
 
-### Página Inicial
-Uma foto minha, uma descrição rápida do que faço e uns botões pra você explorar meus projetos ou mandar um "E aí?". Tudo direto, sem firula.
+- Exibir meus trabalhos com uma cara profissional, mas sem perder o bom humor
+- Categorizar tudo direitinho pra facilitar a navegação
+- Mostrar tanto o resultado final quanto os bastidores dos projetos
+- Ter um espaço pra contar um pouco da minha história e habilidades
 
-### Lista de Projetos
-Todos os projetos que já fiz, cada um com capa, título, descrição curta e tags. Os favoritos têm uma estrelinha pra você notar!
+Ah, e claro, eu queria fazer isso tudo do meu jeito, sem depender de plataformas prontas. Porque programador que é programador gosta mesmo é de complicar... ops, de personalizar tudo! 😂
 
-### Detalhes do Projeto
-Clicou em um? Vai ver tudo: conteúdo formatado, links, projetos relacionados e até como foi feito. Ah, e tudo organizado com TinyMCE, então tá facinho de ler.
-
-### Painel de Admin
-Modo cheat ativado! Aqui eu crio, edito ou apago projetos, gerencio tags e contatos. Só pra quem tem acesso, claro.
-
-### Responsividade
-Funciona em qualquer tela: celular, tablet, PC... Até no seu videogame se você quiser (brincadeira, mas quase).
-
-## 2. Requisitos de Sistema
+## 📋 Requisitos do Sistema
 
 ### 2.1 Requisitos Funcionais Geral (Usuários Não-Autenticados e Administradores)
 
@@ -75,40 +61,27 @@ Funciona em qualquer tela: celular, tablet, PC... Até no seu videogame se você
 | RF-GER018 	|            Exibir um indicador visual (ex.: ícone ou badge) nos Cards de Projetos para destacar o status.           	| ⏳ Não Iniciado 	|
 | RF-GER019 	|                                       Exibir um contador de projetos na lista.                                      	| ⏳ Não Iniciado 	|
 
-### 2.2 Requisitos Funcionais para Administradores
+### 2.2 Requisitos Funcionais do Administrador
 
-|     ID    	|                                                    REQUISITOS ADMINISTRADORES                                                   	|     STATUS     	|
-|:---------:	|:-------------------------------------------------------------------------------------------------------------------------------:	|:--------------:	|
-| RF-ADM001 	| Permitir a criação de novos projetos, com campos para capa, título, descrição, tags, status, datas, conteúdo principal e links. 	| ✅ Implementado 	|
-| RF-ADM002 	|    Integrar o editor tinyMCE para facilitar a formatação de textos nos conteúdos dos projetos (ex.: negrito, listas, links).    	| ✅ Implementado 	|
-| RF-ADM003 	|                              Permitir o upload de imagens para serem usadas como capa dos projetos.                             	| ✅ Implementado 	|
-| RF-ADM004 	|         Garantir que o tema do editor tinyMCE mude automaticamente ao alternar entre os temas claro e escuro do sistema.        	| ✅ Implementado 	|
-| RF-ADM005 	|                        Permitir a edição de projetos já criados, com atualização em tempo real dos dados.                       	| ✅ Implementado 	|
-| RF-ADM006 	|                     Permitir a exclusão de projetos, com confirmação do usuário antes da remoção definitiva.                    	| ✅ Implementado 	|
-| RF-ADM007 	|                 Exibir uma tela de confirmação antes da exclusão de um projeto, para evitar remoções acidentais.                	| ✅ Implementado 	|
-| RF-ADM008 	|                           Implementar um sistema de pré-visualização de projetos antes de publicá-los.                          	| ⏳ Não Iniciado 	|
+|     ID     	|                                                   REQUISITOS DO ADMINISTRADOR                                                  	|     STATUS     	|
+|:----------:	|:----------------------------------------------------------------------------------------------------------------------------:	|:--------------:	|
+| RF-ADM001  	|                    Implementar painel de administração para gerenciamento de projetos (CRUD completo).                        	| ✅ Implementado 	|
+| RF-ADM002  	|             Permitir que o administrador adicione novos projetos, incluindo título, descrição, imagem de capa, etc.           	| ✅ Implementado 	|
+| RF-ADM003  	|                         Permitir a edição de projetos existentes, incluindo todos os metadados.                              	| ✅ Implementado 	|
+| RF-ADM004  	|                      Implementar exclusão segura de projetos, com confirmação para evitar exclusões acidentais.              	| ✅ Implementado 	|
+| RF-ADM005  	| Permitir o upload, armazenamento e gerenciamento de imagens para os projetos, com redimensionamento automático quando necessário. | ✅ Implementado 	|
+| RF-ADM006  	|                    Permitir a associação e gerenciamento de tags nos projetos para melhor organização.                       	| ✅ Implementado 	|
+| RF-ADM007  	|                  Incluir um editor de texto rico (WYSIWYG) para formatação do conteúdo dos projetos.                        	| ✅ Implementado 	|
+| RF-ADM008  	|            Oferecer uma previsualização (preview) do projeto durante a criação/edição, antes da publicação final.            	| ✅ Implementado 	|
+| RF-ADM009  	|                  Garantir que o editor de conteúdo também se adapte ao tema atual (claro ou escuro).                        	| ✅ Implementado 	|
+| RF-ADM010  	|               Permitir a definição do status do projeto (ex.: em andamento, concluído) durante a criação/edição.             	| ✅ Implementado 	|
 
-## Quer ajudar? Bora!
+## 👋 Vamos trocar ideia?
 
-Se curtiu o projeto e quer botar a mão na massa, fique à vontade:
+- 📧 [Mande um e-mail](mailto:seuemail@example.com)
+- 🔗 [LinkedIn](https://linkedin.com/in/seulinkedin)
+- 🐙 [GitHub](https://github.com/seugithub)
 
-- Melhorar a interface: Deixar mais bonito ou intuitivo? Manda ver!
-- Corrigir bugs: Achou algo errado? Me avisa que a gente arruma.
-- Novas funcionalidades: Tem uma ideia? Vamo conversar!
-- Otimizar: Se souber como deixar mais rápido, é só mandar.
+---
 
-## Licença
-
-Esse projeto tá sob a licença MIT. Quer saber mais? Dá uma olhada no LICENSE.
-
-## Contato
-
-Quer trocar uma ideia, dar um feedback ou falar de um projeto? Me chama em qualquer rede:
-
-- LinkedIn: [Jerbesson Silva](https://linkedin.com/in/jerbesson-silva)
-- GitHub: [@jerbss](https://github.com/jerbss)
-- Email: [Seu email aqui]
-
-É isso, man! Espero que curta o portfólio. Qualquer coisa, é só me chamar. Vamo codar junto! 🚀
-
-(Ah, e se passar pelo Benfica, me avisa que a gente toma um caldo de cana!) 😉
+Feito com 💙 e muita cafeína por Jerbesson Silva
