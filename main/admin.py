@@ -1,5 +1,8 @@
 from django.contrib import admin
 from .models import Project, Tag, Contact, Top3Card
+from django.db.models import Sum, Count
+from django.utils.html import format_html
+from .models import Visitor
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
@@ -42,5 +45,55 @@ class Top3CardAdmin(admin.ModelAdmin):
             'fields': ('fun_comment',)
         }),
     )
+
+@admin.register(Visitor)
+class VisitorAdmin(admin.ModelAdmin):
+    list_display = ('ip_address', 'path', 'visit_count', 'last_visit', 'timestamp')
+    list_filter = ('path', 'timestamp', 'last_visit')
+    search_fields = ('ip_address', 'path', 'user_agent')
+    date_hierarchy = 'timestamp'
+    readonly_fields = ('ip_address', 'path', 'user_agent', 'visit_count', 'timestamp', 'last_visit')
+    
+    def has_add_permission(self, request):
+        return False
+        
+    def has_delete_permission(self, request, obj=None):
+        # Permitir excluir para limpar dados antigos se necessário
+        return True
+        
+    def has_change_permission(self, request, obj=None):
+        return False
+        
+    def changelist_view(self, request, extra_context=None):
+        # Adicionar estatísticas resumidas ao topo da lista
+        extra_context = extra_context or {}
+        
+        # Total de visitantes únicos (IPs)
+        unique_visitors = Visitor.objects.values('ip_address').distinct().count()
+        
+        # Total de visitas
+        total_visits = Visitor.objects.aggregate(total=Sum('visit_count'))['total'] or 0
+        
+        # Páginas mais visitadas
+        top_pages = Visitor.objects.values('path').annotate(
+            visits=Sum('visit_count')
+        ).order_by('-visits')[:5]
+        
+        # Dias com mais visitas (últimos 30 dias)
+        from django.db.models.functions import TruncDate
+        
+        daily_visits = Visitor.objects.annotate(
+            visit_date=TruncDate('timestamp')
+        ).values('visit_date').annotate(
+            visits=Count('id')
+        ).order_by('-visit_date')[:7]
+        
+        # Adicionar ao contexto
+        extra_context['unique_visitors'] = unique_visitors
+        extra_context['total_visits'] = total_visits
+        extra_context['top_pages'] = top_pages
+        extra_context['daily_visits'] = daily_visits
+        
+        return super().changelist_view(request, extra_context=extra_context)
 
 admin.site.register(Top3Card, Top3CardAdmin)

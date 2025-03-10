@@ -152,6 +152,22 @@ class Top3Card(models.Model):
     def __str__(self):
         return f"TOP 3 {self.title}"
 
+class Visitor(models.Model):
+    ip_address = models.GenericIPAddressField()
+    user_agent = models.CharField(max_length=500, blank=True, null=True)
+    path = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    visit_count = models.PositiveIntegerField(default=1)
+    last_visit = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-timestamp']
+        verbose_name = 'Visitante'
+        verbose_name_plural = 'Visitantes'
+    
+    def __str__(self):
+        return f"{self.ip_address} ({self.visit_count} visitas)"
+
 # Signal para limpar tags órfãs quando um projeto for excluído
 @receiver(post_delete, sender=Project)
 def clean_orphan_tags(sender, instance, **kwargs):

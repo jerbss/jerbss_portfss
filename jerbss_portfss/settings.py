@@ -76,7 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'jerbss_portfss.middleware.ContentTypeMiddleware',  # Add this line
+    'jerbss_portfss.middleware.ContentTypeMiddleware',
+    'main.middleware.VisitorTrackingMiddleware',  # Adicionado aqui
 ]
 
 ROOT_URLCONF = 'jerbss_portfss.urls'
