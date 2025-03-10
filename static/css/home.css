@@ -715,9 +715,27 @@ body.dark-mode #addTop3Modal .form-control::placeholder {
     color: var(--text-color);
 }
 
+/* Tornando as bordas horizontais do modal de exclusão mais sutis */
+#deleteTop3Modal .modal-header {
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+#deleteTop3Modal .modal-footer {
+    border-top-color: rgba(0, 0, 0, 0.05);
+}
+
 body.dark-mode #deleteTop3Modal .modal-content {
     background-color: #2d2d2d;
     color: #e1e1e1;
+}
+
+/* Bordas mais sutis para o tema escuro */
+body.dark-mode #deleteTop3Modal .modal-header {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode #deleteTop3Modal .modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Estilos para previsualização de imagens no modal de TOP 3 */
