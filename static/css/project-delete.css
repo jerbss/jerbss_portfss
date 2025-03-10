@@ -307,6 +307,10 @@ body.dark-mode .btn-secondary:hover {
     margin-top: 1rem;
 }
 
+body.dark-mode .breadcrumb-item.active {
+    color: #a0a0a0 !important; /* Cinza claro com bom contraste no fundo escuro */
+}
+
 /* Estilização de cada item de metadado */
 .metadata-item {
     display: flex;

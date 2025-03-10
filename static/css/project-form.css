@@ -804,3 +804,196 @@ body.dark-mode .project-preview-container .preview-note .text-muted {
 body.dark-mode .mce-content-body .mce-preview-object {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
+
+/* Espaçamento adequado para botões de ação em todos os tamanhos de tela */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.form-actions .btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Estilos para o botão de rascunho */
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Tema escuro para o botão de rascunho */
+body.dark-mode .btn-outline-primary {
+    color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    color: #121212;
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Badge para projetos em rascunho */
+.badge.bg-secondary {
+    background-color: #6c757d !important;
+    color: white;
+}
+
+body.dark-mode .badge.bg-secondary {
+    background-color: #495057 !important;
+    color: #e1e1e1;
+}
+
+/* Responsividade para os botões de ação */
+@media (max-width: 767px) {
+    .form-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+    }
+    
+    .form-actions .btn,
+    .form-actions .btn-group {
+        width: 100%;
+    }
+    
+    .form-actions .btn-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    /* Ordem dos botões em dispositivos móveis */
+    .form-actions #previewButton {
+        order: 3; /* "Visualizar Preview" fica por último */
+    }
+    
+    .form-actions .btn-group {
+        order: 1; /* Grupo de botões fica em primeiro */
+    }
+    
+    .form-actions .btn-group .btn-secondary {
+        order: 3; /* "Cancelar" fica por último dentro do grupo */
+    }
+    
+    .form-actions .btn-group .btn-outline-primary {
+        order: 2; /* "Salvar Rascunho" fica no meio dentro do grupo */
+    }
+    
+    .form-actions .btn-group .btn-primary {
+        order: 1; /* Botão principal fica em primeiro dentro do grupo */
+    }
+}
+
+/* Estilos para o botão de rascunho e indicadores */
+.project-card__btn--warning {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.project-card__btn--warning:hover {
+    background-color: rgba(255, 193, 7, 0.3);
+}
+
+body.dark-mode .project-card__btn--warning {
+    background-color: rgba(255, 193, 7, 0.3);
+    color: #ffd54f;
+}
+
+body.dark-mode .project-card__btn--warning:hover {
+    background-color: rgba(255, 193, 7, 0.4);
+}
+
+/* Status do rascunho */
+.draft-status {
+    font-size: 0.85rem;
+    color: #ffc107;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+body.dark-mode .draft-status {
+    color: #ffd54f;
+}
+
+/* Alerta de rascunho */
+.alert-warning h5.alert-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #856404;
+}
+
+body.dark-mode .alert-warning h5.alert-heading {
+    color: #ffd54f;
+}
+
+/* Melhorias para o alerta de rascunho */
+.alert-warning {
+    background-color: #fff8e1; /* Fundo amarelo mais claro e suave */
+    border-left: 4px solid #ffc107; /* Borda lateral para destaque visual */
+    border-top: 1px solid rgba(255, 193, 7, 0.2);
+    border-right: 1px solid rgba(255, 193, 7, 0.2);
+    border-bottom: 1px solid rgba(255, 193, 7, 0.2);
+    color: #664d03; /* Texto marrom escuro para melhor contraste */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.alert-warning .alert-heading {
+    color: #804d00; /* Título em marrom mais escuro para destaque */
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.alert-warning p {
+    color: #665200; /* Texto do corpo em marrom escuro */
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.alert-warning i {
+    color: #f59e0b; /* Ícone em amarelo mais vibrante */
+    font-size: 1.2rem;
+}
+
+/* Estilos específicos para o modo escuro */
+body.dark-mode .alert-warning {
+    background-color: #332b00; /* Fundo escuro com tom amarelado */
+    border-color: rgba(255, 193, 7, 0.5); /* Borda amarela mais visível */
+    border-left: 4px solid #ffc107; /* Borda lateral amarela para destaque */
+    color: #ffe066; /* Texto em amarelo claro para bom contraste */
+}
+
+body.dark-mode .alert-warning .alert-heading {
+    color: #ffd43b; /* Título em amarelo vibrante para melhor leitura */
+    font-weight: 600;
+}
+
+body.dark-mode .alert-warning p {
+    color: #e6c159; /* Texto em amarelo suave para bom contraste */
+}
+
+body.dark-mode .alert-warning i {
+    color: #ffd43b; /* Ícone em amarelo vibrante */
+}
+
+/* Estilos para o botão dentro do alerta no tema escuro */
+body.dark-mode .alert-warning .btn-outline-danger {
+    color: #ff6b6b; /* Vermelho mais claro para tema escuro */
+    border-color: #ff6b6b;
+}
+
+body.dark-mode .alert-warning .btn-outline-danger:hover {
+    background-color: #ff6b6b;
+    color: #1a1a1a; /* Texto escuro no hover para contraste */
+}

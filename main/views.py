@@ -12,7 +12,7 @@ import sys
 from django.db.models import Count
 from django.conf import settings
 from cloudinary.uploader import upload
-from .models import Project, Tag, Top3Card
+from .models import Project, ProjectDraft, Tag, Top3Card  # Adicionado ProjectDraft
 from .forms import ProjectForm, ContactForm
 from django.utils import timezone
 from django.template.loader import render_to_string
@@ -182,9 +182,24 @@ def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
+            # Sempre cria o projeto base
             project = form.save()
-            messages.success(request, 'Projeto criado com sucesso!', extra_tags='project')
-            return redirect('main:project_detail', slug=project.slug)
+            
+            # Processar tags
+            if 'tags_input' in form.cleaned_data:
+                tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
+                
+                for tag_name in tag_names:
+                    tag, created = Tag.objects.get_or_create(name=tag_name)
+                    project.tags.add(tag)
+            
+            # Se o botão "Salvar Rascunho" foi clicado, marca como temporário
+            if 'save_draft' in request.POST:
+                messages.success(request, 'Projeto criado como rascunho! Será visível apenas quando salvar as alterações.', extra_tags='project')
+                return redirect('main:edit_project', slug=project.slug)
+            else:
+                messages.success(request, 'Projeto criado com sucesso!', extra_tags='project')
+                return redirect('main:project_detail', slug=project.slug)
     else:
         form = ProjectForm()
     
@@ -200,19 +215,118 @@ def edit_project(request, slug):
     
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES, instance=project)
+        
         if form.is_valid():
-            project = form.save()
-            messages.success(request, 'Projeto atualizado com sucesso!', extra_tags='project')
-            return redirect('main:project_detail', slug=project.slug)
+            if 'save_draft' in request.POST:
+                # Salvar como rascunho
+                draft, created = ProjectDraft.objects.get_or_create(project=project)
+                
+                # Atualizar os campos do rascunho com os dados do formulário
+                draft.title = form.cleaned_data['title']
+                draft.short_description = form.cleaned_data['short_description']
+                draft.content = form.cleaned_data['content']
+                draft.status = form.cleaned_data['status']
+                draft.project_type = form.cleaned_data['project_type']
+                draft.start_date = form.cleaned_data['start_date']
+                draft.end_date = form.cleaned_data['end_date']
+                draft.url = form.cleaned_data['url']
+                draft.github_url = form.cleaned_data['github_url']
+                draft.featured = form.cleaned_data['featured']
+                
+                # Salvar imagem se fornecida
+                if 'image' in request.FILES:
+                    draft.image = request.FILES['image']
+                
+                draft.save()
+                
+                # Processar tags (armazenadas separadamente)
+                if 'tags_input' in form.cleaned_data:
+                    # Salvar as tags como uma string no rascunho
+                    draft.tags_list = form.cleaned_data['tags_input']
+                    draft.save()
+                
+                messages.success(request, 'Alterações salvas como rascunho! O projeto original permanece inalterado até que você salve as alterações.', extra_tags='project')
+            else:
+                # Salvar alterações diretamente
+                project = form.save()
+                
+                # Processar tags
+                if 'tags_input' in form.cleaned_data:
+                    project.tags.clear()
+                    tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
+                    
+                    for tag_name in tag_names:
+                        tag, created = Tag.objects.get_or_create(name=tag_name)
+                        project.tags.add(tag)
+                
+                # Se existia rascunho, remover
+                if hasattr(project, 'draft'):
+                    project.draft.delete()
+                
+                messages.success(request, 'Projeto atualizado com sucesso!', extra_tags='project')
+                return redirect('main:project_detail', slug=project.slug)
+            
+            return redirect('main:edit_project', slug=project.slug)
     else:
-        form = ProjectForm(instance=project)
+        # Verifica se existe um rascunho para este projeto
+        form = ProjectForm(instance=project, project=project)
+        
+        # Preparar as tags para o formulário
+        if project.tags.exists():
+            form.initial['tags_input'] = ','.join([tag.name for tag in project.tags.all()])
+        
+        # Se existe rascunho, mostrar dados do rascunho
+        has_draft = hasattr(project, 'draft') and project.draft
     
     return render(request, 'main/create_project.html', {
         'form': form,
         'is_edit': True,
         'project': project,
+        'has_draft': has_draft,
         'tinymce_api_key': settings.TINYMCE_API_KEY
     })
+
+@user_passes_test(lambda u: u.is_superuser)
+def apply_draft(request, slug):
+    """Aplica as alterações do rascunho ao projeto original"""
+    project = get_object_or_404(Project, slug=slug)
+    
+    if not hasattr(project, 'draft') or not project.draft:
+        messages.error(request, 'Não há rascunho para este projeto.', extra_tags='project')
+        return redirect('main:edit_project', slug=project.slug)
+    
+    draft = project.draft
+    
+    # Aplicar as alterações do rascunho ao projeto
+    project = draft.apply_to_project()
+    
+    # Processar tags se foram armazenadas no rascunho
+    if hasattr(draft, 'tags_list') and draft.tags_list:
+        project.tags.clear()
+        tag_names = [t.strip() for t in draft.tags_list.split(',') if t.strip()]
+        
+        for tag_name in tag_names:
+            tag, created = Tag.objects.get_or_create(name=tag_name)
+            project.tags.add(tag)
+    
+    # Excluir o rascunho após aplicá-lo
+    draft.delete()
+    
+    messages.success(request, 'As alterações do rascunho foram aplicadas com sucesso!', extra_tags='project')
+    return redirect('main:project_detail', slug=project.slug)
+
+@user_passes_test(lambda u: u.is_superuser)
+def discard_draft(request, slug):
+    """Descarta o rascunho sem aplicar as alterações"""
+    project = get_object_or_404(Project, slug=slug)
+    
+    if not hasattr(project, 'draft') or not project.draft:
+        messages.error(request, 'Não há rascunho para este projeto.', extra_tags='project')
+    else:
+        project.draft.delete()
+        messages.success(request, 'Rascunho descartado com sucesso!', extra_tags='project')
+    
+    return redirect('main:edit_project', slug=project.slug)
 
 @user_passes_test(lambda u: u.is_superuser)
 @login_required

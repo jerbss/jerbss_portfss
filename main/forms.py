@@ -108,7 +108,37 @@ class ProjectForm(forms.ModelForm):
             'featured': 'Projeto Destacado'
         }
     
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, project=None, **kwargs):
+        """
+        Inicializa o formulário, permitindo carregar dados do rascunho se existir
+        """
+        instance = kwargs.get('instance')
+        
+        # Se um projeto foi fornecido e tem rascunho, use os dados do rascunho
+        if instance and hasattr(instance, 'draft') and instance.draft:
+            draft = instance.draft
+            initial = kwargs.get('initial', {})
+            
+            # Preenche os dados iniciais com os valores do rascunho
+            initial.update({
+                'title': draft.title,
+                'short_description': draft.short_description,
+                'content': draft.content,
+                'status': draft.status,
+                'project_type': draft.project_type,
+                'start_date': draft.start_date,
+                'end_date': draft.end_date,
+                'url': draft.url,
+                'github_url': draft.github_url,
+                'featured': draft.featured,
+            })
+            
+            # Adiciona um indicador de que estamos carregando dados de um rascunho
+            kwargs['initial'] = initial
+            self.has_draft = True
+        else:
+            self.has_draft = False
+        
         super().__init__(*args, **kwargs)
         
         # Inicializar tags_input com as tags existentes

@@ -96,6 +96,9 @@
                         <button class="btn btn-sm btn-outline-primary active" data-status="all">
                             <i class="fas fa-list"></i>Todos
                         </button>
+                        <button class="btn btn-sm btn-outline-primary" data-status="draft">
+                            <i class="fas fa-file-alt"></i>Rascunhos
+                        </button>
                         <button class="btn btn-sm btn-outline-primary" data-status="in_progress">
                             <i class="fas fa-spinner"></i>Em Andamento
                         </button>
@@ -149,7 +152,11 @@
                     </div>
                     
                     <div class="project-card__status">
-                        {{ project.get_status_display_html|safe }}
+                        {% if project.status == 'draft' %}
+                            <span class="badge bg-secondary">Rascunho</span>
+                        {% else %}
+                            {{ project.get_status_display_html|safe }}
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -183,6 +190,11 @@
                         <a href="{% url 'main:edit_project' project.slug %}" class="project-card__btn project-card__btn--icon" aria-label="Editar projeto">
                             <i class="fas fa-edit"></i>
                         </a>
+                        {% if project.draft %}
+                        <span class="project-card__btn project-card__btn--icon project-card__btn--warning" title="Este projeto possui um rascunho">
+                            <i class="fas fa-file-alt"></i>
+                        </span>
+                        {% endif %}
                         <a href="{% url 'main:delete_project' project.slug %}" class="project-card__btn project-card__btn--icon project-card__btn--danger" aria-label="Excluir projeto">
                             <i class="fas fa-trash"></i>
                         </a>

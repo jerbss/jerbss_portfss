@@ -25,6 +25,7 @@ class Tag(models.Model):
 
 class Project(models.Model):
     STATUS_CHOICES = (
+        ('draft', 'Rascunho'),  # Novo status de rascunho
         ('in_progress', 'Em Andamento'),  # Corrigido para "Em Andamento" com A maiúsculo
         ('completed', 'Concluído'),
     )
@@ -109,6 +110,59 @@ class Project(models.Model):
             unique_id = str(uuid.uuid4())[:8]
             self.slug = f"{base_slug}-{unique_id}"
         super().save(*args, **kwargs)
+
+class ProjectDraft(models.Model):
+    """
+    Modelo para armazenar versões de rascunho de projetos existentes
+    sem modificar o projeto original até que o usuário decida salvar.
+    """
+    project = models.OneToOneField(Project, on_delete=models.CASCADE, related_name='draft')
+    title = models.CharField('Título', max_length=200)
+    short_description = models.CharField('Breve Descrição', max_length=200, default='')
+    content = models.TextField('Conteúdo Completo', default='')
+    image = CloudinaryField('image', folder='drafts', blank=True, null=True)
+    status = models.CharField('Status', max_length=50, choices=Project.STATUS_CHOICES, default='in_progress')
+    project_type = models.CharField('Tipo', max_length=50, choices=Project.TYPE_CHOICES, default='personal')
+    start_date = models.DateField('Data de Início', null=True, blank=True)
+    end_date = models.DateField('Data de Conclusão', null=True, blank=True)
+    url = models.URLField('Link do Projeto', blank=True, null=True)
+    github_url = models.URLField('Link do GitHub', blank=True, null=True)
+    featured = models.BooleanField('Projeto Destacado', default=False)
+    last_updated = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Rascunho de: {self.project.title}"
+    
+    def apply_to_project(self):
+        """
+        Aplica as alterações do rascunho ao projeto original
+        """
+        project = self.project
+        
+        # Atualizar campos básicos
+        project.title = self.title
+        project.short_description = self.short_description
+        project.content = self.content
+        project.status = self.status
+        project.project_type = self.project_type
+        project.start_date = self.start_date
+        project.end_date = self.end_date
+        project.url = self.url
+        project.github_url = self.github_url
+        project.featured = self.featured
+        
+        # Atualizar imagem apenas se foi alterada no rascunho
+        if self.image:
+            project.image = self.image
+            
+        # Salvar o projeto com as alterações
+        project.save()
+        
+        return project
+        
+    class Meta:
+        verbose_name = 'Rascunho de Projeto'
+        verbose_name_plural = 'Rascunhos de Projetos'
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)
