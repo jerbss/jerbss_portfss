@@ -575,8 +575,12 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="item1_image" class="form-label">Imagem</label>
-                                    <input type="file" class="form-control" id="item1_image" name="item1_image" 
-                                           accept="image/*" required>
+                                    <!-- Container para pré-visualização da imagem -->
+                                    <div class="image-preview mb-2" id="item1_image_preview" style="display: none;">
+                                        <img src="" alt="Preview" class="img-thumbnail" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;">
+                                        <div class="mt-1 text-muted small">Imagem atual (não será alterada a menos que você faça upload de uma nova)</div>
+                                    </div>
+                                    <input type="file" class="form-control" id="item1_image" name="item1_image" accept="image/*" required>
                                 </div>
                             </div>
                         </div>
@@ -596,8 +600,12 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="item2_image" class="form-label">Imagem</label>
-                                    <input type="file" class="form-control" id="item2_image" name="item2_image" 
-                                           accept="image/*" required>
+                                    <!-- Container para pré-visualização da imagem -->
+                                    <div class="image-preview mb-2" id="item2_image_preview" style="display: none;">
+                                        <img src="" alt="Preview" class="img-thumbnail" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;">
+                                        <div class="mt-1 text-muted small">Imagem atual (não será alterada a menos que você faça upload de uma nova)</div>
+                                    </div>
+                                    <input type="file" class="form-control" id="item2_image" name="item2_image" accept="image/*" required>
                                 </div>
                             </div>
                         </div>
@@ -617,8 +625,12 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="item3_image" class="form-label">Imagem</label>
-                                    <input type="file" class="form-control" id="item3_image" name="item3_image" 
-                                           accept="image/*" required>
+                                    <!-- Container para pré-visualização da imagem -->
+                                    <div class="image-preview mb-2" id="item3_image_preview" style="display: none;">
+                                        <img src="" alt="Preview" class="img-thumbnail" style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;">
+                                        <div class="mt-1 text-muted small">Imagem atual (não será alterada a menos que você faça upload de uma nova)</div>
+                                    </div>
+                                    <input type="file" class="form-control" id="item3_image" name="item3_image" accept="image/*" required>
                                 </div>
                             </div>
                         </div>
@@ -701,6 +713,11 @@
             document.getElementById('item1_image').setAttribute('required', '');
             document.getElementById('item2_image').setAttribute('required', '');
             document.getElementById('item3_image').setAttribute('required', '');
+            
+            // Hide all image previews
+            document.getElementById('item1_image_preview').style.display = 'none';
+            document.getElementById('item2_image_preview').style.display = 'none';
+            document.getElementById('item3_image_preview').style.display = 'none';
         });
         
         // Fetch TOP3 data for editing
@@ -722,12 +739,30 @@
                     document.getElementById('item3_name').value = data.item3_name;
                     document.getElementById('item3_link').value = data.item3_link || '';
                     document.getElementById('fun_comment').value = data.fun_comment;
-                    document.getElementById('display_order').value = data.display_order;
                     
                     // Remove required attribute for image inputs when editing
                     document.getElementById('item1_image').removeAttribute('required');
                     document.getElementById('item2_image').removeAttribute('required');
                     document.getElementById('item3_image').removeAttribute('required');
+                    
+                    // Set image previews
+                    if (data.item1_image_url) {
+                        const preview1 = document.getElementById('item1_image_preview');
+                        preview1.querySelector('img').src = data.item1_image_url;
+                        preview1.style.display = 'block';
+                    }
+                    
+                    if (data.item2_image_url) {
+                        const preview2 = document.getElementById('item2_image_preview');
+                        preview2.querySelector('img').src = data.item2_image_url;
+                        preview2.style.display = 'block';
+                    }
+                    
+                    if (data.item3_image_url) {
+                        const preview3 = document.getElementById('item3_image_preview');
+                        preview3.querySelector('img').src = data.item3_image_url;
+                        preview3.style.display = 'block';
+                    }
                 })
                 .catch(error => console.error('Error fetching TOP3 data:', error));
         }
@@ -735,4 +770,3 @@
 </script>
 {% endif %}
 {% endblock %}
-

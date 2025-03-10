@@ -720,7 +720,23 @@ body.dark-mode #deleteTop3Modal .modal-content {
     color: #e1e1e1;
 }
 
-body.dark-mode #deleteTop3Modal .modal-header,
-body.dark-mode #deleteTop3Modal .modal-footer {
-    border-color: rgba(255, 255, 255, 0.1);
+/* Estilos para previsualização de imagens no modal de TOP 3 */
+.image-preview {
+    background-color: rgba(0, 0, 0, 0.03);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+body.dark-mode .image-preview {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.image-preview img {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.image-preview img:hover {
+    transform: scale(1.05);
 }
