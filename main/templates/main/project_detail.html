@@ -125,7 +125,7 @@
                                             <i class="fas fa-history"></i>
                                         </span>
                                         <span class="project-meta-label">Publicado:</span>
-                                        <span class="project-meta-value">{{ project.created_at|date:"d/m/Y" }}</span>
+                                        <span class="project-meta-value">{{ project.created_at|date:"d/m/Y • H:i" }}</span>
                                     </div>
                                     
                                     {% if project.updated_at and project.updated_at != project.created_at %}
@@ -134,7 +134,7 @@
                                             <i class="fas fa-sync-alt"></i>
                                         </span>
                                         <span class="project-meta-label">Atualizado:</span>
-                                        <span class="project-meta-value">{{ project.updated_at|date:"d/m/Y" }}</span>
+                                        <span class="project-meta-value">{{ project.updated_at|date:"d/m/Y • H:i" }}</span>
                                     </div>
                                     {% endif %}
                                 </div>

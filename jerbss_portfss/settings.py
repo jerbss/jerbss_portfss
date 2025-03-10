@@ -136,7 +136,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Mudando de 'UTC' para o fuso horário de Fortaleza
+TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 
