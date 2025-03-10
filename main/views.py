@@ -402,7 +402,8 @@ def contact(request):
                 'name': name,
                 'email': sender_email,
                 'message': message,
-                'timestamp': timezone.now().strftime("%d/%m/%Y %H:%M:%S")
+                # Obter a hora correta no fuso de Fortaleza
+                'timestamp': timezone.localtime(timezone.now()).strftime("%d/%m/%Y %H:%M:%S")
             }
             
             # Renderizar o template HTML
