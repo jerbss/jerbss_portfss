@@ -21,12 +21,12 @@ from django.template.loader import render_to_string
 logger = logging.getLogger(__name__)
 
 def home(request):
-    # Get all dynamic TOP 3 cards
-    dynamic_top3_cards = Top3Card.objects.all()
+    # Get all TOP 3 cards (agora incluindo os originais que foram migrados)
+    top3_cards = Top3Card.objects.all().order_by('display_order', 'created_at')
     
     context = {
-        'dynamic_top3_cards': dynamic_top3_cards,
-        'user': request.user,  # Ensure user is available in template
+        'top3_cards': top3_cards,
+        'user': request.user,
     }
     
     return render(request, 'main/home.html', context)
