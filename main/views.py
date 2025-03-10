@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.http import JsonResponse, HttpResponse
 import cloudinary
 import cloudinary.api
@@ -16,6 +16,7 @@ from .models import Project, ProjectDraft, Tag, Top3Card  # Adicionado ProjectDr
 from .forms import ProjectForm, ContactForm
 from django.utils import timezone
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -394,21 +395,32 @@ def contact(request):
             sender_email = form.cleaned_data['email']
             message = form.cleaned_data['message']
             
-            subject = f"Contato via Site - {name}"
-            body = (
-                f"Você recebeu uma nova mensagem pelo formulário de contato.\n\n"
-                f"Nome: {name}\n"
-                f"E-mail: {sender_email}\n\n"
-                f"Mensagem:\n{message}"
-            )
+            # Contexto para o template de email
+            context = {
+                'name': name,
+                'email': sender_email,
+                'message': message,
+                'timestamp': timezone.now().strftime("%d/%m/%Y %H:%M:%S")
+            }
             
-            send_mail(
+            # Renderizar o template HTML
+            html_content = render_to_string('email/contact_email.html', context)
+            # Criar versão em texto simples para clientes que não suportam HTML
+            text_content = strip_tags(html_content)
+            
+            # Usar como assunto o nome da pessoa que está enviando a mensagem
+            subject = f"Contato via Site - {name}"
+            
+            # Configurar o email com versão texto e HTML
+            email = EmailMultiAlternatives(
                 subject,
-                body,  # Usando a variável de ambiente
-                sender_email,
-                ['jerbessonc@gmail.com'],
-                fail_silently=False,
+                text_content,
+                settings.DEFAULT_FROM_EMAIL,  # Usar o email configurado no settings como remetente
+                ['jerbessonc@gmail.com'],  # Email para onde será enviado
+                reply_to=[sender_email],  # Configurar "Reply-To" para o email do usuário
             )
+            email.attach_alternative(html_content, "text/html")
+            email.send(fail_silently=False)
             
             messages.success(request, 'Sua mensagem foi enviada com sucesso!', extra_tags='contact')
             return redirect('main:contact')
