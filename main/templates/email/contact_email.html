@@ -7,70 +7,81 @@
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
+        }
+        .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-        }
-        .email-container {
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 20px;
-            background-color: #f9f9f9;
         }
         .header {
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #0d6efd;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            color: #0d6efd;
-            margin: 0;
-            font-size: 24px;
-        }
-        .message-info {
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border-left: 4px solid #0d6efd;
-        }
-        .sender-details {
-            margin-bottom: 15px;
-        }
-        .message-content {
-            white-space: pre-wrap;
-            background-color: #f0f0f0;
-            padding: 15px;
-            border-radius: 5px;
+            background-color: #0d6efd;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px 5px 0 0;
+            margin: -20px -20px 20px;
         }
         .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            border-top: 1px solid #ddd;
+            font-size: 0.8em;
+            margin: 20px -20px -20px;
+            border-radius: 0 0 5px 5px;
+        }
+        .message-body {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #0d6efd;
+            margin-bottom: 20px;
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+        .highlight {
+            font-weight: bold;
+        }
+        .note {
+            font-size: 0.9em;
             color: #666;
+        }
+        /* Linha separadora para melhorar a visibilidade em respostas */
+        .email-separator {
+            border-top: 1px solid #ddd;
+            margin: 15px 0;
+            padding-top: 15px;
+            color: #777;
+            font-style: italic;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <div class="email-container">
+    <div class="container">
         <div class="header">
-            <h1>Nova Mensagem do jerbssfolio</h1>
+            <h2>Mensagem do Portfólio</h2>
         </div>
         
-        <div class="sender-details">
-            <p><strong>Nome:</strong> {{ name }}</p>
-            <p><strong>E-mail:</strong> <a href="mailto:{{ email }}">{{ email }}</a></p>
+        <p class="info">Esta é uma mensagem enviada por <span class="highlight">{{ name }}</span> através do formulário de contato do portfólio.</p>
+        
+        <p class="info"><strong>Email:</strong> {{ email }}</p>
+        
+        <div class="message-body">
+            {{ message|linebreaks }}
         </div>
         
-        <div class="message-info">
-            <h3>Mensagem:</h3>
-            <div class="message-content">{{ message }}</div>
+        <!-- Nova linha separadora para contexto em respostas -->
+        <div class="email-separator">
+            --- Esta mensagem foi enviada em {{ timestamp }} ---
         </div>
         
         <div class="footer">
-            <p>Esta mensagem foi enviada através do formulário de contato do seu portfólio.</p>
-            <p>Data e hora: {{ timestamp }}</p>
+            <p class="note">
+                <strong>✉️ Informação sobre este email:</strong><br>
+                Esta mensagem foi enviada do site do portfólio de Jerbesson Silva. 
+                Ao responder, você está se comunicando diretamente com {{ name }}.
+            </p>
         </div>
     </div>
 </body>

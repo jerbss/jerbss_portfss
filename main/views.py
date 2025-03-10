@@ -402,7 +402,6 @@ def contact(request):
                 'name': name,
                 'email': sender_email,
                 'message': message,
-                # Obter a hora correta no fuso de Fortaleza
                 'timestamp': timezone.localtime(timezone.now()).strftime("%d/%m/%Y %H:%M:%S")
             }
             
@@ -411,14 +410,17 @@ def contact(request):
             # Criar versão em texto simples para clientes que não suportam HTML
             text_content = strip_tags(html_content)
             
-            # Usar como assunto o nome da pessoa que está enviando a mensagem
-            subject = f"Contato via Site - {name}"
+            # Usar formato mais claro no assunto para indicar a origem
+            subject = f"[Contato Portfolio] Mensagem de {name}"
+            
+            # Configurar o FROM como "Nome via Portfolio <seu-email>" para evitar confusão
+            from_email = f'"{name} via Portfolio" <{settings.DEFAULT_FROM_EMAIL}>'
             
             # Configurar o email com versão texto e HTML
             email = EmailMultiAlternatives(
                 subject,
                 text_content,
-                settings.DEFAULT_FROM_EMAIL,  # Usar o email configurado no settings como remetente
+                from_email,  # Usar o formato personalizado
                 ['jerbessonc@gmail.com'],  # Email para onde será enviado
                 reply_to=[sender_email],  # Configurar "Reply-To" para o email do usuário
             )
