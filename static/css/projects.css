@@ -1034,6 +1034,22 @@ body.dark-mode .project-card__date i.fa-users {
     color: #64b5f6; /* Cor azul claro para o tema escuro */
 }
 
+/* Estilos para o indicador de colaboração nos cards de projeto */
+.project-card__date i.fa-user,
+.project-card__date i.fa-user-friends,
+.project-card__date i.fa-people-group,
+.project-card__date i.fa-users-gear {
+    color: #0d6efd; /* Cor azul para o tema claro */
+    margin-left: 2px;
+}
+
+body.dark-mode .project-card__date i.fa-user,
+body.dark-mode .project-card__date i.fa-user-friends,
+body.dark-mode .project-card__date i.fa-people-group,
+body.dark-mode .project-card__date i.fa-users-gear {
+    color: #64b5f6; /* Cor azul claro para o tema escuro */
+}
+
 /* Ajuste para a separação entre data e colaboração */
 .project-card__date .ms-2.ps-2.border-start {
     border-left-color: rgba(0, 0, 0, 0.1) !important; /* Cor da linha separadora no tema claro */
