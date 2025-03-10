@@ -67,4 +67,43 @@ document.addEventListener('DOMContentLoaded', function() {
         // Inicia o ciclo de animações
         setInterval(updateGreeting, 3000);
     }, 800);
+    
+    // Função para habilitar a ordenação - modificar a parte relevante
+    function enableSorting() {
+        // Configuração aprimorada do Sortable
+        sortable = new Sortable(top3Container, {
+            animation: 150,
+            delay: 100,
+            delayOnTouchOnly: true,
+            touchStartThreshold: 5,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            forceFallback: false,
+            onStart: function(evt) {
+                const item = evt.item;
+                item.classList.add('sorting-enabled');
+            },
+            onEnd: function(evt) {
+                const item = evt.item;
+                item.classList.remove('sorting-enabled');
+                
+                // Mostrar botão para salvar apenas se a ordem mudou
+                if (evt.oldIndex !== evt.newIndex) {
+                    saveOrderBtn.style.display = 'inline-block';
+                    reorderBtn.style.display = 'none';
+                    
+                    // Remover o código que adiciona a classe order-changed
+                    // Assim não teremos mais o efeito visual
+                }
+            }
+        });
+        
+        // Adicionar indicadores visuais que os cards são arrastáveis
+        document.querySelectorAll('.top3-item').forEach(item => {
+            item.classList.add('sortable-enabled');
+        });
+        
+        // Remover a linha que mostrava as instruções
+        // reorderingInfo.style.display = 'block';
+    }
 });

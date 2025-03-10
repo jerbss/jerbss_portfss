@@ -162,125 +162,121 @@
     </div>
 
     <div id="top3Container" class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-        <!-- Instruções visuais para reordenação (aparece apenas quando reordenação está ativa) -->
-        <div class="col-12 reordering-active-info" id="reorderingInfo" style="display: none;">
-            <i class="fas fa-info-circle me-2"></i> Arraste os cards para reordenar. Quando terminar, clique em <strong>Salvar Ordem</strong> para confirmar suas alterações.
-        </div>
-        
-        {% for card in top3_cards %}
-        {% if forloop.last and forloop.counter0|divisibleby:2 == False %}
-        <!-- Último card em número ímpar ocupa toda a linha -->
-        <div class="col-12 top3-item" data-id="{{ card.id }}">
-        {% else %}
-        <div class="col top3-item" data-id="{{ card.id }}">
-        {% endif %}
-            <div class="card h-100">
-                {% if user.is_superuser %}
-                <div class="card-admin-controls">
-                    <button type="button" class="btn btn-sm btn-primary edit-top3-btn" 
-                            data-id="{{ card.id }}"
-                            data-bs-toggle="modal" 
-                            data-bs-target="#addTop3Modal">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-danger delete-top3-btn"
-                            data-id="{{ card.id }}"
-                            data-title="{{ card.title }}"
-                            data-bs-toggle="modal"
-                            data-bs-target="#deleteTop3Modal">
-                        <i class="fas fa-trash"></i>
-                    </button>
+    
+    {% for card in top3_cards %}
+    {% if forloop.last and forloop.counter0|divisibleby:2 == False %}
+    <!-- Último card em número ímpar ocupa toda a linha -->
+    <div class="col-12 top3-item" data-id="{{ card.id }}">
+    {% else %}
+    <div class="col top3-item" data-id="{{ card.id }}">
+    {% endif %}
+        <div class="card h-100">
+            {% if user.is_superuser %}
+            <div class="card-admin-controls">
+                <button type="button" class="btn btn-sm btn-primary edit-top3-btn" 
+                        data-id="{{ card.id }}"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#addTop3Modal">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger delete-top3-btn"
+                        data-id="{{ card.id }}"
+                        data-title="{{ card.title }}"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteTop3Modal">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h3 class="h5 mb-3">
+                    <i class="{{ card.icon_class }}"></i><span class="ms-2">{{ card.title }}</span>
+                </h3>
+
+                <!-- First item -->
+                <div class="d-flex align-items-center mb-3">
+                    {% if card.item1_link %}
+                    <a href="{{ card.item1_link }}" target="_blank" style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item1_image.url }}"
+                            alt="{{ card.item1_name }}"
+                            class="rounded-circle me-3 hover-darken"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
+                        <i class="fas fa-external-link-alt redirect-icon"></i>
+                    </a>
+                    {% else %}
+                    <div style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item1_image.url }}"
+                            alt="{{ card.item1_name }}"
+                            class="rounded-circle me-3"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
+                    </div>
+                    {% endif %}
+                    <span>{{ card.item1_name }}</span>
                 </div>
-                {% endif %}
-                <div class="card-body">
-                    <h3 class="h5 mb-3">
-                        <i class="{{ card.icon_class }}"></i><span class="ms-2">{{ card.title }}</span>
-                    </h3>
 
-                    <!-- First item -->
-                    <div class="d-flex align-items-center mb-3">
-                        {% if card.item1_link %}
-                        <a href="{{ card.item1_link }}" target="_blank" style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item1_image.url }}"
-                                alt="{{ card.item1_name }}"
-                                class="rounded-circle me-3 hover-darken"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                            <i class="fas fa-external-link-alt redirect-icon"></i>
-                        </a>
-                        {% else %}
-                        <div style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item1_image.url }}"
-                                alt="{{ card.item1_name }}"
-                                class="rounded-circle me-3"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                        </div>
-                        {% endif %}
-                        <span>{{ card.item1_name }}</span>
+                <!-- Second item -->
+                <div class="d-flex align-items-center mb-3">
+                    {% if card.item2_link %}
+                    <a href="{{ card.item2_link }}" target="_blank" style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item2_image.url }}"
+                            alt="{{ card.item2_name }}"
+                            class="rounded-circle me-3 hover-darken"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
+                        <i class="fas fa-external-link-alt redirect-icon"></i>
+                    </a>
+                    {% else %}
+                    <div style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item2_image.url }}"
+                            alt="{{ card.item2_name }}"
+                            class="rounded-circle me-3"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
                     </div>
-
-                    <!-- Second item -->
-                    <div class="d-flex align-items-center mb-3">
-                        {% if card.item2_link %}
-                        <a href="{{ card.item2_link }}" target="_blank" style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item2_image.url }}"
-                                alt="{{ card.item2_name }}"
-                                class="rounded-circle me-3 hover-darken"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                            <i class="fas fa-external-link-alt redirect-icon"></i>
-                        </a>
-                        {% else %}
-                        <div style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item2_image.url }}"
-                                alt="{{ card.item2_name }}"
-                                class="rounded-circle me-3"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                        </div>
-                        {% endif %}
-                        <span>{{ card.item2_name }}</span>
-                    </div>
-
-                    <!-- Third item -->
-                    <div class="d-flex align-items-center mb-3">
-                        {% if card.item3_link %}
-                        <a href="{{ card.item3_link }}" target="_blank" style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item3_image.url }}"
-                                alt="{{ card.item3_name }}"
-                                class="rounded-circle me-3 hover-darken"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                            <i class="fas fa-external-link-alt redirect-icon"></i>
-                        </a>
-                        {% else %}
-                        <div style="position: relative; display: inline-block;">
-                            <img
-                                src="{{ card.item3_image.url }}"
-                                alt="{{ card.item3_name }}"
-                                class="rounded-circle me-3"
-                                style="width: 60px; height: 60px; object-fit: cover;"
-                            />
-                        </div>
-                        {% endif %}
-                        <span>{{ card.item3_name }}</span>
-                    </div>
-
-                    <p class="text-muted fst-italic small mt-2">
-                        <i class="fas fa-laugh-wink me-1"></i>
-                        {{ card.fun_comment }}
-                    </p>
+                    {% endif %}
+                    <span>{{ card.item2_name }}</span>
                 </div>
+
+                <!-- Third item -->
+                <div class="d-flex align-items-center mb-3">
+                    {% if card.item3_link %}
+                    <a href="{{ card.item3_link }}" target="_blank" style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item3_image.url }}"
+                            alt="{{ card.item3_name }}"
+                            class="rounded-circle me-3 hover-darken"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
+                        <i class="fas fa-external-link-alt redirect-icon"></i>
+                    </a>
+                    {% else %}
+                    <div style="position: relative; display: inline-block;">
+                        <img
+                            src="{{ card.item3_image.url }}"
+                            alt="{{ card.item3_name }}"
+                            class="rounded-circle me-3"
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                        />
+                    </div>
+                    {% endif %}
+                    <span>{{ card.item3_name }}</span>
+                </div>
+
+                <p class="text-muted fst-italic small mt-2">
+                    <i class="fas fa-laugh-wink me-1"></i>
+                    {{ card.fun_comment }}
+                </p>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
 </div>
 
 <!-- CTA para Sugestões de TOP 3 - Versão Reformulada -->
