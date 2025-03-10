@@ -61,12 +61,27 @@
                         <button class="btn btn-sm btn-outline-primary active" data-filter="all">
                             <i class="fas fa-tags"></i>Todas
                         </button>
-                        {% for tag in tags %}
+                        {% for tag in tags|slice:":5" %}
                         <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
                             <i class="fas fa-tag"></i><span>{{ tag.name }}</span>
                             <span class="badge">{{ tag.project_count }}</span>
                         </button>
                         {% endfor %}
+                        
+                        {% if tags.count > 5 %}
+                        <button class="btn btn-sm btn-outline-secondary toggle-more-tags" id="showMoreTags">
+                            <i class="fas fa-ellipsis-h"></i> Mais tags
+                        </button>
+                        
+                        <div class="collapse mt-2" id="moreTags">>
+                            {% for tag in tags|slice:"5:" %}
+                            <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
+                                <i class="fas fa-tag"></i><span>{{ tag.name }}</span>
+                                <span class="badge">{{ tag.project_count }}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -232,7 +247,8 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const tagButtons = document.querySelectorAll('.tags-container button');
+    // Selecionar todos os botões de tag, incluindo os que estão dentro do container de "Mais tags"
+    const tagButtons = document.querySelectorAll('.tags-container button[data-filter]');
     const typeButtons = document.querySelectorAll('.type-container button');
     const statusButtons = document.querySelectorAll('.status-container button');
     const clearFiltersBtn = document.querySelector('.clear-filters');
@@ -241,6 +257,39 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentTag = 'all';
     let currentType = 'all';
     let currentStatus = 'all';
+    
+    // Toggle para mostrar/esconder mais tags
+    const showMoreTagsBtn = document.getElementById('showMoreTags');
+    const moreTagsContainer = document.getElementById('moreTags');
+    
+    if (showMoreTagsBtn && moreTagsContainer) {
+        // Usar Bootstrap collapse para toggle com animação suave
+        showMoreTagsBtn.addEventListener('click', function() {
+            // Verifica se o container está visível
+            const isVisible = moreTagsContainer.classList.contains('show');
+            
+            // Toggle do estado de show
+            if (!isVisible) {
+                moreTagsContainer.classList.add('show');
+                this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
+                this.classList.add('active');
+            } else {
+                moreTagsContainer.classList.remove('show');
+                this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
+                this.classList.remove('active');
+            }
+        });
+        
+        // Adicionar ouvintes de evento também para os botões que estão dentro do container de "Mais tags"
+        const hiddenTagButtons = moreTagsContainer.querySelectorAll('button[data-filter]');
+        hiddenTagButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                currentTag = this.getAttribute('data-filter');
+                updateActiveStates();
+                filterProjects();
+            });
+        });
+    }
     
     function filterProjects() {
         let visibleCount = 0;
@@ -333,6 +382,15 @@ document.addEventListener('DOMContentLoaded', function() {
         currentStatus = 'all';
         updateActiveStates();
         filterProjects();
+        
+        // Reset o botão "Mais tags" se estiver ativo
+        const moreTagsContainer = document.getElementById('moreTags');
+        const showMoreTagsBtn = document.getElementById('showMoreTags');
+        if (moreTagsContainer && showMoreTagsBtn) {
+            moreTagsContainer.classList.remove('show');
+            showMoreTagsBtn.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
+            showMoreTagsBtn.classList.remove('active');
+        }
     });
 });
 </script>
