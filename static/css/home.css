@@ -766,9 +766,7 @@ body.dark-mode .image-preview {
     position: relative;
 }
 
-/* Reposicionado o indicador visual de arrasto para não conflitar com os controles de admin */
-
-/* Efeito de hover simplificado quando a ordenação está ativada */
+/* Remover o box-shadow no hover e adicionar melhores affordances ao card */
 .sortable-enabled:hover {
     box-shadow: none; /* Remove a sombra */
 }
@@ -786,35 +784,9 @@ body.dark-mode .image-preview {
     position: relative;
 }
 
-/* Indicador visual de "puxe para arrastar" */
-.sortable-enabled:hover .card::after {
-    content: "\f0b2"; /* Código do ícone 'move' do FontAwesome */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: var(--primary-color);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    opacity: 0.8;
-    z-index: 5;
-}
-
 /* Versão para tema escuro */
 body.dark-mode .sortable-enabled:hover .card {
     border-color: var(--primary-dark);
-}
-
-body.dark-mode .sortable-enabled:hover .card::after {
-    background-color: var(--primary-dark);
-    color: #121212;
 }
 
 /* Estado durante arrastamento (cursor segurado) */
