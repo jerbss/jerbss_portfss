@@ -1,10 +1,11 @@
-# 🚀 Portfólio de Jerbesson Silva
+# 😎 Portfólio de Jerbesson Silva
 
-Eita, pois não é que você achou meu repositório!? Seja bem-vindo(a) ao meu cantinho digital. Aqui é onde mostro um pouco do que faço, projetos que já criei e as tecnologias que uso no meu dia a dia. Se você tá curioso(a) pra saber mais ou só quer dar uma espiadinha, chegou no lugar certo, viu?!
+**Eae, meu chapa!**<br>
+Achou meu portfólio, hein? Seja bem-vindo ao meu cantinho digital. Aqui você encontra os projetos que eu ando criando, as tecnologias que eu curto mexer e um pouco sobre o que me interessa. Se veio só dar uma olhada ou tá curioso pra saber mais, fica à vontade!
 
-## 💻 Que diaxo é isso aqui?
+## 💻 Que diaxo é isso aqui?!
 
-Este projeto é meu portfólio pessoal desenvolvido com Django. É basicamente um espaço onde mostro meus projetos, habilidades e um pouquinho sobre minha pessoa. Tudo isso com um visual arretado!
+Esse aqui é o meu portfólio pessoal feito com Django 🐍💪! É tipo minha vitrine digital: projetos, habilidades e quem é o carinha que fez tudo isso.
 
 ### ✨ O que você vai encontrar por aqui:
 
@@ -18,22 +19,19 @@ Este projeto é meu portfólio pessoal desenvolvido com Django. É basicamente u
 
 - Django (Backend)
 - Bootstrap (Frontend)
+- PostgreSQL (Banco de dados)
 - JavaScript (Interatividade)
 - Cloudinary (Armazenamento de imagens)
-- PostgreSQL (Banco de dados)
+- TinyMCE (Edição de textos)
 
-## 💡 Por que criei esse portfólio?
 
-Rapaz, eu sou daqueles que acredita que uma imagem vale mais que mil palavras. Mas um portfólio interativo vale umas 10 mil, no mínimo! 
+## 💭 Como surgiu essa doideira de portfólio?
 
-A ideia aqui é simples: mostrar meus projetos de um jeito organizado e bonito, que qualquer pessoa consiga navegar sem estresse. Queria uma plataforma onde eu pudesse:
+Simples: um dia, me peguei pensando: "Onde estão todos os projetos e trabalhos que já fiz?" 🤔
 
-- Exibir meus trabalhos com uma cara profissional, mas sem perder o bom humor
-- Categorizar tudo direitinho pra facilitar a navegação
-- Mostrar tanto o resultado final quanto os bastidores dos projetos
-- Ter um espaço pra contar um pouco da minha história e habilidades
+Aí, a luz piscou e pensei: "Por que não criar o jerbssfolio?" Esse portfólio tem como missão mostrar meu trabalho de forma dinâmica, sem a chatice de ficar mexendo em código toda vez que eu quiser adicionar algo novo.
 
-Ah, e claro, eu queria fazer isso tudo do meu jeito, sem depender de plataformas prontas. Porque programador que é programador gosta mesmo é de complicar... ops, de personalizar tudo! 😂
+E aqui está, de forma simples e cheia de personalidade! 🔥
 
 ## 📋 Requisitos do Sistema
 
@@ -78,9 +76,9 @@ Ah, e claro, eu queria fazer isso tudo do meu jeito, sem depender de plataformas
 
 ## 👋 Vamos trocar ideia?
 
-- 📧 [Mande um e-mail](mailto:seuemail@example.com)
-- 🔗 [LinkedIn](https://linkedin.com/in/seulinkedin)
-- 🐙 [GitHub](https://github.com/seugithub)
+- 📧 [Mande um e-mail](mailto:jerbessonc@gmail.com)
+- 🔗 [LinkedIn](https://www.linkedin.com/in/jerbs/)
+- 🐙 [GitHub](https://github.com/jerbss)
 
 ---
 
