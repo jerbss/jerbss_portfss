@@ -3,7 +3,7 @@
 {% load static %}
 {% load django_bootstrap5 %}
 
-{% block title %}{{ is_edit|yesno:"Editar,Criar" }} Projeto{% endblock %}
+{% block title %}{{ is_edit|yesno:"Editar,Criar Novo" }} Projeto{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/project-form.css' %}">

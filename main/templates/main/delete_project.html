@@ -2,7 +2,7 @@
 {% extends "main/base.html" %}
 {% load static %}
 
-{% block title %}Excluir Projeto{% endblock %}
+{% block title %}Excluir {{ project.title }}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/project-delete.css' %}">

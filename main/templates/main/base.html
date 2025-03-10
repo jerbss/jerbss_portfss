@@ -5,7 +5,19 @@
     {% load django_bootstrap5 %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Portfolio{% endblock %}</title>
+    <meta name="description" content="Portfolio de Jerbesson Silva - Desenvolvedor Web Full Stack">
+    
+    <!-- Favicons - Usando a nova imagem -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dgzifammt/image/upload/w_32,h_32,c_fit/v1741627236/vr0f4tynoxm951mlobrl.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dgzifammt/image/upload/w_16,h_16,c_fit/v1741627236/vr0f4tynoxm951mlobrl.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dgzifammt/image/upload/w_180,h_180,c_fit/v1741627236/vr0f4tynoxm951mlobrl.png">
+    
+    <!-- Title -->
+    <title>
+        {% block title %}Portfolio{% endblock %} |  jerbssfolio
+    </title>
+    
+    <!-- Styles -->
     {% bootstrap_css %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/expand.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
