@@ -35,6 +35,7 @@ class ProjectForm(forms.ModelForm):
             'title',            # Required
             'short_description', # Required
             'project_type',     # Required
+            'collaboration',    # Adicionado o novo campo
             'start_date',       # Required
             'url',              # Required
             'tags_input',       # Required, max 3
@@ -69,6 +70,10 @@ class ProjectForm(forms.ModelForm):
                 'class': 'form-control',
                 'required': True,
             }),
+            'collaboration': forms.Select(attrs={
+                'class': 'form-control',
+                'required': True,
+            }),
             'start_date': forms.DateInput(attrs={
                 'class': 'form-control',
                 'type': 'date',
@@ -99,6 +104,7 @@ class ProjectForm(forms.ModelForm):
             'title': 'Título do Projeto *',
             'short_description': 'Breve Descrição *',
             'project_type': 'Tipo de Projeto *',
+            'collaboration': 'Tipo de Colaboração *',  # Adicionar label
             'start_date': 'Data de Início *',
             'url': 'Link Externo *',
             'content': 'Conteúdo do Projeto *',
@@ -126,6 +132,7 @@ class ProjectForm(forms.ModelForm):
                 'content': draft.content,
                 'status': draft.status,
                 'project_type': draft.project_type,
+                'collaboration': draft.collaboration,
                 'start_date': draft.start_date,
                 'end_date': draft.end_date,
                 'url': draft.url,

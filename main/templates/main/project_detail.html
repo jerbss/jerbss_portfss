@@ -137,6 +137,25 @@
                                         <span class="project-meta-value">{{ project.updated_at|date:"d/m/Y • H:i" }}</span>
                                     </div>
                                     {% endif %}
+                                    
+                                    <!-- Adicionar informação de colaboração -->
+                                    <div class="d-flex align-items-center">
+                                        <span class="project-meta-icon">
+                                            <i class="fas fa-users"></i>
+                                        </span>
+                                        <span class="project-meta-label">Colaboração:</span>
+                                        <span class="project-meta-value">
+                                            {% if project.collaboration == 'solo' %}
+                                                <i class="fas fa-user me-1"></i> Solo
+                                            {% elif project.collaboration == 'duo' %}
+                                                <i class="fas fa-user-friends me-1"></i> Dupla
+                                            {% elif project.collaboration == 'trio' %}
+                                                <i class="fas fa-users me-1"></i> Trio
+                                            {% else %}
+                                                <i class="fas fa-users me-1"></i> Grupo (4+)
+                                            {% endif %}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             

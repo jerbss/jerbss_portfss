@@ -36,6 +36,14 @@ class Project(models.Model):
         ('professional', 'Profissional'),
     )
     
+    # Novo conjunto de choices para colaboração
+    COLLABORATION_CHOICES = (
+        ('solo', 'Solo'),
+        ('duo', 'Dupla'),
+        ('trio', 'Trio'),
+        ('group', 'Grupo (4+)'),
+    )
+    
     title = models.CharField('Título', max_length=200)
     slug = models.SlugField(unique=True, blank=True, max_length=255)
     short_description = models.CharField('Breve Descrição', max_length=200, default='')  # Limite de 200 caracteres
@@ -56,6 +64,13 @@ class Project(models.Model):
     url = models.URLField('Link do Projeto', blank=True, null=True)
     github_url = models.URLField('Link do GitHub', blank=True, null=True)
     featured = models.BooleanField('Projeto Destacado', default=False)
+    # Novo campo para tipo de colaboração
+    collaboration = models.CharField(
+        'Colaboração', 
+        max_length=20, 
+        choices=COLLABORATION_CHOICES,
+        default='solo'
+    )
     
     class Meta:
         ordering = ['-created_at']
@@ -128,6 +143,13 @@ class ProjectDraft(models.Model):
     url = models.URLField('Link do Projeto', blank=True, null=True)
     github_url = models.URLField('Link do GitHub', blank=True, null=True)
     featured = models.BooleanField('Projeto Destacado', default=False)
+    # Novo campo para tipo de colaboração no rascunho
+    collaboration = models.CharField(
+        'Colaboração', 
+        max_length=20, 
+        choices=Project.COLLABORATION_CHOICES,
+        default='solo'
+    )
     last_updated = models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -150,6 +172,7 @@ class ProjectDraft(models.Model):
         project.url = self.url
         project.github_url = self.github_url
         project.featured = self.featured
+        project.collaboration = self.collaboration  # Atualizar o campo de colaboração
         
         # Atualizar imagem apenas se foi alterada no rascunho
         if self.image:

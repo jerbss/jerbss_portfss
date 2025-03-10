@@ -96,9 +96,11 @@
                         <button class="btn btn-sm btn-outline-primary active" data-status="all">
                             <i class="fas fa-list"></i>Todos
                         </button>
+                        {% if user.is_superuser %}
                         <button class="btn btn-sm btn-outline-primary" data-status="draft">
                             <i class="fas fa-file-alt"></i>Rascunhos
                         </button>
+                        {% endif %}
                         <button class="btn btn-sm btn-outline-primary" data-status="in_progress">
                             <i class="fas fa-spinner"></i>Em Andamento
                         </button>
@@ -176,6 +178,19 @@
                     <div class="project-card__date">
                         <i class="far fa-calendar-alt"></i>
                         <span>{{ project.get_date_display|striptags }}</span>
+                        
+                        <!-- Adicionar indicador de colaboração -->
+                        <span class="ms-2 ps-2 border-start">
+                            {% if project.collaboration == 'solo' %}
+                                <i class="fas fa-user" title="Projeto individual"></i>
+                            {% elif project.collaboration == 'duo' %}
+                                <i class="fas fa-user-friends" title="Projeto em dupla"></i>
+                            {% elif project.collaboration == 'trio' %}
+                                <i class="fas fa-users" title="Projeto em trio"></i>
+                            {% else %}
+                                <i class="fas fa-users" title="Projeto em grupo (4+ pessoas)"></i>
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
                 
