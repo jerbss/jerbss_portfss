@@ -258,27 +258,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentType = 'all';
     let currentStatus = 'all';
     
-    // Toggle para mostrar/esconder mais tags - CORRIGIDO
+    // Toggle para mostrar/esconder mais tags - MELHORADO PARA ANIMAÇÃO FLUIDA
     const showMoreTagsBtn = document.getElementById('showMoreTags');
     const moreTagsContainer = document.getElementById('moreTags');
     
     if (showMoreTagsBtn && moreTagsContainer) {
         showMoreTagsBtn.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevenir comportamento padrão
+            event.preventDefault();
             
-            console.log('Botão "Mais tags" clicado'); // Log para depuração
+            // Toggle simples da classe 'show' para iniciar a transição CSS
+            moreTagsContainer.classList.toggle('show');
             
-            // Usar o método do Bootstrap para controlar o collapse
-            const bsCollapse = new bootstrap.Collapse(moreTagsContainer, {toggle: false});
-            
+            // Atualiza o botão baseado no estado atual
             if (moreTagsContainer.classList.contains('show')) {
-                bsCollapse.hide();
-                this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
-                this.classList.remove('active');
-            } else {
-                bsCollapse.show();
                 this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
                 this.classList.add('active');
+            } else {
+                this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
+                this.classList.remove('active');
             }
         });
         

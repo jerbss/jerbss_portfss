@@ -1642,15 +1642,55 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     color: white;
 }
 
-/* Container para as tags adicionais */
+/* Container para as tags adicionais - Animação melhorada e unificada */
 #moreTags {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding-top: 0.5rem;
-    transition: all 0.3s ease;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                padding-top 0.4s ease;
+    overflow: hidden;
+    transform-origin: top;
 }
+
+/* Estado fechado */
+#moreTags.collapse:not(.show) {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0.8) translateY(-10px);
+    padding-top: 0;
+    margin-top: 0;
+    pointer-events: none;
+    display: flex !important; /* Mantém como flex mas escondido */
+}
+
+/* Estado aberto */
+#moreTags.collapse.show {
+    max-height: 500px; /* Altura máxima suficiente */
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    pointer-events: auto;
+    display: flex !important;
+}
+
+/* Animação do ícone no botão toggle */
+.toggle-more-tags i {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.toggle-more-tags.active i {
+    transform: rotate(180deg);
+}
+
+/* Remover animação fadeInDown que estava causando conflito */
+/* @keyframes fadeInDown { ... } - removido */
 
 /* Tema escuro para o botão "Mais tags" */
 body.dark-mode .toggle-more-tags {
@@ -1706,16 +1746,4 @@ body.dark-mode .toggle-more-tags.active i {
 #moreTags.collapse.show {
     display: flex;
     flex-wrap: wrap;
-    animation: fadeInDown 0.3s ease-out;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
