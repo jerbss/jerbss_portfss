@@ -1697,3 +1697,25 @@ body.dark-mode .toggle-more-tags.active i {
         color: #121212 !important;
     }
 }
+
+/* Certifica que o collapse funciona corretamente */
+#moreTags.collapse:not(.show) {
+    display: none;
+}
+
+#moreTags.collapse.show {
+    display: flex;
+    flex-wrap: wrap;
+    animation: fadeInDown 0.3s ease-out;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

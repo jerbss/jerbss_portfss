@@ -73,7 +73,7 @@
                             <i class="fas fa-ellipsis-h"></i> Mais tags
                         </button>
                         
-                        <div class="collapse mt-2" id="moreTags">>
+                        <div class="collapse w-100" id="moreTags">
                             {% for tag in tags|slice:"5:" %}
                             <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
                                 <i class="fas fa-tag"></i><span>{{ tag.name }}</span>
@@ -247,7 +247,7 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Selecionar todos os botões de tag, incluindo os que estão dentro do container de "Mais tags"
+    // Selecionar todos os botões de tag, incluindo os escondidos
     const tagButtons = document.querySelectorAll('.tags-container button[data-filter]');
     const typeButtons = document.querySelectorAll('.type-container button');
     const statusButtons = document.querySelectorAll('.status-container button');
@@ -258,29 +258,31 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentType = 'all';
     let currentStatus = 'all';
     
-    // Toggle para mostrar/esconder mais tags
+    // Toggle para mostrar/esconder mais tags - CORRIGIDO
     const showMoreTagsBtn = document.getElementById('showMoreTags');
     const moreTagsContainer = document.getElementById('moreTags');
     
     if (showMoreTagsBtn && moreTagsContainer) {
-        // Usar Bootstrap collapse para toggle com animação suave
-        showMoreTagsBtn.addEventListener('click', function() {
-            // Verifica se o container está visível
-            const isVisible = moreTagsContainer.classList.contains('show');
+        showMoreTagsBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevenir comportamento padrão
             
-            // Toggle do estado de show
-            if (!isVisible) {
-                moreTagsContainer.classList.add('show');
-                this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
-                this.classList.add('active');
-            } else {
-                moreTagsContainer.classList.remove('show');
+            console.log('Botão "Mais tags" clicado'); // Log para depuração
+            
+            // Usar o método do Bootstrap para controlar o collapse
+            const bsCollapse = new bootstrap.Collapse(moreTagsContainer, {toggle: false});
+            
+            if (moreTagsContainer.classList.contains('show')) {
+                bsCollapse.hide();
                 this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
                 this.classList.remove('active');
+            } else {
+                bsCollapse.show();
+                this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
+                this.classList.add('active');
             }
         });
         
-        // Adicionar ouvintes de evento também para os botões que estão dentro do container de "Mais tags"
+        // Adicionar event listeners para os botões dentro do container de mais tags
         const hiddenTagButtons = moreTagsContainer.querySelectorAll('button[data-filter]');
         hiddenTagButtons.forEach(button => {
             button.addEventListener('click', function() {
