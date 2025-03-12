@@ -1,7 +1,19 @@
 /* Navbar styles */
 .navbar {
     padding: 0.75rem 0;
-    transition: all 0.3s ease;
+    transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
+/* Classe para esconder a navbar quando rolar para baixo */
+.navbar-hidden {
+    transform: translateY(-100%);
+    box-shadow: none;
 }
 
 .navbar-brand {

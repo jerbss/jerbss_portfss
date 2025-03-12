@@ -3,6 +3,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeStatus = document.querySelector('.theme-status');
     const body = document.body;
     
+    // Adicionado código para detectar a direção da rolagem
+    const navbar = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+    
+    // Função para controlar a visibilidade da navbar baseada na rolagem
+    function handleNavbarVisibility() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Se estiver no topo da página, sempre manter a navbar visível
+        if (scrollTop <= 100) {
+            navbar.classList.remove('navbar-hidden');
+            return;
+        }
+        
+        // Detecta a direção da rolagem
+        if (scrollTop > lastScrollTop) {
+            // Rolagem para baixo - esconder a navbar
+            navbar.classList.add('navbar-hidden');
+        } else {
+            // Rolagem para cima - mostrar a navbar
+            navbar.classList.remove('navbar-hidden');
+        }
+        
+        lastScrollTop = scrollTop;
+    }
+    
+    // Adiciona o listener para o evento de rolagem (com debounce para performance)
+    let scrollTimer;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(handleNavbarVisibility, 10);
+    });
+    
     // Initialize tooltips
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
