@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Certifique-se de que as URLs do app main estão incluídas na raiz
     path('', include('main.urls')),  # Esta linha deve estar presente para que as URLs do app main funcionem corretamente
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml', TemplateView.as_view(template_name="sitemap.xml", content_type="application/xml")),
 ]
 
 if settings.DEBUG:

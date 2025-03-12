@@ -439,7 +439,33 @@
 {% endblock %}
 
 {% block extra_js %}
+{{ block.super }}
 <script src="{% static 'js/home.js' %}"></script>
+
+<!-- Structured Data para SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Jerbesson Silva",
+  "givenName": "Jerbesson",
+  "familyName": "Silva",
+  "alternateName": ["Jerb", "Jerbin", "Jejé"],
+  "description": "Desenvolvedor Web, estudante de Sistemas e Mídias Digitais na UFC",
+  "image": "https://res.cloudinary.com/dgzifammt/image/upload/v1741627236/vr0f4tynoxm951mlobrl.png",
+  "jobTitle": "Desenvolvedor Web",
+  "url": "https://jerbssfolio.up.railway.app/",
+  "sameAs": [
+    "https://www.linkedin.com/in/jerbs/",
+    "https://github.com/jerbss/"
+  ],
+  "knowsAbout": [
+    "Python", "Django", "JavaScript", "Web Development", 
+    "UX Design", "Front-end Development"
+  ],
+  "seeks": "Oportunidades de desenvolvimento web em empresas de tecnologia"
+}
+</script>
 
 {% if user.is_superuser %}
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>

@@ -5,7 +5,19 @@
     {% load django_bootstrap5 %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio de Jerbesson Silva - Desenvolvedor Web Full Stack">
+    <meta name="description" content="Portfólio de Jerbesson Silva - Desenvolvedor Web especializado em Python, Django e UI/UX. Estudante de Sistemas e Mídias Digitais na UFC, disponível para oportunidades profissionais.">
+    <meta name="keywords" content="desenvolvedor web, full stack, django, python, UFC, Jerbesson Silva, portfolio, UI, UX, desenvolvimento de software">
+    <meta name="author" content="Jerbesson Silva">
+    
+    <!-- Google Site Verification Tag -->
+    <meta name="google-site-verification" content="8x7n0W5iljbvt7MQUzii0vOkbBdbfhdhr7oWiRAT7rY" />
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:title" content="{% block og_title %}Portfolio de Jerbesson Silva{% endblock %}">
+    <meta property="og:description" content="Desenvolvedor Web com foco em Python, Django, JavaScript e UI/UX. Estudante de Sistemas e Mídias Digitais na UFC.">
+    <meta property="og:image" content="https://res.cloudinary.com/dgzifammt/image/upload/v1741627236/vr0f4tynoxm951mlobrl.png">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:type" content="website">
     
     <!-- Favicons - Usando a nova imagem -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dgzifammt/image/upload/w_32,h_32,c_fit/v1741627236/vr0f4tynoxm951mlobrl.png">
@@ -24,6 +36,7 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
     {% block extra_css %}{% endblock %}
     {% bootstrap_javascript %}
 </head>
