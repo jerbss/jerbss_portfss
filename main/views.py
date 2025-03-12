@@ -595,3 +595,65 @@ def save_top3_order(request):
     except Exception as e:
         logger.error(f"Error saving TOP3 order: {str(e)}")
         return JsonResponse({'success': False, 'error': str(e)})
+
+@login_required
+@require_POST
+def cloudinary_upload(request):
+    """
+    Endpoint para enviar arquivos diretamente para o Cloudinary e retornar a URL.
+    Funciona principalmente como um proxy de upload para o TinyMCE.
+    """
+    if 'file' not in request.FILES:
+        return JsonResponse({'error': 'Nenhum arquivo recebido'}, status=400)
+    
+    try:
+        file = request.FILES['file']
+        
+        # Verifica se é um tipo de arquivo permitido
+        allowed_types = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']
+        if file.content_type not in allowed_types:
+            return JsonResponse({
+                'error': 'Tipo de arquivo não suportado. Use MP4, WebM, OGG ou MOV.'
+            }, status=400)
+        
+        # Gerar ID único para o vídeo
+        video_id = f"{request.user.username}_video_{timezone.now().strftime('%Y%m%d_%H%M%S')}"
+        logger.info(f"Iniciando upload de vídeo: {video_id}, tipo: {file.content_type}")
+            
+        # Upload para o Cloudinary
+        # CORRIGIDO: Usar streaming_profile como a única diretiva em cada transformação
+        result = cloudinary.uploader.upload(
+            file,
+            resource_type="video", 
+            folder="videos",
+            eager=[
+                # Versão HD - apenas streaming_profile sem quality
+                {"streaming_profile": "hd"},
+                # Versão SD - apenas streaming_profile sem quality
+                {"streaming_profile": "sd"}
+            ],
+            eager_async=True,
+            public_id=video_id,
+            # Adicionar controle de qualidade a nível global
+            quality="auto:good",
+            # Opções adicionais para melhor reprodução
+            format="mp4",
+            chunk_size=6000000
+        )
+        
+        logger.info(f"Upload de vídeo concluído com sucesso: {video_id}")
+        
+        return JsonResponse({
+            'secure_url': result['secure_url'],
+            'public_id': result['public_id'],
+            'resource_type': result['resource_type'],
+            'width': result.get('width'),
+            'height': result.get('height'),
+            'format': result.get('format'),
+            'duration': result.get('duration')
+        })
+        
+    except Exception as e:
+        error_msg = f"Erro no upload para o Cloudinary: {str(e)}"
+        logger.error(error_msg)
+        return JsonResponse({'error': error_msg}, status=500)

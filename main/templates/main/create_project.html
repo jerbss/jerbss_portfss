@@ -232,6 +232,8 @@
 {{ block.super }}
 <script src="https://cdn.tiny.cloud/1/{{ tinymce_api_key }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="{% static 'js/tinymce-helper.js' %}"></script>
+<script src="{% static 'js/tinymce-cloudinary-upload.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/tinymce-video.css' %}">
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var shortDescriptionField = document.getElementById('id_short_description');
@@ -252,14 +254,16 @@
             }
             tinymce.init({
                 selector: '#id_content',
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount media toc',
-                toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | anchor anchormanual toc removetoc tocdiag | removeformat media',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount cloudinaryupload toc',
+                toolbar: 'undo redo | blocks | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | anchor anchormanual toc removetoc tocdiag | customvideoupload | removeformat',
                 height: 400,
                 skin: isDarkMode ? 'oxide-dark' : 'oxide',
                 content_css: isDarkMode ? 'dark' : 'default',
                 content_style: isDarkMode 
-                    ? 'body { background-color: #1a1a1a; color: #e1e1e1; } [data-mce-placeholder]::before { color: #b0b0b0 !important; opacity: 1 !important; } html { scroll-behavior: smooth; }'
-                    : 'body { background-color: #ffffff; color: #000000; } html { scroll-behavior: smooth; }',
+                    ? 'body { background-color: #1a1a1a; color: #e1e1e1; } [data-mce-placeholder]::before { color: #b0b0b0 !important; opacity: 1 !important; } html { scroll-behavior: smooth; } ' +
+                      '.video-responsive { background-color: #2d2d2d; }'
+                    : 'body { background-color: #ffffff; color: #000000; } html { scroll-behavior: smooth; } ' +
+                      '.video-responsive { background-color: #f5f5f5; }',
                 media_live_embeds: true,
                 // Adicione estas configurações
                 required: true,
@@ -276,7 +280,32 @@
                 },
                 // Melhorar o tratamento de âncoras
                 anchor_top: false,  // Não usar "top" como âncora padrão
-                anchor_bottom: false  // Não usar "bottom" como âncora padrão
+                anchor_bottom: false,  // Não usar "bottom" como âncora padrão
+                // Adicionar configuração para tratamento de vídeos responsivos
+                extended_valid_elements: 'div[class|style],video[*],source[*]',
+                content_css: [
+                    (isDarkMode ? 'dark' : 'default'),
+                    '{% static "css/tinymce-video.css" %}'
+                ],
+                content_style: isDarkMode 
+                    ? 'body { background-color: #1a1a1a; color: #e1e1e1; } [data-mce-placeholder]::before { color: #b0b0b0 !important; opacity: 1 !important; } html { scroll-behavior: smooth; } ' +
+                      '.video-responsive { background-color: #2d2d2d; }'
+                    : 'body { background-color: #ffffff; color: #000000; } html { scroll-behavior: smooth; } ' +
+                      '.video-responsive { background-color: #f5f5f5; }',
+                    
+                // Manipulador personalizado para pastes e drops de vídeos
+                paste_preprocess: function(plugin, args) {
+                    // Se o conteúdo colado for um iframe de vídeo, encapsule-o no container responsivo
+                    if (args.content.includes('<iframe') && 
+                        (args.content.includes('youtube.com') || 
+                         args.content.includes('vimeo.com'))) {
+                        args.content = '<div class="video-responsive iframe-container">' + args.content + '</div>';
+                    }
+                },
+                
+                // Configurar o upload de mídia para usar nosso endpoint
+                images_upload_url: '/api/cloudinary/upload/',
+                automatic_uploads: true,
             });
         }
 

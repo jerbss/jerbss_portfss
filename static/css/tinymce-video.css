@@ -1,0 +1,97 @@
+/* Estilos para vídeos responsivos */
+
+/* Container principal para vídeos responsivos */
+.video-responsive {
+    position: relative;
+    width: 100%;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background-color: #000; /* Fundo preto para vídeos */
+}
+
+/* Estilo para vídeos nativos */
+.video-responsive video {
+    width: 100%;
+    display: block;
+    background-color: #000; /* Garantir fundo preto no player */
+}
+
+/* Container responsivo para iframes (como YouTube, Vimeo) */
+.video-responsive.iframe-container {
+    padding-bottom: 56.25%; /* Proporção 16:9 */
+    height: 0;
+}
+
+.video-responsive.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+}
+
+/* Controles de vídeo customizados para melhor visibilidade */
+.video-responsive video::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para o tema escuro */
+body.dark-mode .video-responsive {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Compatibilidade com TinyMCE */
+.mce-content-body .video-responsive {
+    margin: 1.5rem 0;
+}
+
+/* Sobrescrever estilos do TinyMCE para ajustar tamanho de mídia no editor */
+.mce-content-body .mce-object-video {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}
+
+/* Garantir que os controles estejam visíveis e o vídeo tenha boa aparência no editor */
+.mce-content-body video {
+    background-color: #000;
+    max-width: 100%;
+    cursor: pointer;
+}
+
+/* Resolver problemas com preview de vídeos no TinyMCE */
+.mce-preview-object {
+    margin: 0 !important;
+    border: none !important;
+}
+
+.mce-preview-object .mce-shim {
+    background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+}
+
+/* Adicionar botão play para preview de vídeos no editor */
+.mce-content-body .video-responsive::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mce-content-body .video-responsive:hover::before {
+    transform: scale(1.1);
+    opacity: 1;
+}
