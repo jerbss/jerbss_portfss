@@ -112,7 +112,8 @@
                                 </h5>
                                 
                                 <div class="d-flex flex-column gap-2">
-                                    <div class="d-flex align-items-center">
+                                    <!-- Período -->
+                                    <div class="project-meta-item">
                                         <span class="project-meta-icon">
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
@@ -120,7 +121,8 @@
                                         <span class="project-meta-value">{{ project.get_date_display }}</span>
                                     </div>
                                     
-                                    <div class="d-flex align-items-center">
+                                    <!-- Publicado -->
+                                    <div class="project-meta-item">
                                         <span class="project-meta-icon">
                                             <i class="fas fa-history"></i>
                                         </span>
@@ -128,8 +130,9 @@
                                         <span class="project-meta-value">{{ project.created_at|date:"d/m/Y • H:i" }}</span>
                                     </div>
                                     
+                                    <!-- Atualizado (condicional) -->
                                     {% if project.updated_at and project.updated_at != project.created_at %}
-                                    <div class="d-flex align-items-center">
+                                    <div class="project-meta-item">
                                         <span class="project-meta-icon">
                                             <i class="fas fa-sync-alt"></i>
                                         </span>
@@ -138,22 +141,23 @@
                                     </div>
                                     {% endif %}
                                     
-                                    <!-- Adicionar informação de colaboração -->
-                                    <div class="d-flex align-items-center">
+                                    <!-- Colaboração -->
+                                    <div class="project-meta-item">
                                         <span class="project-meta-icon">
                                             <i class="fas fa-handshake"></i>
                                         </span>
                                         <span class="project-meta-label">Colaboração:</span>
                                         <span class="project-meta-value">
                                             {% if project.collaboration == 'solo' %}
-                                                <i class="fas fa-user me-1"></i> Solo
+                                                <i class="fas fa-user me-2"></i>
                                             {% elif project.collaboration == 'duo' %}
-                                                <i class="fas fa-user-friends me-1"></i> Dupla
+                                                <i class="fas fa-user-friends me-2"></i>
                                             {% elif project.collaboration == 'trio' %}
-                                                <i class="fas fa-people-group me-1"></i> Trio
+                                                <i class="fas fa-people-group me-2"></i>
                                             {% else %}
-                                                <i class="fas fa-users-gear me-1"></i> Grupo (4+)
+                                                <i class="fas fa-users-gear me-2"></i>
                                             {% endif %}
+                                            {{ project.get_collaboration_display }}
                                         </span>
                                     </div>
                                 </div>

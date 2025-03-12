@@ -125,6 +125,22 @@ body.dark-mode .project-meta-value i.fa-users-gear {
     color: #64b5f6; /* Cor azul claro para o tema escuro */
 }
 
+/* Ajuste específico para o ícone de colaboração - removido margin-left */
+.project-meta-value i.fa-user,
+.project-meta-value i.fa-user-friends,
+.project-meta-value i.fa-people-group,
+.project-meta-value i.fa-users-gear {
+    /* margin-left removido, usando me-2 no template para espaçamento à direita */
+    color: #0d6efd; /* Cor azul para o tema claro */
+}
+
+body.dark-mode .project-meta-value i.fa-user,
+body.dark-mode .project-meta-value i.fa-user-friends,
+body.dark-mode .project-meta-value i.fa-people-group,
+body.dark-mode .project-meta-value i.fa-users-gear {
+    color: #64b5f6; /* Cor azul claro para o tema escuro */
+}
+
 /* Estilos para as tags */
 .project-tags .badge {
     padding: 0.5em 1em;
@@ -534,7 +550,7 @@ body.dark-mode .project-meta .date-info {
     }
     
     .project-meta-label {
-        width: 80px;
+        width: 110px; /* Aumentado para acomodar "Colaboração:" em telas pequenas */
     }
     
     .project-links .btn {
@@ -624,4 +640,37 @@ body.dark-mode .project-meta .date-info {
     .project-badge {
         margin-top: 0.5rem;
     }
+}
+
+/* Ajuste para alinhamento consistente dos metadados do projeto */
+.project-meta-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.project-meta-label {
+    width: 100px; /* Largura fixa para todas as labels */
+    flex-shrink: 0; /* Impede que a label encolha */
+    margin-right: 0.5rem;
+    font-weight: 500;
+}
+
+.project-meta-value {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* Ajuste específico para o ícone de colaboração */
+.project-meta-value i.fa-user,
+.project-meta-value i.fa-user-friends,
+.project-meta-value i.fa-people-group,
+.project-meta-value i.fa-users-gear {
+    margin-left: 0.25rem; /* Pequena margem entre o texto e o ícone */
+}
+
+/* Tema escuro */
+body.dark-mode .project-meta-label {
+    color: rgba(255, 255, 255, 0.7);
 }
