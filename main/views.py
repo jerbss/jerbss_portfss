@@ -23,6 +23,9 @@ from django.views.decorators.http import require_POST
 # Configure logging
 logger = logging.getLogger(__name__)
 
+# Configurar logger específico para TOP3
+top3_logger = logging.getLogger('main')
+
 def home(request):
     # Get all TOP 3 cards (agora incluindo os originais que foram migrados)
     top3_cards = Top3Card.objects.all().order_by('display_order', 'created_at')
@@ -575,12 +578,17 @@ def get_top3(request, top3_id):
 def save_top3_order(request):
     """Salva a nova ordem dos cards TOP 3"""
     try:
+        top3_logger.info("Iniciando salvar ordem TOP3")
         data = json.loads(request.body)
         new_order = data.get('order', [])
         
         # Validar entrada
         if not new_order or not isinstance(new_order, list):
+            top3_logger.warning(f"Ordem inválida recebida: {new_order}")
             return JsonResponse({'success': False, 'error': 'Ordem inválida'})
+        
+        # Log da ordem recebida
+        top3_logger.debug(f"Nova ordem recebida: {new_order}")
         
         # Atualizar a ordem de exibição
         for index, card_id in enumerate(new_order):
@@ -589,11 +597,13 @@ def save_top3_order(request):
                 card.display_order = index
                 card.save(update_fields=['display_order'])
             except Top3Card.DoesNotExist:
+                top3_logger.warning(f"Card ID {card_id} não encontrado")
                 continue  # Ignora IDs que não existem
-                
+        
+        top3_logger.info("Ordem dos cards TOP3 salva com sucesso")
         return JsonResponse({'success': True})
     except Exception as e:
-        logger.error(f"Error saving TOP3 order: {str(e)}")
+        top3_logger.error(f"Erro ao salvar ordem TOP3: {str(e)}", exc_info=True)
         return JsonResponse({'success': False, 'error': str(e)})
 
 @login_required

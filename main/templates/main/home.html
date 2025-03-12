@@ -636,7 +636,10 @@
                 return item.dataset.id;
             });
             
-            // Enviar a nova ordem para o servidor via AJAX
+            // Adicionar indicador de carregamento
+            saveOrderBtn.disabled = true;
+            saveOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Salvando...';
+            
             fetch('{% url "main:save_top3_order" %}', {
                 method: 'POST',
                 headers: {
@@ -647,35 +650,75 @@
                     order: newOrder
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
-                    // Adicionar feedback visual
-                    const alert = document.createElement('div');
-                    alert.className = 'alert alert-success alert-dismissible fade show mt-3';
-                    alert.innerHTML = `
-                        <i class="fas fa-check-circle me-2"></i>
-                        Ordem dos cards TOP 3 salva com sucesso!
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                    `;
-                    top3Container.parentNode.insertBefore(alert, top3Container);
-                    
-                    // Auto-fechar alerta após 3 segundos
-                    setTimeout(() => {
-                        const bsAlert = new bootstrap.Alert(alert);
-                        bsAlert.close();
-                    }, 3000);
-                    
-                    // Desabilitar ordenação
-                    disableSorting();
+                    try {
+                        // Adicionar feedback visual de sucesso
+                        const alert = document.createElement('div');
+                        alert.className = 'alert alert-success alert-dismissible fade show mt-3';
+                        alert.innerHTML = `
+                            <i class="fas fa-check-circle me-2"></i>
+                            Ordem dos cards TOP 3 salva com sucesso!
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                        `;
+                        top3Container.parentNode.insertBefore(alert, top3Container);
+                        
+                        // Auto-fechar alerta após 3 segundos - com verificação de segurança
+                        setTimeout(() => {
+                            try {
+                                if (bootstrap && bootstrap.Alert && alert.parentNode) {
+                                    const bsAlert = new bootstrap.Alert(alert);
+                                    bsAlert.close();
+                                }
+                            } catch (e) {
+                                console.log("Aviso: Não foi possível fechar o alerta automaticamente");
+                            }
+                        }, 3000);
+                        
+                        // Desabilitar ordenação com verificação de segurança
+                        if (typeof disableSorting === 'function') {
+                            disableSorting();
+                        }
+                    } catch (innerError) {
+                        console.error('Erro após sucesso:', innerError);
+                        // Não exibimos mensagem de erro, já que a operação foi bem-sucedida
+                    }
                 } else {
-                    alert('Erro ao salvar a ordem: ' + data.error);
+                    // Mostrar erro em um alerta Bootstrap
+                    showErrorAlert(data.error || 'Erro desconhecido');
                 }
             })
             .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao salvar a ordem. Verifique o console para mais detalhes.');
+                console.error('Erro na requisição:', error);
+                showErrorAlert('Erro ao salvar a ordem. Por favor, tente novamente.');
+            })
+            .finally(() => {
+                // Restaurar o botão independentemente do resultado
+                saveOrderBtn.disabled = false;
+                saveOrderBtn.innerHTML = '<i class="fas fa-save me-1"></i> Salvar Ordem';
             });
+            
+            // Função auxiliar para mostrar alertas de erro
+            function showErrorAlert(message) {
+                try {
+                    const errorAlert = document.createElement('div');
+                    errorAlert.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                    errorAlert.innerHTML = `
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    `;
+                    top3Container.parentNode.insertBefore(errorAlert, top3Container);
+                } catch (e) {
+                    console.error('Erro ao mostrar alerta de erro:', e);
+                }
+            }
         });
     });
 </script>
