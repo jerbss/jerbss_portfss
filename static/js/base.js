@@ -11,8 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleNavbarVisibility() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
-        // Se estiver no topo da página, sempre manter a navbar visível
-        if (scrollTop <= 100) {
+        // Verificar se algum dropdown está aberto
+        const openDropdowns = document.querySelectorAll('.dropdown-menu.show');
+        const isDropdownOpen = openDropdowns.length > 0;
+        
+        // Se estiver no topo da página ou se algum dropdown estiver aberto, manter a navbar visível
+        if (scrollTop <= 100 || isDropdownOpen) {
             navbar.classList.remove('navbar-hidden');
             return;
         }
@@ -34,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', function() {
         clearTimeout(scrollTimer);
         scrollTimer = setTimeout(handleNavbarVisibility, 10);
+    });
+    
+    // Adicionar listener para quando um dropdown é aberto
+    document.addEventListener('show.bs.dropdown', function() {
+        // Garantir que a navbar esteja visível quando abrir um dropdown
+        navbar.classList.remove('navbar-hidden');
     });
     
     // Initialize tooltips
