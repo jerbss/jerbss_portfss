@@ -187,8 +187,11 @@
                                     <i class="fas fa-check-circle me-2"></i>Salvar Alterações
                                 </button>
                                 {% else %}
+                                <button type="submit" name="save_draft" class="btn btn-outline-primary">
+                                    <i class="fas fa-save me-2"></i>Salvar como Rascunho
+                                </button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>Criar Projeto
+                                    <i class="fas fa-save me-2"></i>Publicar Projeto
                                 </button>
                                 {% endif %}
                             </div>
@@ -236,6 +239,27 @@
 <link rel="stylesheet" href="{% static 'css/tinymce-video.css' %}">
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Script para desativar validação ao salvar como rascunho
+        const draftButton = document.querySelector('button[name="save_draft"]');
+        const projectForm = draftButton.closest('form');
+        
+        draftButton.addEventListener('click', function(e) {
+            // Remover atributos required de todos os campos do formulário
+            const requiredFields = projectForm.querySelectorAll('[required]');
+            requiredFields.forEach(field => {
+                field.removeAttribute('required');
+            });
+            
+            // Remover validação customizada do TinyMCE
+            if (tinymce.get('id_content')) {
+                tinymce.get('id_content').getElement().setCustomValidity('');
+            }
+            
+            // Permitir envio do formulário mesmo com validação customizada ativa
+            projectForm.noValidate = true;
+        });
+        
+        // Código existente abaixo
         var shortDescriptionField = document.getElementById('id_short_description');
         var counter = document.getElementById('short_description_counter');
 

@@ -186,26 +186,66 @@ def create_project(request):
         return redirect('main:projects')
     
     if request.method == 'POST':
-        form = ProjectForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Sempre cria o projeto base
-            project = form.save()
+        # Se o botão "Salvar Rascunho" foi clicado
+        if 'save_draft' in request.POST:
+            # Criar projeto como rascunho sem validar campos obrigatórios
+            project = Project(
+                title=request.POST.get('title') or 'Rascunho sem título',
+                status='draft',  # Marcar explicitamente como rascunho
+                short_description=request.POST.get('short_description', ''),
+                content=request.POST.get('content', ''),
+                project_type=request.POST.get('project_type', 'personal'),
+                collaboration=request.POST.get('collaboration', 'solo'),
+            )
             
-            # Processar tags
-            if 'tags_input' in form.cleaned_data:
-                tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
+            # Processar datas se fornecidas (opcionais para rascunho)
+            if request.POST.get('start_date'):
+                project.start_date = request.POST.get('start_date')
+            if request.POST.get('end_date'):
+                project.end_date = request.POST.get('end_date')
                 
+            # Processar URLs (opcionais para rascunho)
+            if request.POST.get('url'):
+                project.url = request.POST.get('url')
+            if request.POST.get('github_url'):
+                project.github_url = request.POST.get('github_url')
+            
+            # Processar imagem se fornecida
+            if 'image' in request.FILES:
+                project.image = request.FILES['image']
+                
+            # Salvar o projeto
+            project.save()
+            
+            # Processar tags se fornecidas
+            tags_input = request.POST.get('tags_input', '')
+            if tags_input:
+                tag_names = [t.strip() for t in tags_input.split(',') if t.strip()]
                 for tag_name in tag_names:
                     tag, created = Tag.objects.get_or_create(name=tag_name)
                     project.tags.add(tag)
             
-            # Se o botão "Salvar Rascunho" foi clicado, marca como temporário
-            if 'save_draft' in request.POST:
-                messages.success(request, 'Projeto criado como rascunho! Será visível apenas quando salvar as alterações.', extra_tags='project')
-                return redirect('main:edit_project', slug=project.slug)
-            else:
+            messages.success(request, 'Projeto salvo como rascunho! Complete as informações necessárias antes de publicar.', extra_tags='project')
+            return redirect('main:edit_project', slug=project.slug)
+        else:
+            # Para publicação normal, usar validação completa
+            form = ProjectForm(request.POST, request.FILES)
+            if form.is_valid():
+                project = form.save()
+                
+                # Processar tags
+                if 'tags_input' in form.cleaned_data:
+                    tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
+                    
+                    for tag_name in tag_names:
+                        tag, created = Tag.objects.get_or_create(name=tag_name)
+                        project.tags.add(tag)
+                
                 messages.success(request, 'Projeto criado com sucesso!', extra_tags='project')
                 return redirect('main:project_detail', slug=project.slug)
+            else:
+                # Se o formulário não for válido para publicação, mostrar erros
+                pass
     else:
         form = ProjectForm()
     
