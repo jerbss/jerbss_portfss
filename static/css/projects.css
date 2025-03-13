@@ -1645,15 +1645,15 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
 /* Container para as tags adicionais - Animação melhorada e unificada */
 #moreTags {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
     transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 padding-top 0.4s ease;
-    overflow: hidden;
     transform-origin: top;
+    /* Layout em grade para as tags adicionais */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
 }
 
 /* Estado fechado */
@@ -1664,18 +1664,66 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     padding-top: 0;
     margin-top: 0;
     pointer-events: none;
-    display: flex !important; /* Mantém como flex mas escondido */
+    display: none;
+    overflow: hidden;
 }
 
 /* Estado aberto */
 #moreTags.collapse.show {
-    max-height: 500px; /* Altura máxima suficiente */
+    max-height: 2000px;
     opacity: 1;
     transform: scaleY(1) translateY(0);
     padding-top: 0.5rem;
     margin-top: 0.5rem;
     pointer-events: auto;
-    display: flex !important;
+    display: grid !important; /* Alterado para grid */
+    overflow: visible;
+}
+
+/* Garantir que os botões dentro do moreTags tenham a mesma aparência dos botões principais */
+#moreTags .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+    flex: 1 0 auto;
+    min-width: 90px;
+    text-align: center;
+    height: auto;
+    min-height: 38px;
+    line-height: 1.2;
+    
+    /* Melhorias para quebra de palavras */
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* Ajuste responsivo para telas menores */
+@media (max-width: 991.98px) {
+    #moreTags {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    #moreTags .btn {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    #moreTags {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #moreTags .btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
 }
 
 /* Animação do ícone no botão toggle */
@@ -1689,8 +1737,16 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     transform: rotate(180deg);
 }
 
-/* Remover animação fadeInDown que estava causando conflito */
-/* @keyframes fadeInDown { ... } - removido */
+/* Animação do ícone no botão toggle */
+.toggle-more-tags i {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.toggle-more-tags.active i {
+    transform: rotate(180deg);
+}
 
 /* Tema escuro para o botão "Mais tags" */
 body.dark-mode .toggle-more-tags {
@@ -1736,14 +1792,4 @@ body.dark-mode .toggle-more-tags.active i {
     body.dark-mode .toggle-more-tags:hover i {
         color: #121212 !important;
     }
-}
-
-/* Certifica que o collapse funciona corretamente */
-#moreTags.collapse:not(.show) {
-    display: none;
-}
-
-#moreTags.collapse.show {
-    display: flex;
-    flex-wrap: wrap;
 }
