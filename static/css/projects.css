@@ -1913,71 +1913,88 @@ body.dark-mode .toggle-more-tags.active i {
 #moreTags, 
 #moreTagsMobile {
     width: 100%;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: top;
-    display: none; /* Ambos começam ocultos por padrão */
+    transition: max-height 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+                opacity 0.5s cubic-bezier(0.33, 1, 0.68, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                padding-top 0.4s ease,
+                padding-bottom 0.4s ease,
+                margin-top 0.4s ease;
+    transform-origin: top center;
+    display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    max-height: 0;
     opacity: 0;
-    transform: scaleY(0.8) translateY(-10px);
+    transform: translateY(-10px) scale(0.95);
+    padding-top: 0;
+    margin-top: 0;
     pointer-events: none;
     overflow: hidden;
+    /* Centralização para ambos os contêineres por padrão */
+    justify-content: center;
+    will-change: transform, opacity, max-height; /* Otimiza a performance da animação */
 }
 
-/* Estado aberto para ambos os contêineres */
+/* Estado fechado */
+#moreTags:not(.show),
+#moreTagsMobile:not(.show) {
+    display: none;
+}
+
+/* Estado aberto - base para ambos os contêineres */
 #moreTags.show,
 #moreTagsMobile.show {
     opacity: 1;
-    transform: scaleY(1) translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
     display: flex !important;
     overflow: visible;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    /* Animação para os botões filhos aparecerem sequencialmente */
+    & .btn {
+        animation: tagAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    
+    /* Efeito escalonado nos botões filhos */
+    & .btn:nth-child(1) { animation-delay: 0.05s; }
+    & .btn:nth-child(2) { animation-delay: 0.1s; }
+    & .btn:nth-child(3) { animation-delay: 0.15s; }
+    & .btn:nth-child(4) { animation-delay: 0.2s; }
+    & .btn:nth-child(5) { animation-delay: 0.25s; }
+    & .btn:nth-child(6) { animation-delay: 0.3s; }
+    & .btn:nth-child(7) { animation-delay: 0.35s; }
+    & .btn:nth-child(8) { animation-delay: 0.4s; }
+    & .btn:nth-child(9) { animation-delay: 0.45s; }
+    & .btn:nth-child(10) { animation-delay: 0.5s; }
+    & .btn:nth-child(n+11) { animation-delay: 0.55s; }
 }
 
-/* Estilos específicos para a versão desktop */
+/* Keyframes para a animação de exibição das tags */
+@keyframes tagAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Versão Desktop */
 #moreTags.show {
+    max-height: 1200px; /* Valor alto o suficiente para acomodar tags suficientes */
+    padding-top: 1.25rem;
+    margin-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* Versão Mobile */
+#moreTagsMobile.show {
+    max-height: 1200px;
     padding-top: 1rem;
     margin-top: 0.5rem;
-    padding-bottom: 1rem;
-    border-top: 1px solid rgba(0,0,0,0.1);
-}
-
-/* Estilos específicos para a versão mobile */
-#moreTagsMobile.show {
-    padding-top: 0.75rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.5rem;
     padding-bottom: 0.5rem;
-    border-top: 1px solid rgba(0,0,0,0.1);
-}
-
-/* Media queries para exibição exclusiva baseada no tamanho da tela */
-@media (max-width: 767px) {
-    /* Em telas pequenas, exibir APENAS a versão mobile */
-    #moreTags {
-        display: none !important; /* Força esconder */
-    }
-    
-    #moreTags.show {
-        display: none !important; /* Garante que continue oculto mesmo quando "show" for adicionado */
-    }
-    
-    /* Permite que #moreTagsMobile seja exibido se tiver a classe .show */
-}
-
-@media (min-width: 768px) {
-    /* Em telas maiores, exibir APENAS a versão desktop */
-    #moreTagsMobile {
-        display: none !important; /* Força esconder */
-    }
-    
-    #moreTagsMobile.show {
-        display: none !important; /* Garante que continue oculto mesmo quando "show" for adicionado */
-    }
-    
-    /* Permite que #moreTags seja exibido se tiver a classe .show */
 }
 
 /* Tema escuro para a borda */
@@ -1986,28 +2003,263 @@ body.dark-mode #moreTagsMobile.show {
     border-top-color: rgba(255,255,255,0.1);
 }
 
-/* Estilos específicos para a versão mobile - ajuste do alinhamento */
+/* Animação aprimorada para o ícone do botão toggle */
+.toggle-more-tags {
+    overflow: hidden; /* Contém o efeito de hover */
+    position: relative; /* Para o efeito de ripple */
+}
+
+.toggle-more-tags i {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Curva de easing mais dinâmica */
+    margin-right: 0.5rem;
+    display: inline-block;
+    transform-origin: center;
+}
+
+/* Efeito ripple no hover do botão */
+.toggle-more-tags::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(13, 110, 253, 0.12);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.toggle-more-tags:hover::before {
+    width: 150%;
+    height: 300%;
+}
+
+body.dark-mode .toggle-more-tags::before {
+    background: rgba(100, 181, 246, 0.12);
+}
+
+/* Estado ativo com animação refinada */
+.toggle-more-tags.active i {
+    transform: rotate(180deg) translateY(-2px);
+}
+
+/* ...existing code... */
+
+/* Versões responsivas para as tags adicionais - Ajuste para evitar duplicação */
+
+/* Configurações básicas para ambos os contêineres */
+#moreTags, 
+#moreTagsMobile {
+    width: 100%;
+    transition: max-height 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+                opacity 0.5s cubic-bezier(0.33, 1, 0.68, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+                padding-top 0.4s ease,
+                padding-bottom 0.4s ease,
+                margin-top 0.4s ease;
+    transform-origin: top center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    padding-top: 0;
+    margin-top: 0;
+    pointer-events: none;
+    overflow: hidden;
+    /* Centralização para ambos os contêineres por padrão */
+    justify-content: center;
+    will-change: transform, opacity, max-height; /* Otimiza a performance da animação */
+}
+
+/* Estado fechado */
+#moreTags:not(.show),
+#moreTagsMobile:not(.show) {
+    display: none;
+}
+
+/* Estado aberto - base para ambos os contêineres */
+#moreTags.show,
 #moreTagsMobile.show {
-    justify-content: center; /* Centraliza as tags adicionais no mobile igual às principais */
-}
-
-@media (max-width: 767px) {
-    /* Garantir centralização das tags adicionais no mobile */
-    #moreTagsMobile {
-        justify-content: center; /* Mesmo quando não visível, manter configuração consistente */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    display: flex !important;
+    overflow: visible;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    /* Animação para os botões filhos aparecerem sequencialmente */
+    & .btn {
+        animation: tagAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
     
-    /* Manter os elementos dentro do container com o mesmo comportamento dos principais */
-    #moreTagsMobile .btn {
-        flex: 0 1 auto; /* Mesmo comportamento das tags principais em mobile */
+    /* Efeito escalonado nos botões filhos */
+    & .btn:nth-child(1) { animation-delay: 0.05s; }
+    & .btn:nth-child(2) { animation-delay: 0.1s; }
+    & .btn:nth-child(3) { animation-delay: 0.15s; }
+    & .btn:nth-child(4) { animation-delay: 0.2s; }
+    & .btn:nth-child(5) { animation-delay: 0.25s; }
+    & .btn:nth-child(6) { animation-delay: 0.3s; }
+    & .btn:nth-child(7) { animation-delay: 0.35s; }
+    & .btn:nth-child(8) { animation-delay: 0.4s; }
+    & .btn:nth-child(9) { animation-delay: 0.45s; }
+    & .btn:nth-child(10) { animation-delay: 0.5s; }
+    & .btn:nth-child(n+11) { animation-delay: 0.55s; }
+}
+
+/* Keyframes para a animação de exibição das tags */
+@keyframes tagAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* ... o resto dos estilos comuns permanece igual ... */
-@media (min-width: 768px) {
+/* Versão Desktop */
+#moreTags.show {
+    max-height: 1200px; /* Valor alto o suficiente para acomodar tags suficientes */
+    padding-top: 1.25rem;
+    margin-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* Versão Mobile */
+#moreTagsMobile.show {
+    max-height: 1200px;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Tema escuro para a borda */
+body.dark-mode #moreTags.show,
+body.dark-mode #moreTagsMobile.show {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Animação aprimorada para o ícone do botão toggle */
+.toggle-more-tags {
+    overflow: hidden; /* Contém o efeito de hover */
+    position: relative; /* Para o efeito de ripple */
+}
+
+.toggle-more-tags i {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Curva de easing mais dinâmica */
+    margin-right: 0.5rem;
+    display: inline-block;
+    transform-origin: center;
+}
+
+/* Efeito ripple no hover do botão */
+.toggle-more-tags::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(13, 110, 253, 0.12);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: -1;
+}
+
+.toggle-more-tags:hover::before {
+    width: 150%;
+    height: 300%;
+}
+
+body.dark-mode .toggle-more-tags::before {
+    background: rgba(100, 181, 246, 0.12);
+}
+
+/* Estado ativo com animação refinada */
+.toggle-more-tags.active i {
+    transform: rotate(180deg) translateY(-2px);
+}
+
+/* Regras de visibilidade aprimoradas para solucionar problemas de exibição duplicada */
+
+/* Configurações básicas para ambos os contêineres - com display inicial none absoluto */
+#moreTags, 
+#moreTagsMobile {
+    width: 100%;
+    transition: max-height 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+                opacity 0.5s cubic-bezier(0.33, 1, 0.68, 1),
+                transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: top center;
+    display: none !important; /* Por padrão, ambos estão SEMPRE ocultos */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+    overflow: hidden;
+    justify-content: center;
+    will-change: transform, opacity, max-height;
+}
+
+/* ================= REGRAS ESPECÍFICAS PARA DISPOSITIVOS MÓVEIS ================= */
+@media (max-width: 767.98px) {
+    /* Em mobile, o desktop container está SEMPRE oculto */
     #moreTags {
-        justify-content: center;
+        display: none !important;
     }
     
-    /* ...existing code... */
+    /* Apenas o contêiner mobile pode ser exibido, e somente com a classe show */
+    #moreTagsMobile.show {
+        display: flex !important; /* Sobrescreve o display:none !important acima */
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        max-height: 1200px;
+        padding-top: 1rem;
+        margin-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        pointer-events: auto;
+        overflow: visible;
+    }
+}
+
+/* ================= REGRAS ESPECÍFICAS PARA DESKTOP ================= */
+@media (min-width: 768px) {
+    /* Em desktop, o mobile container está SEMPRE oculto */
+    #moreTagsMobile {
+        display: none !important;
+    }
+    
+    /* Apenas o contêiner desktop pode ser exibido, e somente com a classe show */
+    #moreTags.show {
+        display: flex !important; /* Sobrescreve o display:none !important acima */
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        max-height: 1200px;
+        padding-top: 1.25rem;
+        margin-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        pointer-events: auto;
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* Tema escuro para a borda */
+body.dark-mode #moreTags.show,
+body.dark-mode #moreTagsMobile.show {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Manter as animações para os botões de tag */
+#moreTags.show .btn,
+#moreTagsMobile.show .btn {
+    animation: tagAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }

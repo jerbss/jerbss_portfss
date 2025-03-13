@@ -271,29 +271,66 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentType = 'all';
     let currentStatus = 'all';
     
-    // Toggle para mostrar/esconder mais tags - versão melhorada para suportar ambas as versões
+    // Toggle para mostrar/esconder mais tags - versão melhorada para detectar o tamanho da tela
     const showMoreTagsBtn = document.getElementById('showMoreTags');
     const moreTagsDesktop = document.getElementById('moreTags');
     const moreTagsMobile = document.getElementById('moreTagsMobile');
+    
+    function isMobileView() {
+        return window.innerWidth < 768; // Corresponde ao breakpoint do CSS
+    }
     
     if (showMoreTagsBtn && (moreTagsDesktop || moreTagsMobile)) {
         showMoreTagsBtn.addEventListener('click', function(event) {
             event.preventDefault();
             
-            // Toggle classes para ambas as versões
-            if (moreTagsDesktop) moreTagsDesktop.classList.toggle('show');
-            if (moreTagsMobile) moreTagsMobile.classList.toggle('show');
+            const isMobile = isMobileView();
+            const targetContainer = isMobile ? moreTagsMobile : moreTagsDesktop;
+            const otherContainer = isMobile ? moreTagsDesktop : moreTagsMobile;
+            
+            // Sempre garantir que o outro container esteja fechado
+            if (otherContainer && otherContainer.classList.contains('show')) {
+                otherContainer.classList.remove('show');
+                otherContainer.style = '';
+            }
+            
+            // Processar apenas o container apropriado para o tamanho atual da tela
+            if (targetContainer) {
+                if (targetContainer.classList.contains('show')) {
+                    // Ao esconder, animar suavemente
+                    const currentHeight = targetContainer.scrollHeight;
+                    targetContainer.style.maxHeight = currentHeight + 'px';
+                    
+                    // Força um reflow para que a transição funcione
+                    void targetContainer.offsetWidth;
+                    
+                    // Inicia a transição para fechar
+                    targetContainer.style.opacity = '0';
+                    targetContainer.style.maxHeight = '0';
+                    targetContainer.style.transform = 'translateY(-10px) scale(0.95)';
+                    
+                    // Remove a classe após a animação terminar
+                    setTimeout(() => {
+                        targetContainer.classList.remove('show');
+                        targetContainer.style = ''; // Remove os estilos inline
+                    }, 500);
+                } else {
+                    // Ao mostrar, simplesmente adicione a classe
+                    targetContainer.classList.add('show');
+                }
+            }
             
             // Atualiza o botão baseado no estado atual
-            const isShowingMoreTags = (moreTagsDesktop && moreTagsDesktop.classList.contains('show')) || 
-                                    (moreTagsMobile && moreTagsMobile.classList.contains('show'));
+            const isShowingMoreTags = targetContainer && targetContainer.classList.contains('show');
             
             if (isShowingMoreTags) {
                 this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
                 this.classList.add('active');
             } else {
-                this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
-                this.classList.remove('active');
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
+                    this.classList.remove('active');
+                }, 150);
             }
         });
         
@@ -307,6 +344,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    
+    // Observar mudanças na largura da janela para ajustar os contêineres se necessário
+    window.addEventListener('resize', function() {
+        const isMobile = isMobileView();
+        const moreTagsBtn = document.getElementById('showMoreTags');
+        const isShowingTags = (moreTagsDesktop && moreTagsDesktop.classList.contains('show')) || 
+                            (moreTagsMobile && moreTagsMobile.classList.contains('show'));
+        
+        // Se estiver mostrando tags adicionais, ajustar qual contêiner deve estar visível
+        if (isShowingTags) {
+            if (isMobile) {
+                if (moreTagsDesktop) moreTagsDesktop.classList.remove('show');
+                if (moreTagsMobile) moreTagsMobile.classList.add('show');
+            } else {
+                if (moreTagsMobile) moreTagsMobile.classList.remove('show');
+                if (moreTagsDesktop) moreTagsDesktop.classList.add('show');
+            }
+        }
+    });
     
     function filterProjects() {
         let visibleCount = 0;
@@ -400,17 +456,46 @@ document.addEventListener('DOMContentLoaded', function() {
         updateActiveStates();
         filterProjects();
         
-        // Reset o botão "Mais tags" se estiver ativo
+        // Reset o botão "Mais tags" se estiver ativo - com animação
         const moreTagsDesktop = document.getElementById('moreTags');
         const moreTagsMobile = document.getElementById('moreTagsMobile');
         const showMoreTagsBtn = document.getElementById('showMoreTags');
         
-        if (moreTagsDesktop) moreTagsDesktop.classList.remove('show');
-        if (moreTagsMobile) moreTagsMobile.classList.remove('show');
+        if (moreTagsDesktop && moreTagsDesktop.classList.contains('show')) {
+            // Animação para fechar
+            const currentHeight = moreTagsDesktop.scrollHeight;
+            moreTagsDesktop.style.maxHeight = currentHeight + 'px';
+            void moreTagsDesktop.offsetWidth;
+            moreTagsDesktop.style.opacity = '0';
+            moreTagsDesktop.style.maxHeight = '0';
+            moreTagsDesktop.style.transform = 'translateY(-10px) scale(0.95)';
+            
+            setTimeout(() => {
+                moreTagsDesktop.classList.remove('show');
+                moreTagsDesktop.style = '';
+            }, 500);
+        }
         
-        if (showMoreTagsBtn) {
-            showMoreTagsBtn.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
-            showMoreTagsBtn.classList.remove('active');
+        if (moreTagsMobile && moreTagsMobile.classList.contains('show')) {
+            // Animação para fechar
+            const currentHeight = moreTagsMobile.scrollHeight;
+            moreTagsMobile.style.maxHeight = currentHeight + 'px';
+            void moreTagsMobile.offsetWidth;
+            moreTagsMobile.style.opacity = '0';
+            moreTagsMobile.style.maxHeight = '0';
+            moreTagsMobile.style.transform = 'translateY(-10px) scale(0.95)';
+            
+            setTimeout(() => {
+                moreTagsMobile.classList.remove('show');
+                moreTagsMobile.style = '';
+            }, 500);
+        }
+        
+        if (showMoreTagsBtn && showMoreTagsBtn.classList.contains('active')) {
+            setTimeout(() => {
+                showMoreTagsBtn.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
+                showMoreTagsBtn.classList.remove('active');
+            }, 150);
         }
     });
 });
