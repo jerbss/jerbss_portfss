@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/top3/<int:top3_id>/', views.get_top3, name='get_top3'),
     path('top3/save-order/', views.save_top3_order, name='save_top3_order'),
     path('api/cloudinary/upload/', views.cloudinary_upload, name='cloudinary_upload'),
+    path('api/tags/search/', views.search_tags, name='search_tags'),
 ]

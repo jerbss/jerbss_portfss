@@ -256,10 +256,14 @@ def create_project(request):
     else:
         form = ProjectForm()
     
+    # Fetch all tags for autocomplete
+    all_tags = list(Tag.objects.values_list('name', flat=True))
+    
     return render(request, 'main/create_project.html', {
         'form': form,
         'action': 'create',
-        'tinymce_api_key': settings.TINYMCE_API_KEY
+        'tinymce_api_key': settings.TINYMCE_API_KEY,
+        'all_tags': json.dumps(all_tags)  # Add serialized tags to context
     })
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -331,12 +335,16 @@ def edit_project(request, slug):
         # Se existe rascunho, mostrar dados do rascunho
         has_draft = hasattr(project, 'draft') and project.draft
     
+    # Fetch all tags for autocomplete
+    all_tags = list(Tag.objects.values_list('name', flat=True))
+    
     return render(request, 'main/create_project.html', {
         'form': form,
         'is_edit': True,
         'project': project,
         'has_draft': has_draft,
-        'tinymce_api_key': settings.TINYMCE_API_KEY
+        'tinymce_api_key': settings.TINYMCE_API_KEY,
+        'all_tags': json.dumps(all_tags)  # Add serialized tags to context
     })
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -725,3 +733,18 @@ def cloudinary_upload(request):
         error_msg = f"Erro no upload para o Cloudinary: {str(e)}"
         logger.error(error_msg)
         return JsonResponse({'error': error_msg}, status=500)
+
+@login_required
+def search_tags(request):
+    """API endpoint to search for tags"""
+    search_term = request.GET.get('q', '').strip().lower()
+    if not search_term:
+        return JsonResponse([], safe=False)
+    
+    # Search for tags that start with or contain the search term
+    tags = Tag.objects.filter(name__icontains=search_term).values_list('name', flat=True)[:10]
+    
+    # Convert QuerySet to list
+    tag_list = list(tags)
+    
+    return JsonResponse(tag_list, safe=False)

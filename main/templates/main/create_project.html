@@ -7,6 +7,72 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/project-form.css' %}">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<style>
+    /* Tag Input Styling */
+    .tag-input-container {
+        position: relative;
+    }
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        min-height: 50px;
+        margin-bottom: 0.5rem;
+    }
+    .tag-item {
+        display: inline-flex;
+        align-items: center;
+        background-color: #e9ecef;
+        border-radius: 0.25rem;
+        padding: 0.25rem 0.5rem;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+    .tag-item.new-tag {
+        background-color: #cfe2ff;
+    }
+    .tag-remove {
+        cursor: pointer;
+        margin-left: 0.5rem;
+        color: #dc3545;
+    }
+    .tag-input {
+        flex-grow: 1;
+        border: none;
+        outline: none;
+        min-width: 100px;
+        background: transparent;
+    }
+    .dark-mode .tags-container {
+        background-color: #343a40;
+        border-color: #495057;
+    }
+    .dark-mode .tag-item {
+        background-color: #495057;
+        color: #e9ecef;
+    }
+    .dark-mode .tag-item.new-tag {
+        background-color: #1a3152;
+        color: #e9ecef;
+    }
+    /* Make sure the autocomplete dropdown is visible in dark mode */
+    .dark-mode .ui-autocomplete {
+        background-color: #343a40;
+        color: #e9ecef;
+        border-color: #495057;
+    }
+    .dark-mode .ui-menu-item-wrapper {
+        color: #e9ecef;
+    }
+    .dark-mode .ui-menu-item-wrapper.ui-state-active {
+        background-color: #495057;
+        color: #ffffff;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -128,7 +194,24 @@
                                 {% bootstrap_field form.project_type layout='' %}
                             </div>
                             <div class="col-md-6">
-                                {% bootstrap_field form.tags_input layout='' %}
+                                <label for="tags-input-field" class="form-label">{{ form.tags_input.label }}</label>
+                                <div class="tag-input-container">
+                                    <div class="tags-container" id="tags-container">
+                                        <!-- Existing tags will be added here -->
+                                        <input type="text" id="tags-input-field" class="tag-input" placeholder="Digite para adicionar tags">
+                                    </div>
+                                    <!-- Hidden input to store the comma-separated tags -->
+                                    <input type="hidden" name="{{ form.tags_input.name }}" id="{{ form.tags_input.auto_id }}" class="form-control">
+                                    {% if form.tags_input.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ form.tags_input.errors }}
+                                    </div>
+                                    {% endif %}
+                                    {% if form.tags_input.help_text %}
+                                    <div class="form-text">{{ form.tags_input.help_text }}</div>
+                                    {% endif %}
+                                    <div class="form-text">Adicione até 7 tags. Pressione Enter para adicionar.</div>
+                                </div>
                             </div>
                         </div>
 
@@ -233,12 +316,17 @@
 {% block extra_js %}
 {{ form.media }}
 {{ block.super }}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/{{ tinymce_api_key }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="{% static 'js/tinymce-helper.js' %}"></script>
 <script src="{% static 'js/tinymce-cloudinary-upload.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/tinymce-video.css' %}">
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tag autocomplete
+        initTagsAutocomplete();
+        
         // Script para desativar validação ao salvar como rascunho
         const draftButton = document.querySelector('button[name="save_draft"]');
         const projectForm = draftButton.closest('form');
@@ -423,6 +511,118 @@
                 `;
             });
         });
+
+        // Replace tag validation with new tag system validation
+        function validateTags() {
+            const hiddenInput = document.getElementById('id_tags_input');
+            const tagItems = document.querySelectorAll('.tag-item');
+            
+            if (tagItems.length > 7) {
+                hiddenInput.setCustomValidity('Máximo de 7 tags permitidas');
+                return false;
+            } else {
+                hiddenInput.setCustomValidity('');
+                return true;
+            }
+        }
+        
+        // Tags autocomplete initialization
+        function initTagsAutocomplete() {
+            const tagsInput = document.getElementById('tags-input-field');
+            const tagsContainer = document.getElementById('tags-container');
+            const hiddenInput = document.getElementById('id_tags_input');
+            const tagItems = new Set();
+            
+            // Pre-loaded tags from the server
+            const availableTags = {{ all_tags|safe }};
+            
+            // Load existing tags from the hidden input
+            if (hiddenInput.value) {
+                const existingTags = hiddenInput.value.split(',').map(tag => tag.trim()).filter(Boolean);
+                existingTags.forEach(tag => addTagItem(tag, false));
+            }
+            
+            // Initialize jQuery UI autocomplete with pre-loaded tags
+            $(tagsInput).autocomplete({
+                source: function(request, response) {
+                    // Filter locally based on the search term
+                    const term = request.term.toLowerCase();
+                    const filteredTags = availableTags.filter(tag => 
+                        tag.toLowerCase().includes(term) && !tagItems.has(tag.toLowerCase())
+                    );
+                    response(filteredTags);
+                },
+                minLength: 1,
+                select: function(event, ui) {
+                    event.preventDefault();
+                    addTagItem(ui.item.value, false);
+                    tagsInput.value = '';
+                    return false;
+                }
+            });
+            
+            // Handle tag creation on Enter key
+            tagsInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && tagsInput.value.trim() !== '') {
+                    e.preventDefault();
+                    addTagItem(tagsInput.value.trim(), true);
+                    tagsInput.value = '';
+                }
+            });
+            
+            // Focus the input when clicking in the container
+            tagsContainer.addEventListener('click', function(e) {
+                if (e.target === tagsContainer) {
+                    tagsInput.focus();
+                }
+            });
+            
+            // Function to add a new tag item
+            function addTagItem(text, isNew) {
+                const tagText = text.toLowerCase();
+                
+                // Don't add if already exists
+                if (tagItems.has(tagText)) {
+                    return;
+                }
+                
+                // Check tag limit
+                if (tagItems.size >= 7) {
+                    alert('Máximo de 7 tags permitidas');
+                    return;
+                }
+                
+                // Create tag element
+                const tagElement = document.createElement('div');
+                tagElement.className = isNew ? 'tag-item new-tag' : 'tag-item';
+                tagElement.innerHTML = `
+                    <span class="tag-text">${text}</span>
+                    <span class="tag-remove">&times;</span>
+                `;
+                
+                // Insert before the input
+                tagsContainer.insertBefore(tagElement, tagsInput);
+                
+                // Add to set and update hidden input
+                tagItems.add(tagText);
+                updateHiddenInput();
+                
+                // Add remove event listener
+                tagElement.querySelector('.tag-remove').addEventListener('click', function() {
+                    tagElement.remove();
+                    tagItems.delete(tagText);
+                    updateHiddenInput();
+                    validateTags();
+                });
+                
+                validateTags();
+            }
+            
+            // Update the hidden input with comma-separated tags
+            function updateHiddenInput() {
+                hiddenInput.value = Array.from(tagItems).join(',');
+            }
+        }
     });
 </script>
 {% endblock %}
