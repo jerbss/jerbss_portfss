@@ -1985,4 +1985,21 @@ body.dark-mode #moreTagsMobile.show {
     border-top-color: rgba(255,255,255,0.1);
 }
 
+/* Estilos específicos para a versão mobile - ajuste do alinhamento */
+#moreTagsMobile.show {
+    justify-content: center; /* Centraliza as tags adicionais no mobile igual às principais */
+}
+
+@media (max-width: 767px) {
+    /* Garantir centralização das tags adicionais no mobile */
+    #moreTagsMobile {
+        justify-content: center; /* Mesmo quando não visível, manter configuração consistente */
+    }
+    
+    /* Manter os elementos dentro do container com o mesmo comportamento dos principais */
+    #moreTagsMobile .btn {
+        flex: 0 1 auto; /* Mesmo comportamento das tags principais em mobile */
+    }
+}
+
 /* ... o resto dos estilos comuns permanece igual ... */
