@@ -1905,3 +1905,84 @@ body.dark-mode .toggle-more-tags.active i {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ainda mais colunas em telas grandes */
     }
 }
+
+/* Versões responsivas para as tags adicionais - Ajuste para evitar duplicação */
+
+/* Configurações básicas para ambos os contêineres */
+#moreTags, 
+#moreTagsMobile {
+    width: 100%;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+    display: none; /* Ambos começam ocultos por padrão */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: scaleY(0.8) translateY(-10px);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Estado aberto para ambos os contêineres */
+#moreTags.show,
+#moreTagsMobile.show {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+    pointer-events: auto;
+    display: flex !important;
+    overflow: visible;
+}
+
+/* Estilos específicos para a versão desktop */
+#moreTags.show {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    padding-bottom: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Estilos específicos para a versão mobile */
+#moreTagsMobile.show {
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Media queries para exibição exclusiva baseada no tamanho da tela */
+@media (max-width: 767px) {
+    /* Em telas pequenas, exibir APENAS a versão mobile */
+    #moreTags {
+        display: none !important; /* Força esconder */
+    }
+    
+    #moreTags.show {
+        display: none !important; /* Garante que continue oculto mesmo quando "show" for adicionado */
+    }
+    
+    /* Permite que #moreTagsMobile seja exibido se tiver a classe .show */
+}
+
+@media (min-width: 768px) {
+    /* Em telas maiores, exibir APENAS a versão desktop */
+    #moreTagsMobile {
+        display: none !important; /* Força esconder */
+    }
+    
+    #moreTagsMobile.show {
+        display: none !important; /* Garante que continue oculto mesmo quando "show" for adicionado */
+    }
+    
+    /* Permite que #moreTags seja exibido se tiver a classe .show */
+}
+
+/* Tema escuro para a borda */
+body.dark-mode #moreTags.show,
+body.dark-mode #moreTagsMobile.show {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* ... o resto dos estilos comuns permanece igual ... */

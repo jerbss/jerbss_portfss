@@ -72,6 +72,16 @@
                         <button class="btn btn-sm btn-outline-secondary toggle-more-tags" id="showMoreTags">
                             <i class="fas fa-ellipsis-h"></i> Mais tags
                         </button>
+                        
+                        <!-- Versão mobile - aparece APENAS em telas pequenas, abaixo das tags principais -->
+                        <div id="moreTagsMobile">
+                            {% for tag in tags|slice:"5:" %}
+                            <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
+                                <i class="fas fa-tag"></i><span>{{ tag.name }}</span>
+                                <span class="badge">{{ tag.project_count }}</span>
+                            </button>
+                            {% endfor %}
+                        </div>
                         {% endif %}
                     </div>
                 </div>
@@ -130,7 +140,7 @@
             </div>
             
             {% if tags.count > 5 %}
-            <!-- Tags adicionais fora da estrutura de colunas -->
+            <!-- Versão desktop - aparece APENAS em telas maiores, abaixo do botão limpar filtros -->
             <div id="moreTags" class="mt-3">
                 {% for tag in tags|slice:"5:" %}
                 <button class="btn btn-sm btn-outline-primary" data-filter="{{ tag.name }}">
@@ -251,7 +261,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Selecionar todos os botões de tag, incluindo os escondidos
-    const tagButtons = document.querySelectorAll('.tags-container button[data-filter]');
+    const tagButtons = document.querySelectorAll('.tags-container button[data-filter], #moreTags button[data-filter], #moreTagsMobile button[data-filter]');
     const typeButtons = document.querySelectorAll('.type-container button');
     const statusButtons = document.querySelectorAll('.status-container button');
     const clearFiltersBtn = document.querySelector('.clear-filters');
@@ -261,19 +271,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentType = 'all';
     let currentStatus = 'all';
     
-    // Toggle para mostrar/esconder mais tags - MELHORADO PARA ANIMAÇÃO FLUIDA
+    // Toggle para mostrar/esconder mais tags - versão melhorada para suportar ambas as versões
     const showMoreTagsBtn = document.getElementById('showMoreTags');
-    const moreTagsContainer = document.getElementById('moreTags');
+    const moreTagsDesktop = document.getElementById('moreTags');
+    const moreTagsMobile = document.getElementById('moreTagsMobile');
     
-    if (showMoreTagsBtn && moreTagsContainer) {
+    if (showMoreTagsBtn && (moreTagsDesktop || moreTagsMobile)) {
         showMoreTagsBtn.addEventListener('click', function(event) {
             event.preventDefault();
             
-            // Toggle simples da classe 'show' para iniciar a transição CSS
-            moreTagsContainer.classList.toggle('show');
+            // Toggle classes para ambas as versões
+            if (moreTagsDesktop) moreTagsDesktop.classList.toggle('show');
+            if (moreTagsMobile) moreTagsMobile.classList.toggle('show');
             
             // Atualiza o botão baseado no estado atual
-            if (moreTagsContainer.classList.contains('show')) {
+            const isShowingMoreTags = (moreTagsDesktop && moreTagsDesktop.classList.contains('show')) || 
+                                    (moreTagsMobile && moreTagsMobile.classList.contains('show'));
+            
+            if (isShowingMoreTags) {
                 this.innerHTML = '<i class="fas fa-chevron-up"></i> Menos tags';
                 this.classList.add('active');
             } else {
@@ -282,8 +297,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Adicionar event listeners para os botões dentro do container de mais tags
-        const hiddenTagButtons = moreTagsContainer.querySelectorAll('button[data-filter]');
+        // Adicionar event listeners para os botões em ambas as versões
+        const hiddenTagButtons = document.querySelectorAll('#moreTags button[data-filter], #moreTagsMobile button[data-filter]');
         hiddenTagButtons.forEach(button => {
             button.addEventListener('click', function() {
                 currentTag = this.getAttribute('data-filter');
@@ -377,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Clear filters handler
+    // Clear filters handler - atualizado para suportar ambas as versões
     clearFiltersBtn.addEventListener('click', function() {
         currentTag = 'all';
         currentType = 'all';
@@ -386,10 +401,14 @@ document.addEventListener('DOMContentLoaded', function() {
         filterProjects();
         
         // Reset o botão "Mais tags" se estiver ativo
-        const moreTagsContainer = document.getElementById('moreTags');
+        const moreTagsDesktop = document.getElementById('moreTags');
+        const moreTagsMobile = document.getElementById('moreTagsMobile');
         const showMoreTagsBtn = document.getElementById('showMoreTags');
-        if (moreTagsContainer && showMoreTagsBtn) {
-            moreTagsContainer.classList.remove('show');
+        
+        if (moreTagsDesktop) moreTagsDesktop.classList.remove('show');
+        if (moreTagsMobile) moreTagsMobile.classList.remove('show');
+        
+        if (showMoreTagsBtn) {
             showMoreTagsBtn.innerHTML = '<i class="fas fa-ellipsis-h"></i> Mais tags';
             showMoreTagsBtn.classList.remove('active');
         }
