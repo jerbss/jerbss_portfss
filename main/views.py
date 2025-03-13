@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMultiAlternatives
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, Http404
 import cloudinary
 import cloudinary.api
 import os
@@ -40,7 +40,14 @@ def home(request):
 def projects(request):
     try:
         logger.info("Entering projects view")
-        projects = Project.objects.all().order_by('-created_at')
+        
+        # Filtrar projetos conforme o tipo de usuário
+        if request.user.is_superuser:
+            # Administradores veem todos os projetos, incluindo rascunhos
+            projects = Project.objects.all().order_by('-created_at')
+        else:
+            # Usuários normais veem apenas projetos que não são rascunhos
+            projects = Project.objects.exclude(status='draft').order_by('-created_at')
         
         # Debug info - check number of projects and their image fields
         project_info = []
@@ -480,8 +487,19 @@ def contact(request):
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
     
+    # Verificar se é um rascunho e o usuário não tem permissão para visualizá-lo
+    if project.status == 'draft' and not request.user.is_superuser:
+        raise Http404("Projeto não encontrado")
+    
     # Projetos relacionados baseados em tags
-    related_projects = Project.objects.filter(tags__in=project.tags.all()).exclude(id=project.id).distinct()[:3]
+    related_projects = Project.objects.filter(tags__in=project.tags.all()).exclude(id=project.id)
+    
+    # Filtrar projetos rascunho dos relacionados para usuários não-administradores
+    if not request.user.is_superuser:
+        related_projects = related_projects.exclude(status='draft')
+    
+    # Limitar a 3 projetos relacionados
+    related_projects = related_projects.distinct()[:3]
     
     return render(request, 'main/project_detail.html', {
         'project': project,
