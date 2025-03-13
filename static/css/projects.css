@@ -1670,7 +1670,7 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     display: none;
 }
 
-/* Estado aberto - usando flexbox em vez de grid */
+/* Estado aberto - usando flexbox em vez de grid - adicionado centralização */
 #moreTags.show {
     max-height: 2000px;
     opacity: 1;
@@ -1683,6 +1683,7 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     overflow: visible;
     /* Borda superior para separação visual da área acima */
     border-top: 1px solid rgba(0,0,0,0.1);
+    justify-content: center; /* Centraliza as tags adicionais no desktop */
 }
 
 /* Tema escuro para a borda */
@@ -2003,3 +2004,10 @@ body.dark-mode #moreTagsMobile.show {
 }
 
 /* ... o resto dos estilos comuns permanece igual ... */
+@media (min-width: 768px) {
+    #moreTags {
+        justify-content: center;
+    }
+    
+    /* ...existing code... */
+}
