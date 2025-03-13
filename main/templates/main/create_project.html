@@ -466,7 +466,7 @@
             const tagsInput = document.getElementById('tags-input-field');
             const tagsContainer = document.getElementById('tags-container');
             const hiddenInput = document.getElementById('id_tags_input');
-            const tagItems = new Set();
+            const tagItems = new Map(); // Changed from Set to Map to store original case
             
             // Pre-loaded tags from the server
             const availableTags = {{ all_tags|safe }};
@@ -483,7 +483,7 @@
                     // Filter locally based on the search term
                     const term = request.term.toLowerCase();
                     const filteredTags = availableTags.filter(tag => 
-                        tag.toLowerCase().includes(term) && !tagItems.has(tag.toLowerCase())
+                        tag.toLowerCase().includes(term) && !tagItems.has(term)
                     );
                     response(filteredTags);
                 },
@@ -514,10 +514,11 @@
             
             // Function to add a new tag item
             function addTagItem(text, isNew) {
-                const tagText = text.toLowerCase();
+                const originalText = text.trim();
+                const lowerText = originalText.toLowerCase(); // For case-insensitive comparison
                 
-                // Don't add if already exists
-                if (tagItems.has(tagText)) {
+                // Don't add if already exists (case-insensitive check)
+                if (tagItems.has(lowerText)) {
                     return;
                 }
                 
@@ -531,21 +532,21 @@
                 const tagElement = document.createElement('div');
                 tagElement.className = isNew ? 'tag-item new-tag' : 'tag-item';
                 tagElement.innerHTML = `
-                    <span class="tag-text">${text}</span>
+                    <span class="tag-text">${originalText}</span>
                     <span class="tag-remove">&times;</span>
                 `;
                 
                 // Insert before the input
                 tagsContainer.insertBefore(tagElement, tagsInput);
                 
-                // Add to set and update hidden input
-                tagItems.add(tagText);
+                // Add to Map with lowercase key but preserve original case as value
+                tagItems.set(lowerText, originalText);
                 updateHiddenInput();
                 
                 // Add remove event listener
                 tagElement.querySelector('.tag-remove').addEventListener('click', function() {
                     tagElement.remove();
-                    tagItems.delete(tagText);
+                    tagItems.delete(lowerText);
                     updateHiddenInput();
                     validateTags();
                 });
@@ -555,7 +556,8 @@
             
             // Update the hidden input with comma-separated tags
             function updateHiddenInput() {
-                hiddenInput.value = Array.from(tagItems).join(',');
+                // Use the values (original case) from the Map
+                hiddenInput.value = Array.from(tagItems.values()).join(',');
             }
         }
     });

@@ -229,7 +229,11 @@ def create_project(request):
             if tags_input:
                 tag_names = [t.strip() for t in tags_input.split(',') if t.strip()]
                 for tag_name in tag_names:
-                    tag, created = Tag.objects.get_or_create(name=tag_name)
+                    # Case-insensitive get_or_create, but preserve the original case
+                    tag, created = Tag.objects.get_or_create(
+                        name__iexact=tag_name.lower(),
+                        defaults={'name': tag_name}  # Use original case if creating new
+                    )
                     project.tags.add(tag)
             
             messages.success(request, 'Projeto salvo como rascunho! Complete as informações necessárias antes de publicar.', extra_tags='project')
@@ -245,7 +249,11 @@ def create_project(request):
                     tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
                     
                     for tag_name in tag_names:
-                        tag, created = Tag.objects.get_or_create(name=tag_name)
+                        # Case-insensitive get_or_create, but preserve the original case
+                        tag, created = Tag.objects.get_or_create(
+                            name__iexact=tag_name.lower(),
+                            defaults={'name': tag_name}  # Use original case if creating new
+                        )
                         project.tags.add(tag)
                 
                 messages.success(request, 'Projeto criado com sucesso!', extra_tags='project')
@@ -313,7 +321,11 @@ def edit_project(request, slug):
                     tag_names = [t.strip() for t in form.cleaned_data['tags_input'].split(',') if t.strip()]
                     
                     for tag_name in tag_names:
-                        tag, created = Tag.objects.get_or_create(name=tag_name)
+                        # Case-insensitive get_or_create, but preserve the original case
+                        tag, created = Tag.objects.get_or_create(
+                            name__iexact=tag_name.lower(),
+                            defaults={'name': tag_name}  # Use original case if creating new
+                        )
                         project.tags.add(tag)
                 
                 # Se existia rascunho, remover
