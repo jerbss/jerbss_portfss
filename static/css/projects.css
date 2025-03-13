@@ -1642,7 +1642,7 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     color: white;
 }
 
-/* Container para as tags adicionais - Animação melhorada e unificada */
+/* Container para as tags adicionais - Layout horizontal com flexbox */
 #moreTags {
     width: 100%;
     transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
@@ -1650,37 +1650,48 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
                 transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 padding-top 0.4s ease;
     transform-origin: top;
-    /* Layout em grade para as tags adicionais */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    /* Usando flexbox para layout horizontal com quebra de linha */
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
-}
-
-/* Estado fechado */
-#moreTags.collapse:not(.show) {
     max-height: 0;
     opacity: 0;
     transform: scaleY(0.8) translateY(-10px);
     padding-top: 0;
     margin-top: 0;
     pointer-events: none;
-    display: none;
     overflow: hidden;
+    /* Garantindo alinhamento consistente com outros elementos */
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
-/* Estado aberto */
-#moreTags.collapse.show {
+/* Estado fechado - não é mais necessário usar a classe collapse */
+#moreTags:not(.show) {
+    display: none;
+}
+
+/* Estado aberto - usando flexbox em vez de grid */
+#moreTags.show {
     max-height: 2000px;
     opacity: 1;
     transform: scaleY(1) translateY(0);
-    padding-top: 0.5rem;
+    padding-top: 1rem; /* Aumentado para melhor espaçamento */
     margin-top: 0.5rem;
+    padding-bottom: 1rem; /* Espaço abaixo das tags adicionais */
     pointer-events: auto;
-    display: grid !important; /* Alterado para grid */
+    display: flex !important; /* Garantir que seja flexbox */
     overflow: visible;
+    /* Borda superior para separação visual da área acima */
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Garantir que os botões dentro do moreTags tenham a mesma aparência dos botões principais */
+/* Tema escuro para a borda */
+body.dark-mode #moreTags.show {
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+/* Otimização de espaço para os botões de tag */
 #moreTags .btn {
     font-size: 0.85rem;
     padding: 0.5rem 0.75rem;
@@ -1689,12 +1700,12 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     align-items: center;
     justify-content: center;
     white-space: normal;
-    flex: 1 0 auto;
-    min-width: 90px;
     text-align: center;
     height: auto;
     min-height: 38px;
     line-height: 1.2;
+    margin: 0; /* Remover margens que possam afetar o layout */
+    flex: 0 0 auto; /* Permitir que o tamanho seja baseado no conteúdo */
     
     /* Melhorias para quebra de palavras */
     word-break: break-word;
@@ -1704,37 +1715,24 @@ body.dark-mode .tags-container .btn-outline-primary:hover *:not(.badge) {
     -ms-hyphens: auto;
 }
 
-/* Ajuste responsivo para telas menores */
-@media (max-width: 991.98px) {
-    #moreTags {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    }
-    
-    #moreTags .btn {
-        min-width: auto;
-    }
-}
-
+/* Mantendo a responsividade para os botões */
 @media (max-width: 576px) {
-    #moreTags {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
     #moreTags .btn {
-        padding: 0.4rem 0.6rem;
+        padding: 0.4rem 0.5rem;
         font-size: 0.8rem;
+        min-width: calc(50% - 0.5rem); /* Semi-forçar duas colunas em telas muito pequenas */
     }
 }
 
-/* Animação do ícone no botão toggle */
-.toggle-more-tags i {
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-right: 0.5rem;
-    display: inline-block;
-}
-
-.toggle-more-tags.active i {
-    transform: rotate(180deg);
+/* Layout responsivo para os filtros - ajustando o espaço para tags adicionais */
+@media (min-width: 992px) {
+    /* ...existing code... */
+    
+    /* Remove a definição de grid para o moreTags */
+    #moreTags {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 /* Animação do ícone no botão toggle */
@@ -1791,5 +1789,46 @@ body.dark-mode .toggle-more-tags.active i {
     
     body.dark-mode .toggle-more-tags:hover i {
         color: #121212 !important;
+    }
+}
+
+/* Layout responsivo para os filtros - melhorado para telas grandes */
+@media (min-width: 992px) {
+    /* Layout base para espaço vertical */
+    .filters-section .card-body .row {
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    /* Limitar altura das colunas de tipo e status */
+    .filters-section .card-body .col-lg-4:nth-child(2),
+    .filters-section .card-body .col-lg-4:nth-child(3) {
+        max-height: 220px; /* Altura limitada, ajustável conforme necessário */
+        overflow: hidden; /* Esconde conteúdo que ultrapassar a altura */
+    }
+    
+    /* Contêineres internos com rolagem se necessário */
+    .type-container.filter-buttons,
+    .status-container.filter-buttons {
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 4px;
+    }
+    
+    /* A coluna de tags pode crescer verticalmente */
+    .filters-section .card-body .col-lg-4:first-child {
+        min-height: 220px; /* Mesma altura inicial das outras colunas */
+    }
+    
+    /* Botão "Mais tags" sempre visível */
+    .toggle-more-tags {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    /* Tags adicionais - definindo para telas grandes */
+    #moreTags {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ainda mais colunas em telas grandes */
     }
 }
