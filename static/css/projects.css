@@ -1391,7 +1391,6 @@ body.dark-mode .type-container .btn.active i {
     text-align: center;
     height: auto; /* Remove altura fixa para permitir maior flexibilidade */
     min-height: 38px; /* Altura mínima para manter consistência */
-    line-height: 1.2; /* Melhora o espaçamento de linha quando há quebra de texto */
     
     /* Melhorias para quebra de palavras */
     word-break: break-word; /* Permite quebras em palavras longas */
@@ -1700,19 +1699,93 @@ body.dark-mode #moreTags.show {
     align-items: center;
     justify-content: center;
     white-space: normal;
+    transition: all 0.3s ease;
+    flex: 0 0 auto;
+}
+
+/* Corrigindo os ícones no moreTags para garantir o mesmo espaçamento que nas tags principais */
+#moreTags .btn i {
+    margin-right: 0.7rem; /* Mesmo espaçamento dos ícones nas tags principais */
+    font-size: 0.9rem;
+    width: 1.1rem; /* Largura fixa para que todos os ícones ocupem o mesmo espaço */
     text-align: center;
-    height: auto;
-    min-height: 38px;
-    line-height: 1.2;
-    margin: 0; /* Remover margens que possam afetar o layout */
-    flex: 0 0 auto; /* Permitir que o tamanho seja baseado no conteúdo */
-    
-    /* Melhorias para quebra de palavras */
-    word-break: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
+    flex-shrink: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos unificados para os badges no moreTags - Tema claro */
+#moreTags .btn .badge {
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.25em 0.6em;
+    border-radius: 10px;
+    margin-left: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+/* Tema claro - estado hover para as tags adicionais */
+#moreTags .btn:hover .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Tema claro - estado ativo para as tags adicionais */
+#moreTags .btn.active .badge {
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Tema escuro - estado normal para as tags adicionais */
+body.dark-mode #moreTags .btn .badge {
+    background-color: rgba(100, 181, 246, 0.2);
+    color: #64b5f6;
+    border: 1px solid rgba(100, 181, 246, 0.3);
+}
+
+/* Tema escuro - estado hover para as tags adicionais */
+body.dark-mode #moreTags .btn:hover .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border-color: #64b5f6;
+}
+
+/* Tema escuro - estado ativo para as tags adicionais */
+body.dark-mode #moreTags .btn.active .badge {
+    background-color: #121212;
+    color: #64b5f6;
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+/* Garantir que os badges mantêm o contraste correto durante o hover no tema escuro */
+body.dark-mode #moreTags .btn-outline-primary:hover .badge {
+    color: #64b5f6 !important;
+    background-color: #121212 !important;
+    border: 1px solid #64b5f6 !important;
+}
+
+/* Manter a mesma estrutura e aparência geral das tags adicionais */
+#moreTags .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+    transition: all 0.3s ease;
+    flex: 0 0 auto;
 }
 
 /* Mantendo a responsividade para os botões */
